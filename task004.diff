@@ -1,0 +1,59 @@
+﻿diff --git a/src/app/page.tsx b/src/app/page.tsx
+index 3423e3a..41bdf8b 100644
+--- a/src/app/page.tsx
++++ b/src/app/page.tsx
+@@ -1,35 +1,16 @@
+-const navigationItems = [
+-  { label: "蹂?몄궗 ?뚭컻", href: "#attorney" },
+-  { label: "?낅Т 遺꾩빞", href: "#practice" },
+-  { label: "?щ?", href: "#cases" },
+-  { label: "踰뺣쪧 湲", href: "#articles" },
+-  { label: "?먯＜ 臾삳뒗 吏덈Ц", href: "#faq" },
+-  { label: "?곷떞 ?덈궡", href: "#contact" },
+-];
++import { Footer } from "@/components/layout/Footer";
++import { Header } from "@/components/layout/Header";
+ 
+ export default function Home() {
+   return (
+     <>
+-      <header className="border-b border-zinc-200 bg-white">
+-        <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+-          <p className="text-lg font-semibold text-zinc-950">?뺤쿇 踰뺣쪧?щТ??/p>
+-          <nav aria-label="二쇱슂 硫붾돱">
+-            <ul className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-zinc-700">
+-              {navigationItems.map((item) => (
+-                <li key={item.href}>
+-                  <a href={item.href} className="hover:text-zinc-950">
+-                    {item.label}
+-                  </a>
+-                </li>
+-              ))}
+-            </ul>
+-          </nav>
+-        </div>
+-      </header>
++      <Header />
+ 
+       <main className="flex flex-1 flex-col bg-white text-zinc-950">
+         <section className="mx-auto w-full max-w-6xl px-6 py-20">
+-          <p className="text-sm font-medium text-zinc-600">Jeongcheon Law Office</p>
++          <p className="text-sm font-medium text-zinc-600">
++            Jeongcheon Law Office
++          </p>
+           <h1 className="mt-4 max-w-3xl text-4xl font-semibold tracking-tight">
+             ?섎ː?몄쓽 ?곹솴???뺥솗???댄빐?섍퀬 李⑤텇?섍쾶 ?닿껐 諛⑺뼢??李얠뒿?덈떎.
+           </h1>
+@@ -100,11 +81,7 @@ export default function Home() {
+         </section>
+       </main>
+ 
+-      <footer className="border-t border-zinc-200 bg-zinc-50">
+-        <div className="mx-auto w-full max-w-6xl px-6 py-8 text-sm text-zinc-600">
+-          <p>짤 ?뺤쿇 踰뺣쪧?щТ?? 紐⑤뱺 沅뚮━ 蹂댁쑀.</p>
+-        </div>
+-      </footer>
++      <Footer />
+     </>
+   );
+ }
