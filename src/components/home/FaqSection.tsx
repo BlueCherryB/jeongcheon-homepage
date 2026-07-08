@@ -1,12 +1,15 @@
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { homepageContent } from "@/data/homepage";
 
 export function FaqSection() {
+  const { faq } = homepageContent;
+
   return (
-    <Section id="faq">
+    <Section id={faq.id}>
       <SectionHeading
-        title="자주 묻는 질문"
-        description="상담 전 준비사항, 사건 진행 절차, 비용 안내 등 의뢰인이 자주 궁금해하는 내용을 명확하게 정리할 예정입니다."
+        title={faq.title}
+        description={faq.description}
       />
     </Section>
   );

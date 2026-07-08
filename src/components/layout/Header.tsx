@@ -1,11 +1,4 @@
-const navigationItems = [
-  { label: "변호사 소개", href: "#attorney" },
-  { label: "업무 분야", href: "#practice" },
-  { label: "사례", href: "#cases" },
-  { label: "법률 글", href: "#articles" },
-  { label: "자주 묻는 질문", href: "#faq" },
-  { label: "상담 안내", href: "#contact" },
-];
+import { navigationItems } from "@/data/navigation";
 
 export function Header() {
   return (
