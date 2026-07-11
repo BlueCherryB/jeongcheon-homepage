@@ -6,10 +6,22 @@ type HomeSectionContent = {
 
 export const homepageContent = {
   hero: {
-    eyebrow: "Jeongcheon Law Office",
-    title: "의뢰인의 상황을 정확히 이해하고 차분하게 해결 방향을 찾습니다.",
+    eyebrow: "대한변협 형사전문",
+    title: "의뢰인의 상황을\n정확하게 이해합니다.",
     description:
-      "정천 법률사무소는 형사, 민사, 기업 법무 등 주요 법률 문제에 대해 신뢰할 수 있는 상담과 대응을 준비하는 법률 플랫폼입니다.",
+      "차분한 상담과 전략적인 대응으로\n가장 적합한 해결 방향을 제시합니다.",
+    primaryCta: {
+      label: "상담 예약",
+      href: "#contact",
+    },
+    secondaryCta: {
+      label: "전화 상담",
+      href: "tel:",
+    },
+    image: {
+      src: "/hero-law-office.png",
+      alt: "정천 법률사무소를 상징하는 현대적인 법률 업무 공간 이미지",
+    },
   },
   attorney: {
     id: "attorney",
@@ -52,6 +64,18 @@ export const homepageContent = {
     eyebrow: string;
     title: string;
     description: string;
+    primaryCta: {
+      label: string;
+      href: string;
+    };
+    secondaryCta: {
+      label: string;
+      href: string;
+    };
+    image: {
+      src: string;
+      alt: string;
+    };
   };
   attorney: HomeSectionContent;
   practice: HomeSectionContent;
