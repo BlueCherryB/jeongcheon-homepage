@@ -4,6 +4,28 @@ type HomeSectionContent = {
   description: string;
 };
 
+type AttorneyStrength = {
+  title: string;
+  description: string;
+};
+
+type AttorneyContent = {
+  id: string;
+  eyebrow: string;
+  name: string;
+  quote: string;
+  description: string;
+  strengths: AttorneyStrength[];
+  image: {
+    src: string;
+    alt: string;
+  };
+  cta: {
+    label: string;
+    href: string;
+  };
+};
+
 export const homepageContent = {
   hero: {
     eyebrow: "대한변협 형사전문",
@@ -25,9 +47,31 @@ export const homepageContent = {
   },
   attorney: {
     id: "attorney",
-    title: "변호사 소개",
+    eyebrow: "대표 변호사",
+    name: "김찬협 변호사",
+    quote: "사건은 숫자가 아니라\n한 사람의 삶입니다.",
     description:
-      "사건의 사실관계와 법적 쟁점을 면밀히 검토하고, 의뢰인이 이해할 수 있는 언어로 절차와 선택지를 설명합니다.",
+      "형사사건은 초기 대응이 결과를 크게 좌우합니다.\n사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로\n절차와 대응 방향을 설명드립니다.",
+    strengths: [
+      {
+        title: "상담부터 종결까지 직접 수행",
+        description:
+          "사건의 시작부터 마무리까지 변호사가 직접 책임지고 진행합니다.",
+      },
+      {
+        title: "의뢰인과의 충분한 소통",
+        description:
+          "대응 방향을 이해할 수 있도록 충분히 설명하고 함께 고민합니다.",
+      },
+    ],
+    image: {
+      src: "/images/attorney-kim-chan-hyeop.jpg",
+      alt: "김찬협 변호사 프로필 사진",
+    },
+    cta: {
+      label: "변호사 소개 보기",
+      href: "/attorney",
+    },
   },
   practice: {
     id: "practice",
@@ -77,7 +121,7 @@ export const homepageContent = {
       alt: string;
     };
   };
-  attorney: HomeSectionContent;
+  attorney: AttorneyContent;
   practice: HomeSectionContent;
   cases: HomeSectionContent;
   articles: HomeSectionContent;
