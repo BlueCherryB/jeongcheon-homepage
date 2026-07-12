@@ -26,6 +26,20 @@ type AttorneyContent = {
   };
 };
 
+type PracticeArea = {
+  title: string;
+  icon: "scale" | "document" | "family";
+  href: string;
+  items: string[];
+};
+
+type PracticeContent = {
+  id: string;
+  eyebrow: string;
+  message: string;
+  areas: PracticeArea[];
+};
+
 export const homepageContent = {
   hero: {
     eyebrow: "대한변협 형사전문",
@@ -75,9 +89,39 @@ export const homepageContent = {
   },
   practice: {
     id: "practice",
-    title: "업무 분야",
-    description:
-      "형사 사건, 민사 분쟁, 기업 자문, 계약 검토 등 주요 법률 영역별 안내를 체계적으로 제공할 예정입니다.",
+    eyebrow: "업무 분야",
+    message:
+      "의뢰인의 권리를 지키고,\n최선의 결과를 위해 끝까지 함께하겠습니다.",
+    areas: [
+      {
+        title: "형사",
+        icon: "scale",
+        href: "#contact",
+        items: [
+          "경찰조사 및 수사 대응",
+          "고소 · 고발 대리",
+          "성범죄 사건",
+          "영장 · 구속 사건",
+        ],
+      },
+      {
+        title: "민사",
+        icon: "document",
+        href: "#contact",
+        items: [
+          "계약 분쟁",
+          "손해배상 청구",
+          "대여금 · 채권 회수",
+          "부동산 분쟁",
+        ],
+      },
+      {
+        title: "이혼·가사",
+        icon: "family",
+        href: "#contact",
+        items: ["이혼 소송", "재산분할", "양육권 · 양육비", "상속 · 유류분"],
+      },
+    ],
   },
   cases: {
     id: "cases",
@@ -122,7 +166,7 @@ export const homepageContent = {
     };
   };
   attorney: AttorneyContent;
-  practice: HomeSectionContent;
+  practice: PracticeContent;
   cases: HomeSectionContent;
   articles: HomeSectionContent;
   faq: HomeSectionContent;
