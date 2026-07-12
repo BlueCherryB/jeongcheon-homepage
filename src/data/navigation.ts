@@ -9,5 +9,5 @@ export const navigationItems: NavigationItem[] = [
   { label: "수행사례", href: "/cases" },
   { label: "법률 글", href: "/#articles" },
   { label: "자주 묻는 질문", href: "/#faq" },
-  { label: "상담 안내", href: "/#contact" },
+  { label: "상담 안내", href: "/#consultation" },
 ];

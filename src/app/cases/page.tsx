@@ -5,8 +5,6 @@ import { CasePagination } from "@/components/cases/CasePagination";
 import { CasesPageHero } from "@/components/cases/CasesPageHero";
 import { CaseStudyList } from "@/components/cases/CaseStudyList";
 import { Container } from "@/components/ui/Container";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
 import { caseStudies } from "@/data/cases";
 import {
   filterCases,
@@ -45,46 +43,40 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
   const currentCases = filteredCases.slice(startIndex, endIndex);
 
   return (
-    <>
-      <Header />
+    <main className="bg-[#FAF8F4] text-[#111B36]">
+      <CasesPageHero />
 
-      <main className="bg-[#FAF8F4] text-[#111B36]">
-        <CasesPageHero />
+      <section className="py-8 lg:py-10">
+        <Container>
+          <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+            <CaseCategoryFilter activeCategory={activeCategory} />
 
-        <section className="py-8 lg:py-10">
-          <Container>
-            <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-              <CaseCategoryFilter activeCategory={activeCategory} />
+            <label className="flex w-full max-w-48 items-center justify-between rounded-md border border-[#E8E2D7] bg-white px-5 py-3 text-sm font-semibold text-[#111B36] shadow-[0_10px_24px_rgba(17,27,54,0.04)] md:w-48">
+              <span className="sr-only">정렬</span>
+              <select
+                className="w-full appearance-none bg-transparent font-semibold outline-none"
+                defaultValue="latest"
+              >
+                <option value="latest">최신순</option>
+              </select>
+              <span aria-hidden="true" className="ml-3 text-[#111B36]/70">
+                ˅
+              </span>
+            </label>
+          </div>
 
-              <label className="flex w-full max-w-48 items-center justify-between rounded-md border border-[#E8E2D7] bg-white px-5 py-3 text-sm font-semibold text-[#111B36] shadow-[0_10px_24px_rgba(17,27,54,0.04)] md:w-48">
-                <span className="sr-only">정렬</span>
-                <select
-                  className="w-full appearance-none bg-transparent font-semibold outline-none"
-                  defaultValue="latest"
-                >
-                  <option value="latest">최신순</option>
-                </select>
-                <span aria-hidden="true" className="ml-3 text-[#111B36]/70">
-                  ˅
-                </span>
-              </label>
-            </div>
+          <div className="mt-5">
+            <CaseStudyList caseStudies={currentCases} />
+          </div>
 
-            <div className="mt-5">
-              <CaseStudyList caseStudies={currentCases} />
-            </div>
-
-            <CasePagination
-              category={activeCategory}
-              currentPage={currentPage}
-              totalCount={filteredCases.length}
-              totalPages={totalPages}
-            />
-          </Container>
-        </section>
-      </main>
-
-      <Footer />
-    </>
+          <CasePagination
+            category={activeCategory}
+            currentPage={currentPage}
+            totalCount={filteredCases.length}
+            totalPages={totalPages}
+          />
+        </Container>
+      </section>
+    </main>
   );
 }

@@ -6,8 +6,6 @@ import { CaseConsultationCta } from "@/components/cases/CaseConsultationCta";
 import { CaseDetailHero } from "@/components/cases/CaseDetailHero";
 import { CaseDetailSection } from "@/components/cases/CaseDetailSection";
 import { Container } from "@/components/ui/Container";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
 import { caseStudies } from "@/data/cases";
 import {
   getCaseStudyBySlug,
@@ -96,8 +94,6 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
 
   return (
     <>
-      <Header />
-
       <main className="bg-white text-[#111B36]">
         <CaseDetailHero caseStudy={caseStudy} />
 
@@ -192,7 +188,6 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
       </main>
 
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      <Footer />
     </>
   );
 }

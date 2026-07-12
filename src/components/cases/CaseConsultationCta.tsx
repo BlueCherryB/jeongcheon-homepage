@@ -14,7 +14,7 @@ export function CaseConsultationCta() {
         </p>
       </div>
 
-      <Button href="/#contact" className="mt-7 h-14 px-7 lg:mt-0">
+      <Button href="/#consultation" className="mt-7 h-14 px-7 lg:mt-0">
         상담 문의하기
       </Button>
     </section>

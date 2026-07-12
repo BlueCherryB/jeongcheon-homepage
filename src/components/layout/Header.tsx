@@ -43,7 +43,7 @@ export function Header() {
             </ul>
           </nav>
 
-          <Button href="/#contact" className="w-fit px-6 py-3">
+          <Button href="/#consultation" className="w-fit px-6 py-3">
             상담 예약
           </Button>
         </div>

@@ -62,11 +62,11 @@ export const homepageContent = {
       "차분한 상담과 전략적인 대응으로\n가장 적합한 해결 방향을 제시합니다.",
     primaryCta: {
       label: "상담 예약",
-      href: "#contact",
+      href: "#consultation",
     },
     secondaryCta: {
       label: "전화 상담",
-      href: "tel:",
+      href: "#consultation",
     },
     image: {
       src: "/hero-law-office.png",
@@ -110,7 +110,7 @@ export const homepageContent = {
       {
         title: "형사",
         icon: "scale",
-        href: "#contact",
+        href: "#consultation",
         items: [
           "경찰조사 및 수사 대응",
           "고소 · 고발 대리",
@@ -121,7 +121,7 @@ export const homepageContent = {
       {
         title: "민사",
         icon: "document",
-        href: "#contact",
+        href: "#consultation",
         items: [
           "계약 분쟁",
           "손해배상 청구",
@@ -132,7 +132,7 @@ export const homepageContent = {
       {
         title: "이혼·가사",
         icon: "family",
-        href: "#contact",
+        href: "#consultation",
         items: ["이혼 소송", "재산분할", "양육권 · 양육비", "상속 · 유류분"],
       },
     ],
@@ -140,7 +140,7 @@ export const homepageContent = {
   cases: {
     id: "cases",
     eyebrow: "수행 사례",
-    heading: "실제 사건을 바탕으로 검증된 결과를 소개합니다.",
+    heading: "정천의 수행사례를 소개합니다.",
     filters: caseCategoryFilters.map((filter) => filter.label),
     viewAllLabel: "전체 사례 보기",
     viewAllHref: "/cases",
@@ -157,12 +157,6 @@ export const homepageContent = {
     title: "자주 묻는 질문",
     description:
       "상담 전 준비사항, 사건 진행 절차, 비용 안내 등 의뢰인이 자주 궁금해하는 내용을 명확하게 정리할 예정입니다.",
-  },
-  contact: {
-    id: "contact",
-    title: "상담 안내",
-    description:
-      "방문 상담, 전화 상담, 온라인 문의 등 상담 경로와 준비해야 할 자료를 안내하는 영역입니다.",
   },
 } satisfies {
   hero: {
@@ -187,5 +181,4 @@ export const homepageContent = {
   cases: CasesContent;
   articles: HomeSectionContent;
   faq: HomeSectionContent;
-  contact: HomeSectionContent;
 };
