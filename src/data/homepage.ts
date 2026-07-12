@@ -1,3 +1,7 @@
+import { caseCategoryFilters } from "@/data/cases";
+import type { CaseStudy } from "@/data/cases";
+import { getLatestCaseStudies } from "@/lib/cases";
+
 type HomeSectionContent = {
   id: string;
   title: string;
@@ -40,16 +44,6 @@ type PracticeContent = {
   areas: PracticeArea[];
 };
 
-export type CaseStudyPreview = {
-  category: "형사" | "민사" | "이혼·가사";
-  title: string;
-  summary: string;
-  result: string;
-  resultDetail: string;
-  date: string;
-  slug: string;
-};
-
 type CasesContent = {
   id: string;
   eyebrow: string;
@@ -57,7 +51,7 @@ type CasesContent = {
   filters: string[];
   viewAllLabel: string;
   viewAllHref: string;
-  studies: CaseStudyPreview[];
+  studies: CaseStudy[];
 };
 
 export const homepageContent = {
@@ -147,61 +141,10 @@ export const homepageContent = {
     id: "cases",
     eyebrow: "수행 사례",
     heading: "실제 사건을 바탕으로 검증된 결과를 소개합니다.",
-    filters: ["전체", "형사", "민사", "이혼·가사"],
+    filters: caseCategoryFilters.map((filter) => filter.label),
     viewAllLabel: "전체 사례 보기",
     viewAllHref: "/cases",
-    studies: [
-      {
-        category: "형사",
-        title: "주식양수도계약서 위조 및 업무상횡령 사건",
-        summary:
-          "경영권 분쟁 과정에서 제기된 사문서위조 및 업무상횡령 혐의 사건에서, 면밀한 사실관계 검토와 법리적 주장을 통해 혐의없음 처분을 이끌어냈습니다.",
-        result: "무혐의",
-        resultDetail: "혐의없음(불송치)",
-        date: "2026.07.15",
-        slug: "example-slug-1",
-      },
-      {
-        category: "민사",
-        title: "건설공사대금 청구 사건",
-        summary:
-          "공사대금 미지급으로 인한 분쟁에서 계약서 및 공정 내역 분석을 바탕으로 의뢰인의 정당한 권리를 인정받아 승소 판결을 이끌어냈습니다.",
-        result: "승소",
-        resultDetail: "일부승소",
-        date: "2026.06.28",
-        slug: "example-slug-2",
-      },
-      {
-        category: "이혼·가사",
-        title: "이혼 및 재산분할 청구 사건",
-        summary:
-          "혼인기간 중 형성된 재산에 대한 기여도를 입증하여 의뢰인에게 유리한 재산분할 비율(80%)로 조정 성립하였습니다.",
-        result: "조정성립",
-        resultDetail: "재산분할 80%",
-        date: "2026.06.10",
-        slug: "example-slug-3",
-      },
-      {
-        category: "형사",
-        title: "특정경제범죄가중처벌등에관한법률위반(사기) 사건",
-        summary:
-          "복잡한 거래관계와 고의성 입증을 다투어 의뢰인의 혐의를 적극 소명하여 무혐의 처분을 받았습니다.",
-        result: "무혐의",
-        resultDetail: "혐의없음(불송치)",
-        date: "2026.05.22",
-        slug: "example-slug-4",
-      },
-      {
-        category: "민사",
-        title: "상가 임대차보증금 반환 청구 사건",
-        summary:
-          "임대인의 보증금 반환 거부에 대응하여 법적 절차를 통해 전액 반환 판결을 받아내어 의뢰인의 재산권을 보호하였습니다.",
-        result: "승소",
-        resultDetail: "전액 반환",
-        date: "2026.05.02",
-        slug: "example-slug-5",
-      },
-    ],
+    studies: getLatestCaseStudies(5),
   },
   articles: {
     id: "articles",

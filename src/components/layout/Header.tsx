@@ -32,18 +32,18 @@ export function Header() {
             <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[15px] font-medium text-zinc-800">
               {navigationItems.map((item) => (
                 <li key={item.href}>
-                  <a
+                  <Link
                     href={item.href}
                     className="hover:text-[#0F172A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0F172A]"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
           </nav>
 
-          <Button href="#contact" className="w-fit px-6 py-3">
+          <Button href="/#contact" className="w-fit px-6 py-3">
             상담 예약
           </Button>
         </div>

@@ -1,23 +1,39 @@
 import Link from "next/link";
 
-import type { CaseStudyPreview } from "@/data/homepage";
+import type { CaseStudy } from "@/data/cases";
 
 type CaseStudyCardProps = {
-  caseStudy: CaseStudyPreview;
+  caseStudy: CaseStudy;
+  variant?: "preview" | "board";
 };
 
-export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
+export function CaseStudyCard({
+  caseStudy,
+  variant = "preview",
+}: CaseStudyCardProps) {
+  const isBoard = variant === "board";
+
   return (
     <Link
       href={`/cases/${caseStudy.slug}`}
       aria-label={`${caseStudy.title} 사례 자세히 보기`}
-      className="group block rounded-lg border border-[#E8E2D7] bg-white px-6 py-7 shadow-[0_16px_40px_rgba(17,27,54,0.06)] transition duration-300 hover:border-[#C8A96A]/65 hover:shadow-[0_22px_54px_rgba(17,27,54,0.1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A] sm:px-8 lg:px-10"
+      className={[
+        "group block rounded-lg border border-[#E8E2D7] bg-white px-6 shadow-[0_16px_40px_rgba(17,27,54,0.06)] transition duration-300 hover:border-[#C8A96A]/65 hover:shadow-[0_22px_54px_rgba(17,27,54,0.1)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A] sm:px-8 lg:px-10",
+        isBoard ? "py-6" : "py-7",
+      ].join(" ")}
     >
-      <article className="grid gap-6 lg:grid-cols-[120px_minmax(0,1fr)_150px_132px] lg:items-center lg:gap-8">
+      <article
+        className={[
+          "grid gap-6 lg:items-center lg:gap-8",
+          isBoard
+            ? "lg:grid-cols-[120px_minmax(0,1fr)_150px_126px]"
+            : "lg:grid-cols-[120px_minmax(0,1fr)_150px_132px]",
+        ].join(" ")}
+      >
         <div className="flex items-center gap-5 lg:min-h-20 lg:border-r lg:border-[#E8E2D7]">
           <div>
             <p className="text-base font-bold text-[#111B36]">
-              {caseStudy.category}
+              {caseStudy.categoryLabel}
             </p>
             <span
               aria-hidden="true"
@@ -47,8 +63,8 @@ export function CaseStudyCard({ caseStudy }: CaseStudyCardProps) {
         </div>
 
         <div className="flex items-center justify-between border-t border-[#E8E2D7] pt-5 text-sm font-medium text-[#111B36] lg:border-l lg:border-t-0 lg:py-4 lg:pl-8">
-          <time dateTime={caseStudy.date.replace(/\./g, "-")}>
-            {caseStudy.date}
+          <time dateTime={caseStudy.publishedAt}>
+            {caseStudy.displayDate}
           </time>
           <span
             aria-hidden="true"
