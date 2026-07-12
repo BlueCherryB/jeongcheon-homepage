@@ -68,12 +68,12 @@ export function CaseDetailSection({
   children,
 }: CaseDetailSectionProps) {
   return (
-    <section className="grid gap-6 border-b border-[#E8E2D7] py-12 last:border-b-0 md:grid-cols-[130px_minmax(0,1fr)] md:gap-10">
+    <section className="grid gap-6 border-b border-[#E8E2D7] py-12 last:border-b-0 md:grid-cols-[170px_minmax(0,1fr)] md:gap-10">
       <div className="flex items-center gap-4 md:block md:border-r md:border-[#E8E2D7] md:pr-8">
         <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#E8E2D7] bg-[#FAF8F4] text-[#C8A96A]">
           <SectionIcon icon={icon} />
         </div>
-        <h2 className="font-chosun text-2xl font-normal tracking-[-0.02em] text-[#111B36] md:mt-5">
+        <h2 className="font-chosun break-keep text-xl font-normal tracking-[-0.02em] text-[#111B36] md:mt-5">
           {title}
         </h2>
       </div>

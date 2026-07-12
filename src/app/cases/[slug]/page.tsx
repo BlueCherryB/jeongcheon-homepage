@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 
 import { CaseConsultationCta } from "@/components/cases/CaseConsultationCta";
 import { CaseDetailHero } from "@/components/cases/CaseDetailHero";
-import { CaseDetailNavigation } from "@/components/cases/CaseDetailNavigation";
 import { CaseDetailSection } from "@/components/cases/CaseDetailSection";
 import { Container } from "@/components/ui/Container";
 import { Footer } from "@/components/layout/Footer";
@@ -12,8 +11,6 @@ import { Header } from "@/components/layout/Header";
 import { caseStudies } from "@/data/cases";
 import {
   getCaseStudyBySlug,
-  getNextCaseStudy,
-  getPreviousCaseStudy,
   getRelatedCaseStudies,
 } from "@/lib/cases";
 
@@ -75,8 +72,6 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
     notFound();
   }
 
-  const previousCase = getPreviousCaseStudy(caseStudy.slug);
-  const nextCase = getNextCaseStudy(caseStudy.slug);
   const relatedCases = getRelatedCaseStudies(caseStudy);
   const jsonLd = {
     "@context": "https://schema.org",
@@ -182,10 +177,15 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
             </section>
           ) : null}
 
-          <CaseDetailNavigation
-            previousCase={previousCase}
-            nextCase={nextCase}
-          />
+          <div className="mt-10 flex justify-end">
+            <Link
+              href="/cases"
+              aria-label="수행사례 목록으로 이동"
+              className="inline-flex items-center justify-center border border-[#C8A96A] bg-white px-6 py-3 text-sm font-semibold text-[#111B36] transition-colors hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A] max-sm:w-full"
+            >
+              목록
+            </Link>
+          </div>
 
           <CaseConsultationCta />
         </Container>

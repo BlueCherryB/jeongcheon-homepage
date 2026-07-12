@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
@@ -49,7 +48,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
             </p>
 
             <div className="mt-5 flex flex-col gap-6 sm:flex-row sm:items-start">
-              <h1 className="font-chosun max-w-3xl text-[38px] font-normal leading-[1.22] tracking-[-0.02em] text-[#111B36] sm:text-[48px]">
+              <h1 className="font-chosun max-w-3xl text-[34px] font-normal leading-[1.25] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
                 {caseStudy.title}
               </h1>
               <div className="flex h-28 w-28 shrink-0 flex-col items-center justify-center rounded-full border border-[#C8A96A] text-center">
@@ -75,17 +74,10 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
             </div>
           </div>
 
-          <div className="relative hidden aspect-[4/3] overflow-hidden rounded-[22px] bg-white shadow-[0_24px_70px_rgba(17,27,54,0.1)] lg:block">
-            <Image
-              src="/hero-law-office.png"
-              alt="정천 법률사무소의 차분한 상담 공간"
-              fill
-              sizes="420px"
-              className="object-cover object-center"
-              priority
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(250,248,244,0.35),rgba(250,248,244,0)_45%)]" />
-          </div>
+          <div
+            aria-hidden="true"
+            className="hidden aspect-[4/3] rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block"
+          />
         </div>
       </Container>
     </section>
