@@ -362,13 +362,42 @@ Scope:
 
 Expected files or areas:
 
-- `src/lib/cms/sanity-client.ts`
-- `src/lib/cms/queries/cases.ts`
+- `src/lib/cms/client.ts`
+- `src/lib/cms/queries/caseStudies.ts`
+- `src/lib/cms/caseStudies.ts`
+- `src/lib/cms/types/caseStudy.ts`
 
 Validation:
 
 - Strict TypeScript passes.
 - UI components do not import Sanity directly.
+
+Task #025 status:
+
+- Completed.
+- Root dependency added: `@sanity/client`.
+- Published-only client implemented at `src/lib/cms/client.ts`.
+- The client reuses `src/lib/cms/env.ts`, uses `useCdn: true`, uses `perspective: "published"`, and does not use a token.
+- Raw CMS Case Study response types implemented at `src/lib/cms/types/caseStudy.ts`.
+- Query definitions implemented at `src/lib/cms/queries/caseStudies.ts`.
+- Low-level fetch functions implemented at `src/lib/cms/caseStudies.ts`.
+- Queries implemented:
+  - `publishedCaseStudiesQuery`
+  - `featuredCaseStudiesQuery`
+  - `publishedCaseStudyBySlugQuery`
+  - `publishedCaseStudySlugsQuery`
+- Slug lookup uses the `$slug` GROQ parameter.
+- Slug input validation rejects empty, whitespace-only, uppercase, slash-containing, Korean, leading/trailing hyphen, and repeated-hyphen values by throwing `TypeError`.
+- A valid slug with no matching document returns `null`.
+- Empty list results are accepted and returned as empty arrays.
+- Portable Text fields are fetched as raw values and not rendered.
+- Raw image fields are fetched without URL generation.
+- Smoke verification succeeded against the `production` dataset with public variables and no token.
+- No current route, page, component, mapper, renderer, preview mode, webhook, revalidation logic, image URL builder, or local-data replacement was added.
+
+Task #026 readiness:
+
+- The next task can add application-facing domain types and mappers while keeping UI components isolated from raw Sanity results.
 
 ### Task #026 - Domain Types and Mapping
 

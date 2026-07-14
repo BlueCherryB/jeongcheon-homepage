@@ -96,12 +96,13 @@ Recommended data flow:
 ```text
 environment variables
   -> src/lib/cms/env.ts
-  -> src/lib/cms/sanity-client.ts
-  -> src/lib/cms/queries/cases.ts
-  -> src/lib/content/case-mappers.ts
-  -> src/lib/content/cases.ts
-  -> app routes and server components
-  -> UI components
+  -> src/lib/cms/client.ts
+  -> src/lib/cms/queries/caseStudies.ts
+  -> src/lib/cms/caseStudies.ts
+  -> future mapper
+  -> future application content
+  -> future app routes and server components
+  -> future UI components
 ```
 
 Recommended separation:
@@ -149,7 +150,16 @@ Responsibilities:
 - `src/types/content/seo.ts`: shared SEO fields.
 - `src/types/content/image.ts`: normalized image fields.
 
-Avoid adding all folders at once if they are empty. Create them when Task #025+ needs them. The `studio/` directory should be created by Task #021, not by this documentation task.
+Avoid adding all folders at once if they are empty. Create them when each task needs them. The `studio/` directory was created by Task #021.
+
+Implemented low-level CMS read layer in Task #025:
+
+- `src/lib/cms/client.ts`: creates the published-only Sanity client.
+- `src/lib/cms/queries/caseStudies.ts`: stores static GROQ query strings for Case Studies.
+- `src/lib/cms/caseStudies.ts`: exposes low-level raw CMS fetch functions.
+- `src/lib/cms/types/caseStudy.ts`: stores raw projected CMS response types.
+
+The Task #025 client uses `@sanity/client` directly with `useCdn: true`, `perspective: "published"`, and no token. The slug detail query uses GROQ parameters instead of string interpolation. No current page or component imports this layer yet.
 
 ## Query Layer Design
 
