@@ -6,6 +6,8 @@ const caseCategoryTitles: Record<string, string> = {
   family: '이혼·가사',
 }
 
+const caseCategoryValues = ['criminal', 'civil', 'family'] as const
+
 const caseCategoryOptions = [
   {title: caseCategoryTitles.criminal, value: 'criminal'},
   {title: caseCategoryTitles.civil, value: 'civil'},
@@ -26,6 +28,10 @@ function isValidCaseSlug(value: unknown): boolean {
   const slug = value.current
 
   return typeof slug === 'string' && slugPattern.test(slug)
+}
+
+function isValidCaseCategory(value: unknown): boolean {
+  return caseCategoryValues.includes(value as (typeof caseCategoryValues)[number])
 }
 
 export const caseStudy = defineType({
@@ -79,7 +85,10 @@ export const caseStudy = defineType({
         list: caseCategoryOptions,
         layout: 'radio',
       },
-      validation: (Rule) => Rule.required().error('사건 분야를 선택해주세요.'),
+      validation: (Rule) =>
+        Rule.required()
+          .custom((value) => isValidCaseCategory(value) || '사건 분야를 올바르게 선택해주세요.')
+          .error('사건 분야를 올바르게 선택해주세요.'),
     }),
     defineField({
       name: 'result',
