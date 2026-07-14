@@ -58,8 +58,10 @@ export type CaseStudyListItem = {
   categoryId: CaseStudyCategory;
   categoryLabel: CaseStudyCategoryLabel;
   result: string;
+  resultDetail: string;
   summary: string;
   publishedAt?: string;
+  displayDate?: string;
   featured: boolean;
   sortOrder?: number;
   image?: CaseStudyImage;
@@ -70,5 +72,8 @@ export type CaseStudyDetail = CaseStudyListItem & {
   issues: CaseStudyPortableText;
   response: CaseStudyPortableText;
   outcome: CaseStudyPortableText;
+  keywords: string[];
+  relatedPracticeIds: string[];
+  relatedCaseSlugs: string[];
   seo: CaseStudySeo;
 };

@@ -75,6 +75,10 @@ function mapBoolean(value: unknown): boolean {
   return typeof value === "boolean" ? value : false;
 }
 
+function formatDisplayDate(date: string | undefined): string | undefined {
+  return date ? date.replaceAll("-", ".") : undefined;
+}
+
 function mapImageCrop(crop: SanityImageCrop | undefined): CaseStudyImageCrop | undefined {
   if (!crop) {
     return undefined;
@@ -178,8 +182,10 @@ export function mapSanityCaseStudyListItem(
     categoryId: category,
     categoryLabel: caseStudyCategoryLabels[category],
     result: requireTrimmedString("result", caseStudy.result),
+    resultDetail: requireTrimmedString("result", caseStudy.result),
     summary: requireTrimmedString("summary", caseStudy.summary),
     publishedAt: optionalTrimmedString(caseStudy.publishedAt),
+    displayDate: formatDisplayDate(optionalTrimmedString(caseStudy.publishedAt)),
     featured: mapBoolean(caseStudy.featured),
     sortOrder: mapNumber(caseStudy.sortOrder),
     image: mapImage(caseStudy.mainImage),
@@ -211,6 +217,9 @@ export function mapSanityCaseStudyDetail(
     issues: mapPortableTextBlocks(caseStudy.legalIssues),
     response: mapPortableTextBlocks(caseStudy.response),
     outcome: mapPortableTextBlocks(caseStudy.outcome),
+    keywords: [],
+    relatedPracticeIds: [],
+    relatedCaseSlugs: [],
     seo: mapSeo(caseStudy.seo),
   };
 }

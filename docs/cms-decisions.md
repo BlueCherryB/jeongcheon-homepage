@@ -124,6 +124,9 @@ Rules:
 - The Sanity Case Study field `legalIssues` maps to the application field `issues`.
 - A single invalid Case Study detail record should fail loudly at the mapper boundary.
 - Case Study collection mappers may skip invalid records so listings can still render valid published content.
+- During migration, the application content API reads Sanity first and falls back to existing local Case Study data when Sanity is empty or unavailable.
+- If Sanity and local data contain the same slug, Sanity content takes priority.
+- Static slug discovery may combine Sanity and local slugs, with duplicates removed, until the CMS migration is complete.
 - The preview/draft client remains deferred and must be server-only when introduced.
 
 Do not add secrets to `.env`, `.env.local`, Git-tracked files, or documentation examples with real values.

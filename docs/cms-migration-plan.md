@@ -440,18 +440,36 @@ Task #027 readiness:
 
 Scope:
 
-- Create `src/lib/content/cases.ts` with query contracts.
-- Initially preserve behavior using local data fallback if needed.
+- Add local fallback support to `src/lib/content/caseStudies.ts`.
+- Adapt existing local Case Study data to application-facing types.
+- Preserve current content while Sanity has no Case Study documents.
 
 Expected files or areas:
 
-- `src/lib/content/cases.ts`
-- limited route imports
+- `src/lib/content/localCaseStudies.ts`
+- `src/lib/content/caseStudies.ts`
 
 Validation:
 
 - Existing pages render identically.
 - Lint/build pass.
+
+Task #027 status:
+
+- Completed.
+- `src/lib/content/localCaseStudies.ts` converts existing local Case Study records into application-facing Case Study list/detail objects.
+- Local `strategy` maps to application `response`.
+- String-array detail sections are converted to simple Portable Text blocks at the adapter boundary.
+- `src/lib/content/caseStudies.ts` now tries Sanity first and falls back to local data when Sanity is empty, missing a requested detail, or unavailable.
+- Valid Sanity content takes priority over local content.
+- `getCaseStudySlugs()` combines Sanity and local slugs, keeps Sanity slugs first, and removes duplicates.
+- Local data remains a temporary migration fallback and was not duplicated or rewritten.
+- No route, page, component, Studio schema, dependency, preview mode, image URL builder, Portable Text renderer, or local content value was changed.
+
+Task #028 readiness:
+
+- Homepage migration can call `getFeaturedCaseStudies()` from the content API.
+- The local fallback protects the current homepage from an empty Sanity dataset during that migration.
 
 ### Task #028 - Homepage Case Preview Migration
 
