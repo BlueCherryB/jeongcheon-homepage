@@ -113,6 +113,12 @@ Rules:
 - `NEXT_PUBLIC_SANITY_API_VERSION` is fixed to `2025-02-19`.
 - Do not use `latest`, `today`, or any runtime-generated date for the Sanity API version.
 - Use the same variable names in local `.env.local`, Vercel settings, and Cloudflare settings.
+- Use `@sanity/client` directly for the initial read-only query layer.
+- Do not introduce `next-sanity` for the initial published-content client.
+- Published reads use the Sanity CDN and the published perspective.
+- User-derived values such as slugs must be passed to GROQ through parameters.
+- Raw CMS response types stay separate from future application-facing content types.
+- The preview/draft client remains deferred and must be server-only when introduced.
 
 Do not add secrets to `.env`, `.env.local`, Git-tracked files, or documentation examples with real values.
 
@@ -201,6 +207,7 @@ Case-study content must be anonymized and reviewed before publication.
 - Whether to add a separate `development` dataset.
 - Whether archived case detail pages should remain accessible by slug.
 - Preview mode implementation details.
+- Preview client implementation details.
 - Webhook or on-demand revalidation strategy.
 - Studio deployment target.
 - Whether Studio and website should later adopt workspace tooling.
