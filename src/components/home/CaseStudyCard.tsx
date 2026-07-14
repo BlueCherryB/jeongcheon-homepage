@@ -1,9 +1,18 @@
 import Link from "next/link";
 
-import type { CaseStudy } from "@/data/cases";
+export type CaseStudyCardItem = {
+  slug: string;
+  categoryLabel: string;
+  title: string;
+  summary: string;
+  result: string;
+  resultDetail: string;
+  publishedAt?: string;
+  displayDate?: string;
+};
 
 type CaseStudyCardProps = {
-  caseStudy: CaseStudy;
+  caseStudy: CaseStudyCardItem;
   variant?: "preview" | "board";
 };
 
@@ -64,7 +73,7 @@ export function CaseStudyCard({
 
         <div className="flex items-center justify-between border-t border-[#E8E2D7] pt-5 text-sm font-medium text-[#111B36] lg:border-l lg:border-t-0 lg:py-4 lg:pl-8">
           <time dateTime={caseStudy.publishedAt}>
-            {caseStudy.displayDate}
+            {caseStudy.displayDate ?? caseStudy.publishedAt}
           </time>
           <span
             aria-hidden="true"

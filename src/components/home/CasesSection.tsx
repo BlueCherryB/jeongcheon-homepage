@@ -1,11 +1,18 @@
 import Link from "next/link";
 
-import { CaseStudyCard } from "@/components/home/CaseStudyCard";
+import {
+  CaseStudyCard,
+  type CaseStudyCardItem,
+} from "@/components/home/CaseStudyCard";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { homepageContent } from "@/data/homepage";
 
-export function CasesSection() {
+type CasesSectionProps = {
+  caseStudies: CaseStudyCardItem[];
+};
+
+export function CasesSection({ caseStudies }: CasesSectionProps) {
   const { cases } = homepageContent;
 
   return (
@@ -66,11 +73,13 @@ export function CasesSection() {
           </Link>
         </div>
 
-        <div className="mt-8 flex flex-col gap-3">
-          {cases.studies.map((caseStudy) => (
-            <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
-          ))}
-        </div>
+        {caseStudies.length > 0 ? (
+          <div className="mt-8 flex flex-col gap-3">
+            {caseStudies.map((caseStudy) => (
+              <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
+            ))}
+          </div>
+        ) : null}
       </Container>
     </section>
   );

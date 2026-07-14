@@ -10,8 +10,8 @@ Relevant files:
 
 - `src/data/cases.ts`: canonical local case-study data and related TypeScript types.
 - `src/lib/cases.ts`: case filtering, sorting, pagination helpers, slug lookup, related-case lookup.
-- `src/components/home/CasesSection.tsx`: homepage case preview section, currently rendering `homepageContent.cases.studies`.
-- `src/components/home/CaseStudyCard.tsx`: shared preview and board card UI, typed against `CaseStudy` from `src/data/cases.ts`.
+- `src/components/home/CasesSection.tsx`: homepage case preview section, now receiving featured case studies from the application content API.
+- `src/components/home/CaseStudyCard.tsx`: shared preview and board card UI, typed against the small display fields it renders.
 - `src/app/cases/page.tsx`: case board page, imports `caseStudies` directly and uses `src/lib/cases.ts` helpers.
 - `src/components/cases/CaseStudyList.tsx`: board list wrapper around `CaseStudyCard`.
 - `src/app/cases/[slug]/page.tsx`: detail page, static params, per-page metadata, related cases, and Article JSON-LD.
@@ -177,7 +177,14 @@ Implemented local fallback in Task #027:
 - `src/lib/content/localCaseStudies.ts`: adapts existing local Case Study data to the application content types.
 - `src/lib/content/caseStudies.ts`: reads Sanity first, then falls back to local content when Sanity is empty, missing a detail record, or unavailable.
 
-Sanity content takes priority when valid CMS records exist. Slug lists combine Sanity and local slugs, with Sanity slugs first and duplicates removed. The local adapter is temporary migration support and does not replace the existing local data source. Pages and components still have not been connected to this content API.
+Sanity content takes priority when valid CMS records exist. Slug lists combine Sanity and local slugs, with Sanity slugs first and duplicates removed. The local adapter is temporary migration support and does not replace the existing local data source.
+
+Implemented homepage preview integration in Task #028:
+
+- `src/app/page.tsx`: fetches `getFeaturedCaseStudies()` in the server component and limits the homepage preview to five items.
+- `src/components/home/CasesSection.tsx`: renders case studies passed from the page instead of reading local homepage data.
+
+The local fallback still protects the homepage while the Sanity dataset is empty. The `/cases` board and `/cases/[slug]` detail pages still use local data and are planned for later tasks.
 
 ## Query Layer Design
 
