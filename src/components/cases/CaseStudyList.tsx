@@ -1,8 +1,10 @@
-import { CaseStudyCard } from "@/components/home/CaseStudyCard";
-import type { CaseStudy } from "@/data/cases";
+import {
+  CaseStudyCard,
+  type CaseStudyCardItem,
+} from "@/components/home/CaseStudyCard";
 
 type CaseStudyListProps = {
-  caseStudies: CaseStudy[];
+  caseStudies: CaseStudyCardItem[];
 };
 
 export function CaseStudyList({ caseStudies }: CaseStudyListProps) {
