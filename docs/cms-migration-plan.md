@@ -407,14 +407,34 @@ Scope:
 
 Expected files or areas:
 
-- `src/types/content/case.ts`
-- `src/types/content/image.ts`
-- `src/types/content/seo.ts`
-- `src/lib/content/case-mappers.ts`
+- `src/types/content/caseStudy.ts`
+- `src/lib/content/caseStudyMappers.ts`
+- `src/lib/content/caseStudies.ts`
 
 Validation:
 
 - Raw Sanity fields stay out of UI props.
+
+Task #026 status:
+
+- Completed.
+- Application-facing Case Study types were added at `src/types/content/caseStudy.ts`.
+- Mapper functions were added at `src/lib/content/caseStudyMappers.ts`.
+- Application-level Case Study read functions were added at `src/lib/content/caseStudies.ts`.
+- Required usable fields are `_id`, `title`, `slug`, `category`, `result`, and `summary`.
+- Sanity `legalIssues` maps to application `issues`.
+- Category values remain `criminal`, `civil`, and `family`, with Korean labels derived in the mapper.
+- Optional `featured` defaults to `false`.
+- Missing Portable Text sections, SEO keywords, and SEO `noIndex` are normalized to empty arrays or `false`.
+- Single-record mapping throws `CaseStudyMappingError` for unusable data.
+- Collection mapping skips invalid records while preserving valid records.
+- Raw CMS types remain under `src/lib/cms/types/`.
+- No route, component, local data, Studio schema, image URL builder, Portable Text renderer, dependency, or runtime page integration was added.
+
+Task #027 readiness:
+
+- The next task can decide when and how existing pages should consume `src/lib/content/caseStudies.ts`.
+- UI migration should continue to avoid importing raw Sanity types.
 
 ### Task #027 - Content API with Local Fallback
 
