@@ -30,10 +30,8 @@ Recommended fields:
 | `relatedCases` | array of references | no | Maps from existing `relatedCaseSlugs`. |
 | `seo` | SEO object | no | SEO title, description, keywords, OG image. |
 | `publishedAt` | datetime | yes when visible | Public publication date. |
-| `isVisible` | boolean | yes | Website visibility toggle. |
-| `isFeatured` | boolean | no | Homepage feature status. |
-| `isArchived` | boolean | no | Keeps page visible but not actively promoted. |
-| `displayOrder` | number | no | Optional manual ordering for featured/curated lists. |
+| `featured` | boolean | no | Homepage or highlighted placement flag. |
+| `sortOrder` | number | no | Optional manual ordering for featured/curated lists. |
 
 Sanity system fields:
 
@@ -112,7 +110,45 @@ Implemented in Task #022:
 - `studio/schemaTypes/objects/seoFields.ts`
 - `studio/schemaTypes/objects/contentImage.ts`
 
-These are registered from `studio/schemaTypes/index.ts`. No document types are registered yet.
+These are registered from `studio/schemaTypes/index.ts` and reused by document schemas.
+
+## Implemented Case Study Schema
+
+Task #023 implemented the first document schema:
+
+- `studio/schemaTypes/documents/caseStudy.ts`
+
+Registered document type:
+
+- `caseStudy`
+
+Required fields:
+
+- `title`
+- `slug`
+- `category`
+- `result`
+- `summary`
+
+Optional fields:
+
+- `mainImage`
+- `overview`
+- `legalIssues`
+- `response`
+- `outcome`
+- `publishedAt`
+- `featured`
+- `sortOrder`
+- `seo`
+
+Category values:
+
+- `criminal`: 형사
+- `civil`: 민사
+- `family`: 이혼·가사
+
+The schema reuses `blockContent`, `seoFields`, and `contentImage`. Website integration, GROQ queries, content mappers, and local data migration remain deferred.
 
 ## Validation Rules
 

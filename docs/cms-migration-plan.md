@@ -283,6 +283,31 @@ Validation:
 - Editors can create a valid draft case study.
 - Required fields behave as expected.
 
+Task #023 status:
+
+- Completed.
+- `caseStudy` document schema implemented at `studio/schemaTypes/documents/caseStudy.ts`.
+- Registered document type: `caseStudy`.
+- Required fields: `title`, `slug`, `category`, `result`, `summary`.
+- Optional fields: `mainImage`, `overview`, `legalIssues`, `response`, `outcome`, `publishedAt`, `featured`, `sortOrder`, `seo`.
+- Category values: `criminal`, `civil`, `family`.
+- Korean editor labels are used for category options and primary fields.
+- `mainImage` reuses `contentImage`.
+- `overview`, `legalIssues`, `response`, and `outcome` reuse `blockContent`.
+- `seo` reuses `seoFields`.
+- `featured` defaults to `false`.
+- `sortOrder` is optional and validates as a non-negative integer.
+- Studio preview converts category values to Korean labels and uses `mainImage.image` as media.
+- Studio orderings added for newest published first, manual order, and title ascending.
+- Task #022 link validation was tightened to parse `http://` and `https://` values with `URL` and reject malformed hostnames.
+- Website integration remains deferred.
+- No local case data, route, component, token, environment file, or root dependency was added.
+
+Task #024 readiness:
+
+- The Case Study schema is available for future environment/query-layer work.
+- Next task can focus on environment configuration without changing the website runtime.
+
 ### Task #024 - Environment Configuration
 
 Scope:

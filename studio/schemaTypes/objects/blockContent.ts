@@ -1,8 +1,27 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
-const allowedAbsoluteUrlPattern = /^https?:\/\/[^\s]+$/i
 const allowedMailtoPattern = /^mailto:[^\s@]+@[^\s@]+\.[^\s@]+$/i
 const allowedInternalPathPattern = /^\/(?!\/)[^\s]*$/
+
+function isValidHostname(hostname: string): boolean {
+  const labels = hostname.split('.')
+
+  if (labels.length < 2 || labels.some((label) => !label)) {
+    return false
+  }
+
+  return labels.every((label) => /^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i.test(label))
+}
+
+function isAllowedHttpUrl(href: string): boolean {
+  try {
+    const url = new URL(href)
+
+    return ['http:', 'https:'].includes(url.protocol) && isValidHostname(url.hostname)
+  } catch {
+    return false
+  }
+}
 
 export function isAllowedLinkHref(value: unknown): boolean {
   if (typeof value !== 'string') {
@@ -16,7 +35,7 @@ export function isAllowedLinkHref(value: unknown): boolean {
   }
 
   return (
-    allowedAbsoluteUrlPattern.test(href) ||
+    isAllowedHttpUrl(href) ||
     allowedMailtoPattern.test(href) ||
     allowedInternalPathPattern.test(href)
   )
