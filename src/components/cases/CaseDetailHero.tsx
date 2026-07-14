@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
-import type { CaseStudy } from "@/data/cases";
+import type { CaseStudyDetail } from "@/types/content/caseStudy";
 
 type CaseDetailHeroProps = {
-  caseStudy: CaseStudy;
+  caseStudy: CaseStudyDetail;
 };
 
 export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
@@ -22,7 +22,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
               </Link>
             </li>
             <li aria-hidden="true" className="text-[#C8A96A]">
-              ›
+              /
             </li>
             <li>
               <Link
@@ -33,7 +33,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
               </Link>
             </li>
             <li aria-hidden="true" className="text-[#C8A96A]">
-              ›
+              /
             </li>
             <li aria-current="page" className="max-w-full text-[#111B36]">
               {caseStudy.title}
@@ -66,9 +66,11 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
             </p>
 
             <div className="mt-7 flex flex-wrap items-center gap-4 text-sm font-medium text-[#111B36]/70">
-              <time dateTime={caseStudy.publishedAt}>
-                {caseStudy.displayDate}
-              </time>
+              {caseStudy.publishedAt ? (
+                <time dateTime={caseStudy.publishedAt}>
+                  {caseStudy.displayDate ?? caseStudy.publishedAt}
+                </time>
+              ) : null}
               <span aria-hidden="true" className="h-px w-10 bg-[#C8A96A]" />
               <span>{caseStudy.categoryLabel} 사례</span>
             </div>

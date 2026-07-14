@@ -548,6 +548,24 @@ Validation:
 - Existing slugs still generate.
 - Missing slugs call `notFound()`.
 
+Task #030 status:
+
+- `/cases/[slug]` now uses `getCaseStudySlugs()` for static params.
+- `/cases/[slug]` now uses `getCaseStudyBySlug()` from the application content API for detail rendering and metadata.
+- Missing detail records call `notFound()`.
+- Detail rendering uses application fields: `overview`, `issues`, `response`, and `outcome`.
+- The old local `strategy` field is not used by the migrated detail route.
+- Related cases are resolved from `relatedCaseSlugs` against `getCaseStudies()` results, preserving slug order while skipping missing, duplicate, and current records.
+- A minimal Portable Text renderer was added for detail paragraphs and issue lists.
+- Article JSON-LD is still generated from normalized application content.
+- Local fallback remains active for existing slugs while Sanity is empty or unavailable.
+- `/cases` board filtering and pagination remain on application-facing list types.
+- Local data, Studio schemas, CMS query internals, preview mode, image URL builder, and revalidation were not changed.
+
+Task #031 readiness:
+
+- Detail pages can now receive CMS-backed image data once Sanity image URL generation and Next.js remote image configuration are approved.
+
 ### Task #031 - Image Handling
 
 Scope:
