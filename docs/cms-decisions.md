@@ -95,9 +95,9 @@ Future preview policy:
 Planned website environment-variable contract:
 
 ```text
-NEXT_PUBLIC_SANITY_PROJECT_ID=<SANITY_PROJECT_ID>
+NEXT_PUBLIC_SANITY_PROJECT_ID=20zyfjea
 NEXT_PUBLIC_SANITY_DATASET=production
-NEXT_PUBLIC_SANITY_API_VERSION=<SANITY_API_VERSION>
+NEXT_PUBLIC_SANITY_API_VERSION=2025-02-19
 SANITY_API_READ_TOKEN=<SERVER_ONLY_READ_TOKEN_FOR_FUTURE_PREVIEW>
 ```
 
@@ -110,10 +110,15 @@ Rules:
 - The initial published-content implementation should not require `SANITY_API_READ_TOKEN`.
 - The token is reserved for future preview or authenticated draft access.
 - Do not define a write token for the website.
+- `NEXT_PUBLIC_SANITY_API_VERSION` is fixed to `2025-02-19`.
+- Do not use `latest`, `today`, or any runtime-generated date for the Sanity API version.
+- Use the same variable names in local `.env.local`, Vercel settings, and Cloudflare settings.
 
 Do not add secrets to `.env`, `.env.local`, Git-tracked files, or documentation examples with real values.
 
-Planned Studio environment variables can be documented after Task #021 generates the actual Studio structure. Use placeholders only, and do not commit real secrets.
+The committed `.env.example` may include the public project ID because it is already committed in the Studio configuration and is not a secret. It must never include a real API token.
+
+The Studio currently keeps its project ID and dataset in `studio/sanity.config.ts` and `studio/sanity.cli.ts`. Do not move Studio configuration into website environment variables unless a later deployment task requires it.
 
 ## 6. Studio Deployment Boundaries
 
