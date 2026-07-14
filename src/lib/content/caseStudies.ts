@@ -1,41 +1,97 @@
 import {
-  getFeaturedCaseStudies as getFeaturedSanityCaseStudies,
-  getPublishedCaseStudies,
-  getPublishedCaseStudyBySlug,
-  getPublishedCaseStudySlugs,
-} from "@/lib/cms/caseStudies";
-import {
+  CaseStudyMappingError,
   mapNullableSanityCaseStudyDetail,
   mapSanityCaseStudyListItems,
   mapSanityCaseStudySlugs,
 } from "@/lib/content/caseStudyMappers";
+import {
+  getLocalCaseStudies,
+  getLocalCaseStudyBySlug,
+  getLocalCaseStudySlugs,
+  getLocalFeaturedCaseStudies,
+} from "@/lib/content/localCaseStudies";
 import type {
   CaseStudyDetail,
   CaseStudyListItem,
 } from "@/types/content/caseStudy";
 
-export async function getCaseStudies(): Promise<CaseStudyListItem[]> {
-  const caseStudies = await getPublishedCaseStudies();
+async function getCmsCaseStudyApi() {
+  return import("@/lib/cms/caseStudies");
+}
 
-  return mapSanityCaseStudyListItems(caseStudies);
+function uniqueSlugs(slugs: string[]): string[] {
+  return Array.from(new Set(slugs));
+}
+
+export async function getCaseStudies(): Promise<CaseStudyListItem[]> {
+  try {
+    const { getPublishedCaseStudies } = await getCmsCaseStudyApi();
+    const caseStudies = mapSanityCaseStudyListItems(
+      await getPublishedCaseStudies(),
+    );
+
+    return caseStudies.length > 0 ? caseStudies : getLocalCaseStudies();
+  } catch (error) {
+    if (error instanceof CaseStudyMappingError) {
+      throw error;
+    }
+
+    return getLocalCaseStudies();
+  }
 }
 
 export async function getFeaturedCaseStudies(): Promise<CaseStudyListItem[]> {
-  const caseStudies = await getFeaturedSanityCaseStudies();
+  try {
+    const { getFeaturedCaseStudies: getFeaturedSanityCaseStudies } =
+      await getCmsCaseStudyApi();
+    const caseStudies = mapSanityCaseStudyListItems(
+      await getFeaturedSanityCaseStudies(),
+    );
 
-  return mapSanityCaseStudyListItems(caseStudies);
+    return caseStudies.length > 0 ? caseStudies : getLocalFeaturedCaseStudies();
+  } catch (error) {
+    if (error instanceof CaseStudyMappingError) {
+      throw error;
+    }
+
+    return getLocalFeaturedCaseStudies();
+  }
 }
 
 export async function getCaseStudyBySlug(
   slug: string,
 ): Promise<CaseStudyDetail | null> {
-  const caseStudy = await getPublishedCaseStudyBySlug(slug);
+  try {
+    const { getPublishedCaseStudyBySlug } = await getCmsCaseStudyApi();
+    const caseStudy = mapNullableSanityCaseStudyDetail(
+      await getPublishedCaseStudyBySlug(slug),
+    );
 
-  return mapNullableSanityCaseStudyDetail(caseStudy);
+    return caseStudy ?? getLocalCaseStudyBySlug(slug);
+  } catch (error) {
+    if (error instanceof CaseStudyMappingError) {
+      return getLocalCaseStudyBySlug(slug);
+    }
+
+    return getLocalCaseStudyBySlug(slug);
+  }
 }
 
 export async function getCaseStudySlugs(): Promise<string[]> {
-  const slugs = await getPublishedCaseStudySlugs();
+  const localSlugs = getLocalCaseStudySlugs();
 
-  return mapSanityCaseStudySlugs(slugs);
+  try {
+    const { getPublishedCaseStudySlugs } = await getCmsCaseStudyApi();
+    const sanitySlugs = mapSanityCaseStudySlugs(
+      await getPublishedCaseStudySlugs(),
+    );
+
+    return uniqueSlugs([...sanitySlugs, ...localSlugs]);
+  } catch (error) {
+    if (error instanceof CaseStudyMappingError) {
+      throw error;
+    }
+
+    return localSlugs;
+  }
 }

@@ -172,6 +172,13 @@ The mapper is the only place where raw CMS field names should be translated into
 
 Current pages, components, and local data remain unchanged. They should not import raw Sanity response types directly.
 
+Implemented local fallback in Task #027:
+
+- `src/lib/content/localCaseStudies.ts`: adapts existing local Case Study data to the application content types.
+- `src/lib/content/caseStudies.ts`: reads Sanity first, then falls back to local content when Sanity is empty, missing a detail record, or unavailable.
+
+Sanity content takes priority when valid CMS records exist. Slug lists combine Sanity and local slugs, with Sanity slugs first and duplicates removed. The local adapter is temporary migration support and does not replace the existing local data source. Pages and components still have not been connected to this content API.
+
 ## Query Layer Design
 
 Future page and section code should depend on application-level functions:
