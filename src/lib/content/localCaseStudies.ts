@@ -143,10 +143,17 @@ export function getLocalFeaturedCaseStudies(): CaseStudyListItem[] {
   const featuredCaseStudies = sortedCaseStudies.filter(
     (caseStudy) => caseStudy.featured,
   );
+  const featuredSlugs = new Set(
+    featuredCaseStudies.map((caseStudy) => caseStudy.slug),
+  );
+  const latestNonFeaturedCaseStudies = sortedCaseStudies.filter(
+    (caseStudy) => !featuredSlugs.has(caseStudy.slug),
+  );
 
-  return (
-    featuredCaseStudies.length > 0 ? featuredCaseStudies : sortedCaseStudies
-  ).slice(0, localFeaturedFallbackLimit);
+  return [...featuredCaseStudies, ...latestNonFeaturedCaseStudies].slice(
+    0,
+    localFeaturedFallbackLimit,
+  );
 }
 
 export function getLocalCaseStudyBySlug(slug: string): CaseStudyDetail | null {

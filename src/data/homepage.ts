@@ -1,7 +1,3 @@
-import { caseCategoryFilters } from "@/data/cases";
-import type { CaseStudy } from "@/data/cases";
-import { getLatestCaseStudies } from "@/lib/cases";
-
 type HomeSectionContent = {
   id: string;
   title: string;
@@ -51,7 +47,6 @@ type CasesContent = {
   filters: string[];
   viewAllLabel: string;
   viewAllHref: string;
-  studies: CaseStudy[];
 };
 
 export const homepageContent = {
@@ -141,10 +136,9 @@ export const homepageContent = {
     id: "cases",
     eyebrow: "수행 사례",
     heading: "정천의 수행사례를 소개합니다.",
-    filters: caseCategoryFilters.map((filter) => filter.label),
+    filters: ["전체", "형사", "민사", "이혼·가사"],
     viewAllLabel: "전체 사례 보기",
     viewAllHref: "/cases",
-    studies: getLatestCaseStudies(5),
   },
   articles: {
     id: "articles",

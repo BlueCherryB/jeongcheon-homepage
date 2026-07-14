@@ -487,6 +487,20 @@ Validation:
 - Same visual layout.
 - Empty featured list has a graceful fallback.
 
+Task #028 status:
+
+- Completed.
+- `src/app/page.tsx` now fetches `getFeaturedCaseStudies()` in the homepage server component.
+- The homepage limits the preview list to five Case Studies to preserve the previous visible item count.
+- `src/components/home/CasesSection.tsx` receives Case Study preview data through props.
+- `src/components/home/CaseStudyCard.tsx` now accepts a small display-oriented Case Study item shape instead of importing the local `CaseStudy` type.
+- Local fallback still protects the homepage when Sanity is empty or unavailable.
+- `/cases`, `/cases/[slug]`, pagination, filters, local data, Studio schemas, and CMS query internals were not migrated.
+
+Task #029 readiness:
+
+- The next task can migrate the `/cases` board to `getCaseStudies()` while preserving filter and pagination behavior.
+
 ### Task #029 - Case Board Migration
 
 Scope:
