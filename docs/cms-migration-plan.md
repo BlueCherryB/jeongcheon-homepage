@@ -325,6 +325,35 @@ Validation:
 - No secrets committed.
 - Build still passes.
 
+Task #024 status:
+
+- Completed.
+- Environment variable names established:
+  - `NEXT_PUBLIC_SANITY_PROJECT_ID`
+  - `NEXT_PUBLIC_SANITY_DATASET`
+  - `NEXT_PUBLIC_SANITY_API_VERSION`
+  - `SANITY_API_READ_TOKEN`
+- Public variables: the three `NEXT_PUBLIC_SANITY_*` values.
+- Server-only variable: `SANITY_API_READ_TOKEN`.
+- Fixed Sanity API version: `2025-02-19`.
+- Example environment file added at `.env.example`.
+- Root `.gitignore` keeps real `.env*` files ignored while allowing `.env.example`.
+- Studio `.gitignore` also ignores real `.env*` files while allowing a future `studio/.env.example` if needed.
+- Runtime public configuration module added at `src/lib/cms/env.ts`.
+- The module exports `sanityProjectId`, `sanityDataset`, and `sanityApiVersion`.
+- Public configuration validation rejects missing, whitespace-only, malformed project ID, malformed dataset, and invalid API version values.
+- `SANITY_API_READ_TOKEN` is documented but not required or read in code yet.
+- Published-content reads remain planned as public dataset reads without a token.
+- Future preview and draft reads remain server-only and may use `SANITY_API_READ_TOKEN`.
+- The same variable names are documented for local `.env.local`, Vercel, and Cloudflare settings.
+- Content fetching, GROQ queries, Sanity client creation, mappers, preview mode, UI changes, route changes, and local data replacement remain deferred.
+- No dependency, lockfile, token, or real environment file was added.
+
+Task #025 readiness:
+
+- The next task can introduce the Sanity client and low-level query layer using `src/lib/cms/env.ts`.
+- Published-read configuration is ready, but no current website route imports it yet.
+
 ### Task #025 - Sanity Client and Query Layer
 
 Scope:

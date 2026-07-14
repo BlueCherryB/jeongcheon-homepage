@@ -94,7 +94,8 @@ The `studio/` directory should have its own `package.json`, development command,
 Recommended data flow:
 
 ```text
-Sanity CMS
+environment variables
+  -> src/lib/cms/env.ts
   -> src/lib/cms/sanity-client.ts
   -> src/lib/cms/queries/cases.ts
   -> src/lib/content/case-mappers.ts
@@ -244,19 +245,49 @@ Case-study structured data should stay conservative. Use Article-style structure
 
 ## Security and Environment Variables
 
-Public website:
+Task #024 establishes the provider-neutral environment contract for future website integration. The current website does not import this configuration yet, so existing pages and builds do not require Sanity variables until the Sanity client/query layer is introduced.
+
+Committed example file:
+
+- `.env.example`
+
+Future website public variables:
+
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`: public Sanity project ID.
+- `NEXT_PUBLIC_SANITY_DATASET`: public dataset name.
+- `NEXT_PUBLIC_SANITY_API_VERSION`: fixed Sanity API version.
+
+Future website server-only variable:
+
+- `SANITY_API_READ_TOKEN`: optional read token reserved for preview and draft reads.
+
+Fixed API version:
+
+- `2025-02-19`
+
+The API version is date-based and intentionally fixed. Do not use `latest`, `today`, or a runtime-generated date because those values can change query behavior without a code review.
+
+Runtime configuration module:
+
+- `src/lib/cms/env.ts`
+
+This module validates and exports only browser-safe public values. It does not read or export `SANITY_API_READ_TOKEN`, so the token cannot accidentally enter a public configuration object.
+
+Public published-content policy:
 
 - Should not need a token for published public content if Sanity dataset visibility allows CDN reads.
+- Should read only published documents.
+- Should use the Sanity CDN where appropriate.
 - Should use the minimum read capability needed.
 - Should not expose write tokens.
 
-Likely environment variables:
+Future preview and draft policy:
 
-- `NEXT_PUBLIC_SANITY_PROJECT_ID`: public.
-- `NEXT_PUBLIC_SANITY_DATASET`: public.
-- `NEXT_PUBLIC_SANITY_API_VERSION`: public if needed by browser-safe code, otherwise server-only.
-- `SANITY_API_READ_TOKEN`: server-only, only needed for future preview or authenticated draft access.
-- `SANITY_PREVIEW_SECRET`: server-only, only when preview is implemented.
+- Preview reads must run server-side only.
+- Preview reads may use `SANITY_API_READ_TOKEN`.
+- Preview reads should disable CDN caching when draft visibility is required.
+- The token must never be committed, logged, or prefixed with `NEXT_PUBLIC_`.
+- Prefer a read-only viewer token with the minimum required permissions.
 
 CORS:
 
@@ -274,6 +305,15 @@ Studio:
 
 - Studio authentication should be handled by Sanity.
 - Website deployment should not require Studio credentials.
+- Studio remains configured through `studio/sanity.config.ts` and `studio/sanity.cli.ts` with project ID `20zyfjea` and dataset `production`.
+- Do not add `SANITY_STUDIO_*` variables unless a later Studio deployment task requires them.
+
+Deployment providers:
+
+- Local development should use `.env.local`, which is ignored by Git.
+- Vercel should receive the same variables through project environment settings.
+- Cloudflare should receive the same variables through build/runtime environment settings.
+- Do not add provider-specific environment names for the initial integration.
 
 ## Cloudflare Portability
 
