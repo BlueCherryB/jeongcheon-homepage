@@ -118,6 +118,12 @@ Rules:
 - Published reads use the Sanity CDN and the published perspective.
 - User-derived values such as slugs must be passed to GROQ through parameters.
 - Raw CMS response types stay separate from future application-facing content types.
+- Application-facing content types live outside the CMS layer.
+- UI code should consume application content types and should not depend on raw Sanity response types.
+- Case Study mappers translate CMS field names into website field names.
+- The Sanity Case Study field `legalIssues` maps to the application field `issues`.
+- A single invalid Case Study detail record should fail loudly at the mapper boundary.
+- Case Study collection mappers may skip invalid records so listings can still render valid published content.
 - The preview/draft client remains deferred and must be server-only when introduced.
 
 Do not add secrets to `.env`, `.env.local`, Git-tracked files, or documentation examples with real values.

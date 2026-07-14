@@ -99,8 +99,9 @@ environment variables
   -> src/lib/cms/client.ts
   -> src/lib/cms/queries/caseStudies.ts
   -> src/lib/cms/caseStudies.ts
-  -> future mapper
-  -> future application content
+  -> src/lib/content/caseStudyMappers.ts
+  -> src/lib/content/caseStudies.ts
+  -> src/types/content/caseStudy.ts
   -> future app routes and server components
   -> future UI components
 ```
@@ -160,6 +161,16 @@ Implemented low-level CMS read layer in Task #025:
 - `src/lib/cms/types/caseStudy.ts`: stores raw projected CMS response types.
 
 The Task #025 client uses `@sanity/client` directly with `useCdn: true`, `perspective: "published"`, and no token. The slug detail query uses GROQ parameters instead of string interpolation. No current page or component imports this layer yet.
+
+Implemented application content boundary in Task #026:
+
+- `src/types/content/caseStudy.ts`: defines application-facing Case Study list/detail, image, SEO, Portable Text, and category types.
+- `src/lib/content/caseStudyMappers.ts`: maps raw Sanity query results into application-facing Case Study objects.
+- `src/lib/content/caseStudies.ts`: exposes application-level read functions that wrap the low-level CMS fetch layer.
+
+The mapper is the only place where raw CMS field names should be translated into website content names. In particular, the Sanity field `legalIssues` maps to the application field `issues`. Single-record mappers throw a descriptive `CaseStudyMappingError` for unusable records. Collection mappers skip records with mapping errors so one malformed CMS document does not break an entire listing.
+
+Current pages, components, and local data remain unchanged. They should not import raw Sanity response types directly.
 
 ## Query Layer Design
 
