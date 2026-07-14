@@ -106,6 +106,14 @@ Do not add advanced blocks initially:
 - Arbitrary HTML.
 - Code blocks.
 
+Implemented in Task #022:
+
+- `studio/schemaTypes/objects/blockContent.ts`
+- `studio/schemaTypes/objects/seoFields.ts`
+- `studio/schemaTypes/objects/contentImage.ts`
+
+These are registered from `studio/schemaTypes/index.ts`. No document types are registered yet.
+
 ## Validation Rules
 
 Recommended validation:
