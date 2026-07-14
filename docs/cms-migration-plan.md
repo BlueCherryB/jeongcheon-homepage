@@ -227,16 +227,46 @@ Task #021 status:
 
 Scope:
 
-- Add SEO object, image object, publication fields, slug helpers.
+- Add reusable Studio schema objects for `blockContent`, `seoFields`, and `contentImage`.
+- Do not add document types.
+- Do not add the `caseStudy` schema yet.
+- Do not integrate Sanity with the Next.js website.
 
 Expected files or areas:
 
-- Sanity schema files only.
+- `studio/schemaTypes/objects/blockContent.ts`
+- `studio/schemaTypes/objects/seoFields.ts`
+- `studio/schemaTypes/objects/contentImage.ts`
+- `studio/schemaTypes/index.ts`
+- CMS documentation updates.
 
 Validation:
 
 - Studio schema compiles.
 - No website runtime changes.
+- Studio dev startup succeeds.
+- Root lint and build continue to pass.
+
+Task #022 status:
+
+- Completed.
+- `blockContent` supports only `normal`, `h2`, `h3`, `bullet`, `number`, `strong`, and a safe link annotation.
+- Link validation allows `https://`, `http://`, `mailto:`, and `/` internal paths.
+- Unsafe or malformed values such as `javascript:`, `data:`, `ftp:`, bare domains, and relative paths without `/` are rejected.
+- `seoFields` includes optional `seoTitle`, `seoDescription`, `keywords`, and `noIndex`.
+- `seoTitle` is limited to 60 characters.
+- `seoDescription` is limited to 160 characters.
+- `keywords` reject blank, whitespace-padded, and duplicate values.
+- `noIndex` defaults to `false`.
+- `contentImage` wraps a required Sanity image with `hotspot: true`, required alt text, optional caption, and a Studio preview.
+- No document type was created.
+- No Case Study schema was created.
+- No root dependency, token, environment file, or Next.js runtime code was added.
+
+Task #023 readiness:
+
+- Shared schema objects are registered and available for the future `caseStudy` document schema.
+- The next task can focus on the `caseStudy` document fields, publication fields, references, and validation rules.
 
 ### Task #023 - Case Study Schema
 
