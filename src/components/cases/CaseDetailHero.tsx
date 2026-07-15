@@ -1,6 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { Container } from "@/components/ui/Container";
+import {
+  getSanityImageObjectPosition,
+  getSanityImageUrl,
+} from "@/lib/cms/sanityImage";
 import type { CaseStudyDetail } from "@/types/content/caseStudy";
 
 type CaseDetailHeroProps = {
@@ -8,6 +13,13 @@ type CaseDetailHeroProps = {
 };
 
 export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
+  const imageSrc = getSanityImageUrl(caseStudy.image, {
+    width: 840,
+    height: 630,
+    quality: 80,
+  });
+  const imageObjectPosition = getSanityImageObjectPosition(caseStudy.image);
+
   return (
     <section className="overflow-hidden border-b border-[#E8E2D7] bg-[#FAF8F4]">
       <Container className="py-12 lg:py-20">
@@ -76,10 +88,23 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
             </div>
           </div>
 
-          <div
-            aria-hidden="true"
-            className="hidden aspect-[4/3] rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block"
-          />
+          {imageSrc ? (
+            <div className="relative hidden aspect-[4/3] overflow-hidden rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block">
+              <Image
+                src={imageSrc}
+                alt={caseStudy.image?.alt ?? ""}
+                fill
+                sizes="420px"
+                className="object-cover"
+                style={{ objectPosition: imageObjectPosition }}
+              />
+            </div>
+          ) : (
+            <div
+              aria-hidden="true"
+              className="hidden aspect-[4/3] rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block"
+            />
+          )}
         </div>
       </Container>
     </section>

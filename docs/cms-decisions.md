@@ -128,6 +128,11 @@ Rules:
 - If Sanity and local data contain the same slug, Sanity content takes priority.
 - Static slug discovery may combine Sanity and local slugs, with duplicates removed, until the CMS migration is complete.
 - The preview/draft client remains deferred and must be server-only when introduced.
+- Case Study images may use the Sanity CDN for published content.
+- Website UI must use application-facing image types, not raw Sanity image response types.
+- Sanity image URLs should be derived in a focused helper and should fall back safely when required public Sanity environment variables are unavailable.
+- The website may allow `https://cdn.sanity.io/images/**` in Next.js image remote patterns.
+- Do not add `@sanity/image-url` unless the manual helper becomes insufficient for approved crop/hotspot behavior.
 
 Do not add secrets to `.env`, `.env.local`, Git-tracked files, or documentation examples with real values.
 

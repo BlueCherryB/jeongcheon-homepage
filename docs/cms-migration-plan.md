@@ -583,6 +583,20 @@ Validation:
 - Images render with alt text.
 - No layout shift or broken remote image config.
 
+Task #031 status:
+
+- Case Study cards and detail heroes now render CMS `mainImage` when available.
+- Local fallback Case Studies still render without images.
+- Missing, malformed, or incomplete image data falls back to the existing non-image presentation.
+- Sanity crop values are translated into CDN `rect` parameters where possible.
+- Sanity hotspot values are translated into CSS `object-position` values.
+- `next.config.ts` allows `https://cdn.sanity.io/images/**` for optimized `next/image` rendering.
+- No image URL builder dependency, preview mode, draft mode, token, webhook, revalidation, Studio deployment, or schema change was added.
+
+Task #032 readiness:
+
+- The next task can centralize SEO and structured data helpers without changing the image rendering contract.
+
 ### Task #032 - SEO and JSON-LD Migration
 
 Scope:
