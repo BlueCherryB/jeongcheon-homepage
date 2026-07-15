@@ -51,9 +51,10 @@ Current SEO and structured data:
 
 Current image handling:
 
-- Case board/detail currently do not use actual case images. `CaseDetailHero` includes a decorative placeholder block.
+- Case board/detail can render CMS-backed Case Study images when `mainImage` is available.
+- Case detail keeps the existing decorative placeholder when no usable image exists.
 - Other pages use public images and `next/image`.
-- `next.config.ts` does not yet allow remote Sanity image domains.
+- `next.config.ts` allows the Sanity image CDN path required for published Case Study images.
 
 Current coupling:
 
@@ -204,6 +205,15 @@ Implemented case detail integration in Task #030:
 
 The detail route now renders `overview`, `issues`, `response`, and `outcome` from application-facing content. Local fallback still protects current slugs while Sanity is empty or unavailable. Raw Sanity types remain isolated from route and UI code.
 
+Implemented Case Study image handling in Task #031:
+
+- `src/lib/cms/sanityImage.ts`: builds Sanity CDN image URLs from the application `CaseStudyImage` type.
+- `next.config.ts`: allows `https://cdn.sanity.io/images/**` for `next/image`.
+- `CaseStudyCard`: renders a small CMS image thumbnail for homepage preview and board rows when available.
+- `CaseDetailHero`: renders the CMS image in the existing hero media slot when available.
+
+The helper returns `null` for missing environment variables, malformed asset references, or incomplete image data so local fallback content still builds and renders without images. Sanity crop metadata is applied through the CDN `rect` parameter, while final card and hero aspect-ratio cropping is left to `next/image` with CSS `object-cover` and hotspot-driven `object-position`.
+
 ## Query Layer Design
 
 Future page and section code should depend on application-level functions:
@@ -252,27 +262,16 @@ Optional future improvements:
 
 ## Image Strategy
 
-Sanity image assets should remain raw only in the CMS/query layer. UI components should receive normalized image data:
-
-```ts
-type CmsImage = {
-  url: string;
-  alt: string;
-  width?: number;
-  height?: number;
-  caption?: string;
-  blurDataURL?: string;
-};
-```
+Sanity image assets should remain normalized at the application boundary before they reach UI components. UI components receive the application `CaseStudyImage` type and use the focused CMS image helper to create display URLs.
 
 Guidelines:
 
 - Store `alt` text as a required content field for meaningful images.
 - Store captions as optional.
-- Support Sanity hotspot and crop through the URL builder.
-- Generate image URLs with explicit width and quality.
+- Support Sanity crop through the URL helper and Sanity hotspot through CSS `object-position`.
+- Generate image URLs with explicit width and quality, avoiding server-side aspect-ratio cropping so the rendered layout can honor hotspot positioning.
 - Use `next/image` in UI components.
-- Add Sanity's image CDN host to `next.config.ts` only when image integration starts.
+- Allow only the Sanity image CDN path needed by the website in `next.config.ts`.
 - Keep the design portable for Vercel and Cloudflare by using standard HTTPS image URLs.
 
 ## SEO and Structured Data
