@@ -27,6 +27,10 @@ export type SanityContentImage = {
     crop?: SanityImageCrop;
     hotspot?: SanityImageHotspot;
   };
+  /**
+   * Kept optional for compatibility with existing image objects created before
+   * the Studio form was simplified.
+   */
   alt?: string;
   caption?: string;
 };
@@ -50,6 +54,8 @@ export type SanityCaseStudyListItem = {
   slug?: string;
   category?: SanityCaseCategory;
   result?: string;
+  overview?: SanityPortableTextBlock[];
+  outcome?: SanityPortableTextBlock[];
   summary?: string;
   publishedAt?: string;
   featured?: boolean;
@@ -58,10 +64,8 @@ export type SanityCaseStudyListItem = {
 };
 
 export type SanityCaseStudyDetail = SanityCaseStudyListItem & {
-  overview?: SanityPortableTextBlock[];
   legalIssues?: SanityPortableTextBlock[];
   response?: SanityPortableTextBlock[];
-  outcome?: SanityPortableTextBlock[];
   seo?: SanitySeoFields;
 };
 

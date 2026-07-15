@@ -4,7 +4,8 @@ const caseStudyListProjection = `{
   "slug": slug.current,
   category,
   result,
-  summary,
+  overview,
+  outcome,
   publishedAt,
   featured,
   sortOrder,
@@ -13,9 +14,7 @@ const caseStudyListProjection = `{
       asset,
       crop,
       hotspot
-    },
-    alt,
-    caption
+    }
   }
 }`;
 
@@ -45,19 +44,15 @@ export const publishedCaseStudyBySlugQuery = `*[
   "slug": slug.current,
   category,
   result,
-  summary,
   mainImage {
     image {
       asset,
       crop,
       hotspot
-    },
-    alt,
-    caption
+    }
   },
   overview,
   legalIssues,
-  response,
   outcome,
   publishedAt,
   featured,

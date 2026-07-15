@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {RequiredField} from '../../components/RequiredField'
 
 const caseCategoryTitles: Record<string, string> = {
   criminal: '형사',
@@ -14,7 +15,22 @@ const caseCategoryOptions = [
   {title: caseCategoryTitles.family, value: 'family'},
 ]
 
-const slugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
+const sanityApiVersion = '2025-02-19'
+const slugPattern = /^[a-z0-9]+(?:[-_][a-z0-9]+)*$/
+const sequentialSlugPattern = /^case_(\d+)$/
+const requiredField = {field: RequiredField}
+
+type InitialValueContext = {
+  getClient: (options: {apiVersion: string}) => {
+    fetch: <T>(query: string, params?: Record<string, unknown>) => Promise<T>
+  }
+}
+
+type ValidationContext = InitialValueContext & {
+  document?: {
+    _id?: string
+  }
+}
 
 function isFilledString(value: unknown): boolean {
   return typeof value === 'string' && value.trim().length > 0
@@ -34,10 +50,77 @@ function isValidCaseCategory(value: unknown): boolean {
   return caseCategoryValues.includes(value as (typeof caseCategoryValues)[number])
 }
 
+function hasPortableTextContent(value: unknown): boolean {
+  return Array.isArray(value) && value.length > 0
+}
+
+async function getNextCaseStudySlug(context: InitialValueContext): Promise<string> {
+  const client = context.getClient({apiVersion: sanityApiVersion})
+  const slugs = await client.fetch<string[]>(`*[_type == "caseStudy" && defined(slug.current)].slug.current`)
+  const nextNumber =
+    slugs.reduce((maxNumber, slug) => {
+      const match = sequentialSlugPattern.exec(slug)
+
+      if (!match) {
+        return maxNumber
+      }
+
+      const number = Number(match[1])
+
+      return Number.isInteger(number) && number > maxNumber ? number : maxNumber
+    }, 0) + 1
+
+  return `case_${String(nextNumber).padStart(3, '0')}`
+}
+
+async function isUniqueCaseSlug(value: unknown, context: ValidationContext): Promise<true | string> {
+  if (!value || typeof value !== 'object' || !('current' in value)) {
+    return true
+  }
+
+  const slug = value.current
+
+  if (typeof slug !== 'string' || !slugPattern.test(slug)) {
+    return true
+  }
+
+  const documentId = context.document?._id?.replace(/^drafts\./, '')
+
+  if (!documentId) {
+    return true
+  }
+
+  const client = context.getClient({apiVersion: sanityApiVersion})
+  const duplicateId = await client.fetch<string | null>(
+    `*[
+      _type == "caseStudy" &&
+      slug.current == $slug &&
+      !(_id in [$publishedId, $draftId])
+    ][0]._id`,
+    {
+      slug,
+      publishedId: documentId,
+      draftId: `drafts.${documentId}`,
+    },
+  )
+
+  return duplicateId ? '이미 사용 중인 수행사례 주소입니다.' : true
+}
+
+function validateUniqueCaseSlug(value: unknown, context: unknown): Promise<true | string> {
+  return isUniqueCaseSlug(value, context as ValidationContext)
+}
+
 export const caseStudy = defineType({
   name: 'caseStudy',
   title: '수행사례',
   type: 'document',
+  initialValue: async (_params, context) => ({
+    slug: {
+      _type: 'slug',
+      current: await getNextCaseStudySlug(context),
+    },
+  }),
   groups: [
     {name: 'basic', title: '기본 정보', default: true},
     {name: 'content', title: '본문'},
@@ -51,6 +134,7 @@ export const caseStudy = defineType({
       type: 'string',
       group: 'basic',
       description: '수행사례 목록과 상세 페이지에 표시되는 제목입니다.',
+      components: requiredField,
       validation: (Rule) =>
         Rule.required()
           .custom((value) => isFilledString(value) || '제목을 입력해주세요.')
@@ -62,18 +146,17 @@ export const caseStudy = defineType({
       title: '주소',
       type: 'slug',
       group: 'basic',
-      description: '상세 페이지 URL에 사용합니다. 예: /cases/example-case',
-      options: {
-        source: 'title',
-        maxLength: 96,
-      },
+      description: '새 문서 생성 시 자동 부여되는 상세 페이지 URL입니다. 예: /cases/case_001',
+      hidden: true,
+      readOnly: true,
       validation: (Rule) =>
         Rule.required()
           .custom((value) =>
             isValidCaseSlug(value)
               ? true
-              : '주소는 소문자 영문, 숫자, 하이픈만 사용할 수 있으며 하이픈으로 시작하거나 끝날 수 없습니다.',
+              : '주소는 소문자 영문, 숫자, 하이픈, 언더스코어만 사용할 수 있으며 기호로 시작하거나 끝날 수 없습니다.',
           )
+          .custom(validateUniqueCaseSlug)
           .error('올바른 주소를 입력해주세요.'),
     }),
     defineField({
@@ -85,6 +168,7 @@ export const caseStudy = defineType({
         list: caseCategoryOptions,
         layout: 'radio',
       },
+      components: requiredField,
       validation: (Rule) =>
         Rule.required()
           .custom((value) => isValidCaseCategory(value) || '사건 분야를 올바르게 선택해주세요.')
@@ -96,6 +180,7 @@ export const caseStudy = defineType({
       type: 'string',
       group: 'basic',
       description: '목록과 상세 화면에서 강조할 사건 결과입니다. 예: 무혐의, 승소, 조정 성립',
+      components: requiredField,
       validation: (Rule) =>
         Rule.required()
           .custom((value) => isFilledString(value) || '사건 결과를 입력해주세요.')
@@ -103,48 +188,46 @@ export const caseStudy = defineType({
           .error('사건 결과는 120자 이내로 입력해주세요.'),
     }),
     defineField({
-      name: 'summary',
-      title: '요약',
-      type: 'text',
-      rows: 4,
-      group: 'basic',
-      description: '수행사례 목록, 미리보기, 메타데이터 기본 설명에 사용하는 짧은 요약문입니다.',
-      validation: (Rule) =>
-        Rule.required()
-          .custom((value) => isFilledString(value) || '요약을 입력해주세요.')
-          .max(350)
-          .error('요약은 350자 이내로 입력해주세요.'),
-    }),
-    defineField({
       name: 'mainImage',
       title: '대표 이미지',
       type: 'contentImage',
       group: 'basic',
       description: '홈페이지, 수행사례 목록, 상세 페이지에 사용할 수 있는 이미지입니다.',
+      components: requiredField,
+      validation: (Rule) => Rule.required().error('대표 이미지를 선택해주세요.'),
     }),
     defineField({
       name: 'overview',
       title: '사건 개요',
       type: 'blockContent',
       group: 'content',
+      components: requiredField,
+      validation: (Rule) =>
+        Rule.required()
+          .custom((value) => hasPortableTextContent(value) || '사건 개요를 입력해주세요.')
+          .error('사건 개요를 입력해주세요.'),
     }),
     defineField({
       name: 'legalIssues',
       title: '주요 법적 쟁점',
       type: 'blockContent',
       group: 'content',
-    }),
-    defineField({
-      name: 'response',
-      title: '정천의 대응',
-      type: 'blockContent',
-      group: 'content',
+      components: requiredField,
+      validation: (Rule) =>
+        Rule.required()
+          .custom((value) => hasPortableTextContent(value) || '주요 법적 쟁점을 입력해주세요.')
+          .error('주요 법적 쟁점을 입력해주세요.'),
     }),
     defineField({
       name: 'outcome',
       title: '사건 결과 상세',
       type: 'blockContent',
       group: 'content',
+      components: requiredField,
+      validation: (Rule) =>
+        Rule.required()
+          .custom((value) => hasPortableTextContent(value) || '사건 결과 상세를 입력해주세요.')
+          .error('사건 결과 상세를 입력해주세요.'),
     }),
     defineField({
       name: 'publishedAt',

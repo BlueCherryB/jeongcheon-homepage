@@ -23,6 +23,8 @@ import {
 } from "@/types/content/caseStudy";
 
 const caseStudyCategories = ["criminal", "civil", "family"] as const;
+const defaultCaseStudyImageAlt = "판결문 이미지";
+const summaryMaxLength = 220;
 
 export class CaseStudyMappingError extends Error {
   constructor(message: string) {
@@ -119,7 +121,7 @@ function mapImage(image: SanityContentImage | undefined): CaseStudyImage | undef
       ref: assetRef,
       type: "reference",
     },
-    alt: requireTrimmedString("image alt text", image?.alt),
+    alt: optionalTrimmedString(image?.alt) ?? defaultCaseStudyImageAlt,
     caption: optionalTrimmedString(image?.caption),
     crop: mapImageCrop(image?.image?.crop),
     hotspot: mapImageHotspot(image?.image?.hotspot),
@@ -148,6 +150,57 @@ function mapPortableTextBlocks(
     _key: block._key,
     _type: block._type,
   }));
+}
+
+function portableTextToPlainText(blocks: SanityPortableTextBlock[] | undefined): string | undefined {
+  if (!Array.isArray(blocks)) {
+    return undefined;
+  }
+
+  const plainText = blocks
+    .map((block) => {
+      if (!Array.isArray(block.children)) {
+        return "";
+      }
+
+      return block.children
+        .map((child) => {
+          if (!child || typeof child !== "object" || !("text" in child)) {
+            return "";
+          }
+
+          const text = child.text;
+
+          return typeof text === "string" ? text : "";
+        })
+        .join("");
+    })
+    .join(" ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  return plainText || undefined;
+}
+
+function truncateSummary(summary: string): string {
+  if (summary.length <= summaryMaxLength) {
+    return summary;
+  }
+
+  return `${summary.slice(0, summaryMaxLength).trimEnd()}...`;
+}
+
+function deriveSummary(caseStudy: SanityCaseStudyListItem): string {
+  const summary =
+    portableTextToPlainText(caseStudy.overview) ??
+    portableTextToPlainText(caseStudy.outcome) ??
+    optionalTrimmedString(caseStudy.summary);
+
+  if (!summary) {
+    throw new CaseStudyMappingError("Case Study summary could not be derived.");
+  }
+
+  return truncateSummary(summary);
 }
 
 function mapKeywords(keywords: unknown): string[] {
@@ -183,7 +236,7 @@ export function mapSanityCaseStudyListItem(
     categoryLabel: caseStudyCategoryLabels[category],
     result: requireTrimmedString("result", caseStudy.result),
     resultDetail: requireTrimmedString("result", caseStudy.result),
-    summary: requireTrimmedString("summary", caseStudy.summary),
+    summary: deriveSummary(caseStudy),
     publishedAt: optionalTrimmedString(caseStudy.publishedAt),
     displayDate: formatDisplayDate(optionalTrimmedString(caseStudy.publishedAt)),
     featured: mapBoolean(caseStudy.featured),
@@ -215,7 +268,7 @@ export function mapSanityCaseStudyDetail(
     ...mapSanityCaseStudyListItem(caseStudy),
     overview: mapPortableTextBlocks(caseStudy.overview),
     issues: mapPortableTextBlocks(caseStudy.legalIssues),
-    response: mapPortableTextBlocks(caseStudy.response),
+    response: [],
     outcome: mapPortableTextBlocks(caseStudy.outcome),
     keywords: [],
     relatedPracticeIds: [],
