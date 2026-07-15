@@ -15,7 +15,6 @@ type CaseDetailHeroProps = {
 export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
   const imageSrc = getSanityImageUrl(caseStudy.image, {
     width: 840,
-    height: 630,
     quality: 80,
   });
   const imageObjectPosition = getSanityImageObjectPosition(caseStudy.image);

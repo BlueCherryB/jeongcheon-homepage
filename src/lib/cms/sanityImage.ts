@@ -12,7 +12,6 @@ type SanityImageAsset = SanityImageDimensions & {
 
 type SanityImageUrlOptions = {
   width?: number;
-  height?: number;
   quality?: number;
 };
 
@@ -30,7 +29,7 @@ function getOptionalSanityEnv() {
   return { projectId, dataset };
 }
 
-function parseSanityImageAsset(ref: string): SanityImageAsset | null {
+export function parseSanityImageAsset(ref: string): SanityImageAsset | null {
   const match = sanityImageRefPattern.exec(ref);
 
   if (!match) {
@@ -65,7 +64,10 @@ function clampFraction(value: number | undefined, fallback: number): number {
   return Math.min(Math.max(value, 0), 1);
 }
 
-function getCroppedDimensions(image: CaseStudyImage, asset: SanityImageAsset) {
+export function getSanityImageCropRect(
+  image: CaseStudyImage,
+  asset: SanityImageAsset,
+) {
   const crop = image.crop;
 
   if (!crop) {
@@ -129,29 +131,22 @@ export function getSanityImageUrl(
   const url = new URL(
     `https://cdn.sanity.io/images/${env.projectId}/${env.dataset}/${imagePath}`,
   );
-  const croppedDimensions = getCroppedDimensions(image, asset);
+  const cropRect = getSanityImageCropRect(image, asset);
 
   if (
-    croppedDimensions.left > 0 ||
-    croppedDimensions.top > 0 ||
-    croppedDimensions.width !== asset.width ||
-    croppedDimensions.height !== asset.height
+    cropRect.left > 0 ||
+    cropRect.top > 0 ||
+    cropRect.width !== asset.width ||
+    cropRect.height !== asset.height
   ) {
     url.searchParams.set(
       "rect",
-      [
-        croppedDimensions.left,
-        croppedDimensions.top,
-        croppedDimensions.width,
-        croppedDimensions.height,
-      ].join(","),
+      [cropRect.left, cropRect.top, cropRect.width, cropRect.height].join(","),
     );
   }
 
   appendPositiveInteger(url.searchParams, "w", options.width);
-  appendPositiveInteger(url.searchParams, "h", options.height);
   appendPositiveInteger(url.searchParams, "q", options.quality);
-  url.searchParams.set("fit", "crop");
   url.searchParams.set("auto", "format");
 
   return url.toString();

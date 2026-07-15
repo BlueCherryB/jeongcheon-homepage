@@ -590,6 +590,7 @@ Task #031 status:
 - Missing, malformed, or incomplete image data falls back to the existing non-image presentation.
 - Sanity crop values are translated into CDN `rect` parameters where possible.
 - Sanity hotspot values are translated into CSS `object-position` values.
+- The helper does not request server-side aspect-ratio crops with CDN height or `fit=crop`; final card and hero cropping is handled by `next/image` with `object-cover`.
 - `next.config.ts` allows `https://cdn.sanity.io/images/**` for optimized `next/image` rendering.
 - No image URL builder dependency, preview mode, draft mode, token, webhook, revalidation, Studio deployment, or schema change was added.
 

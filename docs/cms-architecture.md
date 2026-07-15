@@ -212,7 +212,7 @@ Implemented Case Study image handling in Task #031:
 - `CaseStudyCard`: renders a small CMS image thumbnail for homepage preview and board rows when available.
 - `CaseDetailHero`: renders the CMS image in the existing hero media slot when available.
 
-The helper returns `null` for missing environment variables, malformed asset references, or incomplete image data so local fallback content still builds and renders without images.
+The helper returns `null` for missing environment variables, malformed asset references, or incomplete image data so local fallback content still builds and renders without images. Sanity crop metadata is applied through the CDN `rect` parameter, while final card and hero aspect-ratio cropping is left to `next/image` with CSS `object-cover` and hotspot-driven `object-position`.
 
 ## Query Layer Design
 
@@ -268,8 +268,8 @@ Guidelines:
 
 - Store `alt` text as a required content field for meaningful images.
 - Store captions as optional.
-- Support Sanity hotspot and crop through the URL helper where practical.
-- Generate image URLs with explicit width and quality.
+- Support Sanity crop through the URL helper and Sanity hotspot through CSS `object-position`.
+- Generate image URLs with explicit width and quality, avoiding server-side aspect-ratio cropping so the rendered layout can honor hotspot positioning.
 - Use `next/image` in UI components.
 - Allow only the Sanity image CDN path needed by the website in `next.config.ts`.
 - Keep the design portable for Vercel and Cloudflare by using standard HTTPS image URLs.

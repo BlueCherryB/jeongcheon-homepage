@@ -31,7 +31,6 @@ export function CaseStudyCard({
   const isBoard = variant === "board";
   const imageSrc = getSanityImageUrl(caseStudy.image, {
     width: 240,
-    height: 180,
     quality: 75,
   });
   const imageObjectPosition = getSanityImageObjectPosition(caseStudy.image);
