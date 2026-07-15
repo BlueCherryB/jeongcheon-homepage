@@ -14,7 +14,7 @@ type CaseDetailHeroProps = {
 
 export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
   const imageSrc = getSanityImageUrl(caseStudy.image, {
-    width: 840,
+    width: 680,
     quality: 80,
   });
   const imageObjectPosition = getSanityImageObjectPosition(caseStudy.image);
@@ -52,7 +52,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
           </ol>
         </nav>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_420px] lg:items-center lg:gap-16">
+        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-center lg:gap-16">
           <div>
             <p className="font-semibold text-[#C8A96A]">
               {caseStudy.categoryLabel}
@@ -88,12 +88,12 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
           </div>
 
           {imageSrc ? (
-            <div className="relative hidden aspect-[4/3] overflow-hidden rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block">
+            <div className="relative hidden aspect-[3/4] overflow-hidden rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block">
               <Image
                 src={imageSrc}
                 alt={caseStudy.image?.alt ?? ""}
                 fill
-                sizes="420px"
+                sizes="340px"
                 className="object-cover"
                 style={{ objectPosition: imageObjectPosition }}
               />
@@ -101,7 +101,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
           ) : (
             <div
               aria-hidden="true"
-              className="hidden aspect-[4/3] rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block"
+              className="hidden aspect-[3/4] rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block"
             />
           )}
         </div>
