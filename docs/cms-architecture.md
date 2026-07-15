@@ -358,6 +358,10 @@ Studio:
 - Studio authentication should be handled by Sanity.
 - Website deployment should not require Studio credentials.
 - Studio remains configured through `studio/sanity.config.ts` and `studio/sanity.cli.ts` with project ID `20zyfjea` and dataset `production`.
+- Hosted Studio URL: `https://jeongcheon-law-office.sanity.studio/`.
+- Studio deployment command: run `npm run deploy` from `studio/`.
+- The deployed Studio requires Sanity login before editors can create or edit Case Study content.
+- A public website administrator link is deferred to a later task.
 - Do not add `SANITY_STUDIO_*` variables unless a later Studio deployment task requires them.
 
 Deployment providers:

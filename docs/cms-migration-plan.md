@@ -598,7 +598,28 @@ Task #032 readiness:
 
 - The next task can centralize SEO and structured data helpers without changing the image rendering contract.
 
-### Task #032 - SEO and JSON-LD Migration
+### Task #032 - Studio Deployment
+
+Scope:
+
+- Deploy the existing independent Sanity Studio for content editing.
+- Keep Studio separate from the Next.js website.
+- Do not add a public administrator link yet.
+
+Task #032 status:
+
+- Studio hostname configured as `jeongcheon-law-office`.
+- Studio URL: `https://jeongcheon-law-office.sanity.studio/`.
+- Studio remains connected to project `20zyfjea` and dataset `production`.
+- Deployment command: run `npm run deploy` from `studio/`.
+- Editors must log in through Sanity before managing Case Study content.
+- No token, preview mode, webhook, revalidation, website route, or public administrator link was added.
+
+Task #033 readiness:
+
+- The next task can add a public-site administrator link or continue with SEO and JSON-LD migration, depending on priority.
+
+### Task #033 - SEO and JSON-LD Migration
 
 Scope:
 
@@ -615,7 +636,7 @@ Validation:
 - Metadata remains equivalent or intentionally improved.
 - JSON-LD validates conceptually and stays conservative.
 
-### Task #033 - Existing Data Migration
+### Task #034 - Existing Data Migration
 
 Scope:
 
@@ -634,7 +655,7 @@ Validation:
 - No duplicate slugs.
 - CMS data count matches local data count.
 
-### Task #034 - Preview Workflow
+### Task #035 - Preview Workflow
 
 Scope:
 
@@ -650,7 +671,7 @@ Validation:
 - Preview requires secret/token.
 - Public users cannot access drafts.
 
-### Task #035 - Deployment Validation
+### Task #036 - Deployment Validation
 
 Scope:
 
@@ -666,7 +687,7 @@ Validation:
 - Production build passes.
 - Environment variables are configured without secrets exposure.
 
-### Task #036 - Articles and FAQ Preparation
+### Task #037 - Articles and FAQ Preparation
 
 Scope:
 
