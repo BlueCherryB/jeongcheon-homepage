@@ -1,10 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
 
-import {
-  getSanityImageObjectPosition,
-  getSanityImageUrl,
-} from "@/lib/cms/sanityImage";
 import type { CaseStudyImage } from "@/types/content/caseStudy";
 
 export type CaseStudyCardItem = {
@@ -29,11 +24,6 @@ export function CaseStudyCard({
   variant = "preview",
 }: CaseStudyCardProps) {
   const isBoard = variant === "board";
-  const imageSrc = getSanityImageUrl(caseStudy.image, {
-    width: 240,
-    quality: 75,
-  });
-  const imageObjectPosition = getSanityImageObjectPosition(caseStudy.image);
 
   return (
     <Link
@@ -52,19 +42,7 @@ export function CaseStudyCard({
             : "lg:grid-cols-[120px_minmax(0,1fr)_150px_132px]",
         ].join(" ")}
       >
-        <div className="flex items-center gap-5 lg:min-h-20 lg:border-r lg:border-[#E8E2D7]">
-          {imageSrc ? (
-            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-md border border-[#E8E2D7] bg-[#FAF8F4]">
-              <Image
-                src={imageSrc}
-                alt={caseStudy.image?.alt ?? ""}
-                fill
-                sizes="64px"
-                className="object-cover"
-                style={{ objectPosition: imageObjectPosition }}
-              />
-            </div>
-          ) : null}
+        <div className="flex items-center lg:min-h-20 lg:border-r lg:border-[#E8E2D7]">
           <div>
             <p className="text-base font-bold text-[#111B36]">
               {caseStudy.categoryLabel}

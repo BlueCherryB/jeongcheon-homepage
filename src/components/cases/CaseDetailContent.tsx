@@ -29,9 +29,7 @@ export function CaseDetailContent({
           <PortableTextContent value={caseStudy.issues} variant="list" />
         </CaseDetailSection>
 
-        <CaseDetailSection icon="shield" title="정천의 대응">
-          <PortableTextContent value={caseStudy.response} />
-        </CaseDetailSection>
+        {/* "정천의 대응" is intentionally hidden for now and may be restored later. */}
 
         <CaseDetailSection icon="result" title="사건의 결과">
           <PortableTextContent value={caseStudy.outcome} />
