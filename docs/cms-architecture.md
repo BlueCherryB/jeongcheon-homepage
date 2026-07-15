@@ -14,9 +14,10 @@ Relevant files:
 - `src/components/home/CaseStudyCard.tsx`: shared preview and board card UI, typed against the small display fields it renders.
 - `src/app/cases/page.tsx`: case board page, now reads list data from the application content API and uses `src/lib/cases.ts` filtering and pagination helpers.
 - `src/components/cases/CaseStudyList.tsx`: board list wrapper around `CaseStudyCard`.
-- `src/app/cases/[slug]/page.tsx`: detail page, static params, per-page metadata, related cases, and Article JSON-LD.
-- `src/components/cases/CaseDetailHero.tsx`: detail-page hero.
+- `src/app/cases/[slug]/page.tsx`: detail page, static params, per-page metadata, related cases, and Article JSON-LD now read from the application content API.
+- `src/components/cases/CaseDetailHero.tsx`: detail-page hero typed against application-facing detail content.
 - `src/components/cases/CaseDetailSection.tsx`: repeated detail content sections.
+- `src/components/cases/PortableTextContent.tsx`: minimal Portable Text renderer for case detail paragraphs and list-style issue blocks.
 - `src/app/layout.tsx`: root metadata fallback.
 - `src/app/attorney/page.tsx`: existing Person JSON-LD pattern and metadata pattern.
 
@@ -193,6 +194,15 @@ Implemented case board integration in Task #029:
 - `src/components/cases/CaseStudyList.tsx`: renders application-facing display items through the shared `CaseStudyCard`.
 
 The local fallback still protects the board while the Sanity dataset is empty. The `/cases/[slug]` detail pages still use local data and are planned for Task #030.
+
+Implemented case detail integration in Task #030:
+
+- `src/app/cases/[slug]/page.tsx`: uses `getCaseStudySlugs()` for static params and `getCaseStudyBySlug()` for detail records.
+- `src/components/cases/CaseDetailContent.tsx`: renders normalized application detail fields.
+- `src/components/cases/PortableTextContent.tsx`: safely renders supported Portable Text blocks without adding a dependency.
+- `src/lib/cases.ts`: adds related-case lookup for application list items while preserving existing local helpers used elsewhere.
+
+The detail route now renders `overview`, `issues`, `response`, and `outcome` from application-facing content. Local fallback still protects current slugs while Sanity is empty or unavailable. Raw Sanity types remain isolated from route and UI code.
 
 ## Query Layer Design
 

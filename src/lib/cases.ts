@@ -3,6 +3,8 @@ import type { CaseStudy } from "@/data/cases";
 import {
   caseStudyCategoryLabels,
   type CaseStudyCategory,
+  type CaseStudyDetail,
+  type CaseStudyListItem,
 } from "@/types/content/caseStudy";
 
 export const CASES_PER_PAGE = 10;
@@ -139,4 +141,37 @@ export function getRelatedCaseStudies(caseStudy: CaseStudy): CaseStudy[] {
   return caseStudy.relatedCaseSlugs
     .map((slug) => getCaseStudyBySlug(slug))
     .filter((relatedCase): relatedCase is CaseStudy => Boolean(relatedCase));
+}
+
+export function getRelatedCaseStudyListItems(
+  caseStudy: CaseStudyDetail,
+  caseStudies: CaseStudyListItem[],
+  limit = 2,
+): CaseStudyListItem[] {
+  const seenSlugs = new Set<string>([caseStudy.slug]);
+  const casesBySlug = new Map(
+    caseStudies.map((relatedCase) => [relatedCase.slug, relatedCase]),
+  );
+  const relatedCases: CaseStudyListItem[] = [];
+
+  for (const relatedSlug of caseStudy.relatedCaseSlugs) {
+    if (seenSlugs.has(relatedSlug)) {
+      continue;
+    }
+
+    const relatedCase = casesBySlug.get(relatedSlug);
+
+    if (!relatedCase) {
+      continue;
+    }
+
+    relatedCases.push(relatedCase);
+    seenSlugs.add(relatedSlug);
+
+    if (relatedCases.length >= limit) {
+      break;
+    }
+  }
+
+  return relatedCases;
 }

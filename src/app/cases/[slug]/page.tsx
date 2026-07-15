@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { CaseConsultationCta } from "@/components/cases/CaseConsultationCta";
+import { CaseDetailContent } from "@/components/cases/CaseDetailContent";
 import { CaseDetailHero } from "@/components/cases/CaseDetailHero";
-import { CaseDetailSection } from "@/components/cases/CaseDetailSection";
-import { Container } from "@/components/ui/Container";
-import { caseStudies } from "@/data/cases";
+import { getRelatedCaseStudyListItems } from "@/lib/cases";
 import {
+  getCaseStudies,
   getCaseStudyBySlug,
-  getRelatedCaseStudies,
-} from "@/lib/cases";
+  getCaseStudySlugs,
+} from "@/lib/content/caseStudies";
+import { portableTextToPlainText } from "@/components/cases/PortableTextContent";
+import type { CaseStudyDetail } from "@/types/content/caseStudy";
 
 type CaseDetailPageProps = {
   params: Promise<{
@@ -18,9 +18,29 @@ type CaseDetailPageProps = {
   }>;
 };
 
-export function generateStaticParams() {
-  return caseStudies.map((caseStudy) => ({
-    slug: caseStudy.slug,
+function buildCaseStudyUrl(slug: string): string {
+  return `/cases/${slug}`;
+}
+
+function getCaseStudyKeywords(caseStudy: CaseStudyDetail): string[] {
+  return caseStudy.seo.keywords.length > 0
+    ? caseStudy.seo.keywords
+    : caseStudy.keywords;
+}
+
+function getCaseStudyDescription(caseStudy: CaseStudyDetail): string {
+  return caseStudy.seo.description ?? caseStudy.summary;
+}
+
+function getCaseStudyTitle(caseStudy: CaseStudyDetail): string {
+  return caseStudy.seo.title ?? `${caseStudy.title} | 수행사례 | 법률사무소 정천`;
+}
+
+export async function generateStaticParams() {
+  const slugs = await getCaseStudySlugs();
+
+  return slugs.map((slug) => ({
+    slug,
   }));
 }
 
@@ -28,59 +48,87 @@ export async function generateMetadata({
   params,
 }: CaseDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const caseStudy = getCaseStudyBySlug(slug);
+  const caseStudy = await getCaseStudyBySlug(slug);
 
   if (!caseStudy) {
     return {
       title: "수행사례를 찾을 수 없습니다 | 법률사무소 정천",
+      alternates: {
+        canonical: buildCaseStudyUrl(slug),
+      },
+      robots: {
+        index: false,
+        follow: false,
+      },
     };
   }
 
-  const url = `/cases/${caseStudy.slug}`;
+  const url = buildCaseStudyUrl(caseStudy.slug);
+  const title = getCaseStudyTitle(caseStudy);
+  const description = getCaseStudyDescription(caseStudy);
+  const keywords = getCaseStudyKeywords(caseStudy);
 
   return {
-    title: `${caseStudy.title} | 수행사례 | 법률사무소 정천`,
-    description: caseStudy.summary,
-    keywords: caseStudy.keywords,
+    title,
+    description,
+    keywords,
     alternates: {
       canonical: url,
     },
+    robots: caseStudy.seo.noIndex
+      ? {
+          index: false,
+          follow: false,
+        }
+      : undefined,
     openGraph: {
-      title: `${caseStudy.title} | 수행사례 | 법률사무소 정천`,
-      description: caseStudy.summary,
+      title,
+      description,
       url,
       type: "article",
       publishedTime: caseStudy.publishedAt,
       section: caseStudy.categoryLabel,
-      tags: caseStudy.keywords,
+      tags: keywords,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${caseStudy.title} | 수행사례 | 법률사무소 정천`,
-      description: caseStudy.summary,
+      title,
+      description,
     },
   };
 }
 
 export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
   const { slug } = await params;
-  const caseStudy = getCaseStudyBySlug(slug);
+  const caseStudy = await getCaseStudyBySlug(slug);
 
   if (!caseStudy) {
     notFound();
   }
 
-  const relatedCases = getRelatedCaseStudies(caseStudy);
+  const allCaseStudies = await getCaseStudies();
+  const relatedCases = getRelatedCaseStudyListItems(caseStudy, allCaseStudies);
+  const url = buildCaseStudyUrl(caseStudy.slug);
+  const keywords = getCaseStudyKeywords(caseStudy);
+  const articleBody = [
+    portableTextToPlainText(caseStudy.overview),
+    portableTextToPlainText(caseStudy.issues),
+    portableTextToPlainText(caseStudy.response),
+    portableTextToPlainText(caseStudy.outcome),
+  ]
+    .filter(Boolean)
+    .join(" ");
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: caseStudy.title,
-    description: caseStudy.summary,
+    description: getCaseStudyDescription(caseStudy),
     datePublished: caseStudy.publishedAt,
     dateModified: caseStudy.publishedAt,
     articleSection: caseStudy.categoryLabel,
-    keywords: caseStudy.keywords,
-    mainEntityOfPage: `/cases/${caseStudy.slug}`,
+    keywords,
+    articleBody: articleBody || undefined,
+    mainEntityOfPage: url,
     author: {
       "@type": "Organization",
       name: "정천 법률사무소",
@@ -89,102 +137,14 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
       "@type": "Organization",
       name: "정천 법률사무소",
     },
-    url: `/cases/${caseStudy.slug}`,
+    url,
   };
 
   return (
     <>
       <main className="bg-white text-[#111B36]">
         <CaseDetailHero caseStudy={caseStudy} />
-
-        <Container className="py-16 lg:py-20">
-          <div className="rounded-[22px] border border-[#E8E2D7] bg-white px-7 shadow-[0_18px_54px_rgba(17,27,54,0.05)] sm:px-10 lg:px-12">
-            <CaseDetailSection icon="document" title="사건의 개요">
-              <div className="space-y-5">
-                {caseStudy.overview.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            </CaseDetailSection>
-
-            <CaseDetailSection icon="search" title="주요 쟁점">
-              <ul className="space-y-3">
-                {caseStudy.issues.map((issue) => (
-                  <li key={issue} className="flex gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C8A96A]"
-                    />
-                    <span>{issue}</span>
-                  </li>
-                ))}
-              </ul>
-            </CaseDetailSection>
-
-            <CaseDetailSection icon="shield" title="정천의 대응">
-              <div className="space-y-5">
-                {caseStudy.strategy.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            </CaseDetailSection>
-
-            <CaseDetailSection icon="result" title="사건의 결과">
-              <div className="space-y-5">
-                {caseStudy.outcome.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
-                ))}
-              </div>
-            </CaseDetailSection>
-          </div>
-
-          <div className="mt-10 flex flex-wrap gap-2">
-            {caseStudy.relatedPracticeIds.map((practiceId) => (
-              <span
-                key={practiceId}
-                className="rounded-full border border-[#E8E2D7] bg-[#FAF8F4] px-4 py-2 text-sm font-medium text-[#111B36]/75"
-              >
-                {practiceId}
-              </span>
-            ))}
-          </div>
-
-          {relatedCases.length > 0 ? (
-            <section className="mt-12">
-              <h2 className="text-lg font-semibold text-[#111B36]">
-                관련 수행사례
-              </h2>
-              <div className="mt-4 grid gap-3 md:grid-cols-2">
-                {relatedCases.slice(0, 2).map((relatedCase) => (
-                  <Link
-                    key={relatedCase.slug}
-                    href={`/cases/${relatedCase.slug}`}
-                    className="rounded-lg border border-[#E8E2D7] bg-white p-5 transition-colors hover:border-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
-                  >
-                    <p className="text-sm font-semibold text-[#C8A96A]">
-                      {relatedCase.categoryLabel}
-                    </p>
-                    <p className="mt-2 font-semibold leading-6">
-                      {relatedCase.title}
-                    </p>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          ) : null}
-
-          <div className="mt-10 flex justify-end">
-            <Link
-              href="/cases"
-              aria-label="수행사례 목록으로 이동"
-              className="inline-flex items-center justify-center border border-[#C8A96A] bg-white px-6 py-3 text-sm font-semibold text-[#111B36] transition-colors hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A] max-sm:w-full"
-            >
-              목록
-            </Link>
-          </div>
-
-          <CaseConsultationCta />
-        </Container>
+        <CaseDetailContent caseStudy={caseStudy} relatedCases={relatedCases} />
       </main>
 
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
