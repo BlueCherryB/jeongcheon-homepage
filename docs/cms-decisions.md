@@ -145,6 +145,15 @@ The Studio currently keeps its project ID and dataset in `studio/sanity.config.t
 
 The website and Studio may share the same Git repository, but they must remain independently buildable and deployable.
 
+Hosted Studio deployment:
+
+- Studio hostname: `jeongcheon-law-office`.
+- Studio URL: `https://jeongcheon-law-office.sanity.studio/`.
+- Deployment command: run `npm run deploy` from `studio/`.
+- Studio uses Sanity authentication and connects to project `20zyfjea` with dataset `production`.
+- Do not expose Studio credentials or API tokens in the website.
+- A public website administrator link is deferred to a later task.
+
 Do not:
 
 - Embed Studio in `src/app`.
