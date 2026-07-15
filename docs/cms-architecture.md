@@ -12,7 +12,7 @@ Relevant files:
 - `src/lib/cases.ts`: case filtering, sorting, pagination helpers, slug lookup, related-case lookup.
 - `src/components/home/CasesSection.tsx`: homepage case preview section, now receiving featured case studies from the application content API.
 - `src/components/home/CaseStudyCard.tsx`: shared preview and board card UI, typed against the small display fields it renders.
-- `src/app/cases/page.tsx`: case board page, imports `caseStudies` directly and uses `src/lib/cases.ts` helpers.
+- `src/app/cases/page.tsx`: case board page, now reads list data from the application content API and uses `src/lib/cases.ts` filtering and pagination helpers.
 - `src/components/cases/CaseStudyList.tsx`: board list wrapper around `CaseStudyCard`.
 - `src/app/cases/[slug]/page.tsx`: detail page, static params, per-page metadata, related cases, and Article JSON-LD.
 - `src/components/cases/CaseDetailHero.tsx`: detail-page hero.
@@ -57,7 +57,7 @@ Current image handling:
 Current coupling:
 
 - UI components import `CaseStudy` directly from `src/data/cases.ts`.
-- Pages import local data directly in some places, especially `src/app/cases/page.tsx` and `src/app/cases/[slug]/page.tsx`.
+- Pages import local data directly in some places, especially `src/app/cases/[slug]/page.tsx`.
 - Metadata and JSON-LD logic are close to page files rather than centralized.
 
 ## Target Architecture
@@ -184,7 +184,15 @@ Implemented homepage preview integration in Task #028:
 - `src/app/page.tsx`: fetches `getFeaturedCaseStudies()` in the server component and limits the homepage preview to five items.
 - `src/components/home/CasesSection.tsx`: renders case studies passed from the page instead of reading local homepage data.
 
-The local fallback still protects the homepage while the Sanity dataset is empty. The `/cases` board and `/cases/[slug]` detail pages still use local data and are planned for later tasks.
+The local fallback still protects the homepage while the Sanity dataset is empty. At this stage, the `/cases` board and `/cases/[slug]` detail pages still used local data and were planned for later tasks.
+
+Implemented case board integration in Task #029:
+
+- `src/app/cases/page.tsx`: fetches `getCaseStudies()` in the server page before applying category filtering and pagination.
+- `src/lib/cases.ts`: filtering, latest sorting, category parsing, and pagination helpers accept application-facing Case Study list items.
+- `src/components/cases/CaseStudyList.tsx`: renders application-facing display items through the shared `CaseStudyCard`.
+
+The local fallback still protects the board while the Sanity dataset is empty. The `/cases/[slug]` detail pages still use local data and are planned for Task #030.
 
 ## Query Layer Design
 

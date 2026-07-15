@@ -510,11 +510,27 @@ Scope:
 Expected files or areas:
 
 - `src/app/cases/page.tsx`
-- `src/lib/content/cases.ts`
+- `src/lib/cases.ts`
+- `src/components/cases/CaseStudyList.tsx`
 
 Validation:
 
 - Category filtering, pagination, and latest sorting still work.
+
+Task #029 status:
+
+- Completed.
+- `/cases` now fetches `getCaseStudies()` from the application content API in the server page.
+- Category filtering, latest sorting, query parsing, and pagination use application-facing Case Study list items.
+- `CaseStudyList` accepts the same display item shape used by `CaseStudyCard`.
+- `CaseCategoryFilter` reads category filter labels from `src/lib/cases.ts`, not from local case data.
+- Local fallback remains active when Sanity is empty or unavailable.
+- `/cases/[slug]`, local data values, Studio schemas, CMS query internals, preview mode, image URL builder, and Portable Text rendering were not migrated.
+
+Task #030 readiness:
+
+- The next task can migrate `/cases/[slug]` to `getCaseStudyBySlug()` and `getCaseStudySlugs()`.
+- Detail rendering will need a Portable Text display strategy or an interim conversion policy for existing detail sections.
 
 ### Task #030 - Case Detail Migration
 
