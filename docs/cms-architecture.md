@@ -312,6 +312,7 @@ Future website public variables:
 Future website server-only variable:
 
 - `SANITY_API_READ_TOKEN`: optional read token reserved for preview and draft reads.
+- `SANITY_REVALIDATE_SECRET`: shared secret for Sanity webhook revalidation.
 
 Fixed API version:
 
@@ -340,6 +341,17 @@ Future preview and draft policy:
 - Preview reads should disable CDN caching when draft visibility is required.
 - The token must never be committed, logged, or prefixed with `NEXT_PUBLIC_`.
 - Prefer a read-only viewer token with the minimum required permissions.
+
+Webhook revalidation:
+
+- Endpoint: `/api/revalidate/sanity`.
+- Method: `POST` only.
+- Secret header: `x-sanity-revalidate-secret`.
+- Environment variable: `SANITY_REVALIDATE_SECRET`.
+- The secret must be configured in Vercel Preview and Production environments and must never be prefixed with `NEXT_PUBLIC_`.
+- The route revalidates `/`, `/cases`, the current `/cases/[slug]`, and the previous `/cases/[slug]` when a slug changes.
+- Invalid or missing secrets return `401`; missing server configuration returns `500`.
+- The route does not expose the secret in browser bundles or response bodies.
 
 CORS:
 

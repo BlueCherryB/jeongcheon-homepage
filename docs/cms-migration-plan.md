@@ -671,7 +671,41 @@ Validation:
 - Preview requires secret/token.
 - Public users cannot access drafts.
 
-### Task #036 - Deployment Validation
+### Task #036 - Sanity Webhook Revalidation
+
+Scope:
+
+- Add a secure website route for Sanity webhook revalidation.
+- Revalidate the homepage, case board, and affected case detail paths when Case Study content changes.
+- Keep the route server-only and protect it with a shared secret.
+
+Task #036 status:
+
+- Revalidation endpoint: `/api/revalidate/sanity`.
+- Method: `POST`.
+- Shared secret environment variable: `SANITY_REVALIDATE_SECRET`.
+- Send the secret in the `x-sanity-revalidate-secret` request header.
+- Configure the same secret in Vercel Preview and Production.
+- Create the Sanity webhook for dataset `production` with a document filter for `_type == "caseStudy"`.
+- Suggested webhook projection:
+
+```groq
+{
+  "_type": _type,
+  "slug": slug.current,
+  "previousSlug": before().slug.current,
+  "operation": delta::operation()
+}
+```
+
+- The route revalidates `/`, `/cases`, `/cases/{slug}`, and `/cases/{previousSlug}` when present.
+- No preview mode, token reads, Studio schema change, website UI change, webhook secret value, or revalidation dependency was added.
+
+Task #037 readiness:
+
+- The next task can validate production webhook behavior after the Vercel environment secret and Sanity webhook are configured.
+
+### Task #037 - Deployment Validation
 
 Scope:
 
@@ -687,7 +721,7 @@ Validation:
 - Production build passes.
 - Environment variables are configured without secrets exposure.
 
-### Task #037 - Articles and FAQ Preparation
+### Task #038 - Articles and FAQ Preparation
 
 Scope:
 
