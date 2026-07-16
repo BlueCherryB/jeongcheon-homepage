@@ -163,9 +163,30 @@ export const caseStudy = defineType({
     defineField({
       name: 'mainImage',
       title: '대표 이미지',
-      type: 'contentImage',
+      type: 'object',
       group: 'basic',
       description: '홈페이지, 수행사례 목록, 상세 페이지에 사용할 수 있는 이미지입니다.',
+      fields: [
+        defineField({
+          name: 'image',
+          title: '이미지',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+        }),
+      ],
+      preview: {
+        select: {
+          media: 'image',
+        },
+        prepare({media}) {
+          return {
+            media,
+            title: '판결문 이미지',
+          }
+        },
+      },
     }),
     defineField({
       name: 'overview',

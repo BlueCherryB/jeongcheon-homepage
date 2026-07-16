@@ -12,6 +12,7 @@ export const contentImage = defineType({
       options: {
         hotspot: true,
       },
+      validation: (Rule) => Rule.required().error('이미지를 선택해주세요.'),
     }),
   ],
   preview: {
