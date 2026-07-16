@@ -2,6 +2,7 @@ import {defineConfig, defineLocaleResourceBundle} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
+import {structure} from './structure'
 import './styles/studio.css'
 
 const studioTextOverrides = defineLocaleResourceBundle({
@@ -19,7 +20,7 @@ export default defineConfig({
   projectId: '20zyfjea',
   dataset: 'production',
 
-  plugins: [structureTool(), visionTool()],
+  plugins: [structureTool({structure}), visionTool()],
 
   i18n: {
     bundles: [studioTextOverrides],
