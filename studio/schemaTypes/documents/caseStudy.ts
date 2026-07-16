@@ -198,10 +198,9 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'overview',
-      title: '사건 개요',
+      title: '사건 개요 *',
       type: 'blockContent',
       group: 'content',
-      components: requiredField,
       validation: (Rule) =>
         Rule.required()
           .custom((value) => hasPortableTextContent(value) || '사건 개요를 입력해주세요.')
@@ -209,10 +208,9 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'legalIssues',
-      title: '주요 법적 쟁점',
+      title: '주요 법적 쟁점 *',
       type: 'blockContent',
       group: 'content',
-      components: requiredField,
       validation: (Rule) =>
         Rule.required()
           .custom((value) => hasPortableTextContent(value) || '주요 법적 쟁점을 입력해주세요.')
@@ -220,10 +218,9 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'outcome',
-      title: '사건 결과 상세',
+      title: '사건 결과 상세 *',
       type: 'blockContent',
       group: 'content',
-      components: requiredField,
       validation: (Rule) =>
         Rule.required()
           .custom((value) => hasPortableTextContent(value) || '사건 결과 상세를 입력해주세요.')
