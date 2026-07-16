@@ -6,8 +6,6 @@ const caseCategoryTitles: Record<string, string> = {
   family: '이혼·가사',
 }
 
-const caseCategoryValues = ['criminal', 'civil', 'family'] as const
-
 const caseCategoryOptions = [
   {title: caseCategoryTitles.criminal, value: 'criminal'},
   {title: caseCategoryTitles.civil, value: 'civil'},
@@ -30,10 +28,6 @@ type ValidationContext = InitialValueContext & {
   }
 }
 
-function isFilledString(value: unknown): boolean {
-  return typeof value === 'string' && value.trim().length > 0
-}
-
 function isValidCaseSlug(value: unknown): boolean {
   if (!value || typeof value !== 'object' || !('current' in value)) {
     return false
@@ -44,17 +38,11 @@ function isValidCaseSlug(value: unknown): boolean {
   return typeof slug === 'string' && slugPattern.test(slug)
 }
 
-function isValidCaseCategory(value: unknown): boolean {
-  return caseCategoryValues.includes(value as (typeof caseCategoryValues)[number])
-}
-
-function hasPortableTextContent(value: unknown): boolean {
-  return Array.isArray(value) && value.length > 0
-}
-
 async function getNextCaseStudySlug(context: InitialValueContext): Promise<string> {
   const client = context.getClient({apiVersion: sanityApiVersion})
-  const slugs = await client.fetch<string[]>(`*[_type == "caseStudy" && defined(slug.current)].slug.current`)
+  const slugs = await client.fetch<string[]>(
+    `*[_type == "caseStudy" && defined(slug.current)].slug.current`,
+  )
   const nextNumber =
     slugs.reduce((maxNumber, slug) => {
       const match = sequentialSlugPattern.exec(slug)
@@ -71,7 +59,10 @@ async function getNextCaseStudySlug(context: InitialValueContext): Promise<strin
   return `case_${String(nextNumber).padStart(3, '0')}`
 }
 
-async function isUniqueCaseSlug(value: unknown, context: ValidationContext): Promise<true | string> {
+async function isUniqueCaseSlug(
+  value: unknown,
+  context: ValidationContext,
+): Promise<true | string> {
   if (!value || typeof value !== 'object' || !('current' in value)) {
     return true
   }
@@ -132,11 +123,7 @@ export const caseStudy = defineType({
       type: 'string',
       group: 'basic',
       description: '수행사례 목록과 상세 페이지에 표시되는 제목입니다.',
-      validation: (Rule) =>
-        Rule.required()
-          .custom((value) => isFilledString(value) || '제목을 입력해주세요.')
-          .max(120)
-          .error('제목은 120자 이내로 입력해주세요.'),
+      validation: (Rule) => Rule.max(120).error('제목은 120자 이내로 입력해주세요.'),
     }),
     defineField({
       name: 'slug',
@@ -147,12 +134,11 @@ export const caseStudy = defineType({
       hidden: true,
       readOnly: true,
       validation: (Rule) =>
-        Rule.required()
-          .custom((value) =>
-            isValidCaseSlug(value)
-              ? true
-              : '주소는 소문자 영문, 숫자, 하이픈, 언더스코어만 사용할 수 있으며 기호로 시작하거나 끝날 수 없습니다.',
-          )
+        Rule.custom((value) =>
+          !value || isValidCaseSlug(value)
+            ? true
+            : '주소는 소문자 영문, 숫자, 하이픈, 언더스코어만 사용할 수 있으며 기호로 시작하거나 끝날 수 없습니다.',
+        )
           .custom(validateUniqueCaseSlug)
           .error('올바른 주소를 입력해주세요.'),
     }),
@@ -165,10 +151,6 @@ export const caseStudy = defineType({
         list: caseCategoryOptions,
         layout: 'radio',
       },
-      validation: (Rule) =>
-        Rule.required()
-          .custom((value) => isValidCaseCategory(value) || '사건 분야를 올바르게 선택해주세요.')
-          .error('사건 분야를 올바르게 선택해주세요.'),
     }),
     defineField({
       name: 'result',
@@ -176,49 +158,53 @@ export const caseStudy = defineType({
       type: 'string',
       group: 'basic',
       description: '목록과 상세 화면에서 강조할 사건 결과입니다. 예: 무혐의, 승소, 조정 성립',
-      validation: (Rule) =>
-        Rule.required()
-          .custom((value) => isFilledString(value) || '사건 결과를 입력해주세요.')
-          .max(120)
-          .error('사건 결과는 120자 이내로 입력해주세요.'),
+      validation: (Rule) => Rule.max(120).error('사건 결과는 120자 이내로 입력해주세요.'),
     }),
     defineField({
       name: 'mainImage',
       title: '대표 이미지',
-      type: 'contentImage',
+      type: 'object',
       group: 'basic',
       description: '홈페이지, 수행사례 목록, 상세 페이지에 사용할 수 있는 이미지입니다.',
-      validation: (Rule) => Rule.required().error('대표 이미지를 선택해주세요.'),
+      fields: [
+        defineField({
+          name: 'image',
+          title: '이미지',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+        }),
+      ],
+      preview: {
+        select: {
+          media: 'image',
+        },
+        prepare({media}) {
+          return {
+            media,
+            title: '판결문 이미지',
+          }
+        },
+      },
     }),
     defineField({
       name: 'overview',
       title: '사건 개요',
       type: 'blockContent',
       group: 'content',
-      validation: (Rule) =>
-        Rule.required()
-          .custom((value) => hasPortableTextContent(value) || '사건 개요를 입력해주세요.')
-          .error('사건 개요를 입력해주세요.'),
     }),
     defineField({
       name: 'legalIssues',
       title: '주요 법적 쟁점',
       type: 'blockContent',
       group: 'content',
-      validation: (Rule) =>
-        Rule.required()
-          .custom((value) => hasPortableTextContent(value) || '주요 법적 쟁점을 입력해주세요.')
-          .error('주요 법적 쟁점을 입력해주세요.'),
     }),
     defineField({
       name: 'outcome',
       title: '사건 결과 상세',
       type: 'blockContent',
       group: 'content',
-      validation: (Rule) =>
-        Rule.required()
-          .custom((value) => hasPortableTextContent(value) || '사건 결과 상세를 입력해주세요.')
-          .error('사건 결과 상세를 입력해주세요.'),
     }),
     defineField({
       name: 'publishedAt',
@@ -240,11 +226,10 @@ export const caseStudy = defineType({
       title: '노출 순서',
       type: 'number',
       group: 'settings',
-      description: '수동 정렬을 사용할 때 낮은 숫자가 먼저 표시됩니다. 비워두면 날짜 기준 정렬을 사용합니다.',
+      description:
+        '수동 정렬을 사용할 때 낮은 숫자가 먼저 표시됩니다. 비워두면 날짜 기준 정렬을 사용합니다.',
       validation: (Rule) =>
-        Rule.integer()
-          .min(0)
-          .error('노출 순서는 0 이상의 정수로 입력해주세요.'),
+        Rule.integer().min(0).error('노출 순서는 0 이상의 정수로 입력해주세요.'),
     }),
     defineField({
       name: 'seo',
