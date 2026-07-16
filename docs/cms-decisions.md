@@ -115,7 +115,8 @@ Rules:
 - Use the same variable names in local `.env.local`, Vercel settings, and Cloudflare settings.
 - Use `@sanity/client` directly for the initial read-only query layer.
 - Do not introduce `next-sanity` for the initial published-content client.
-- Published reads use the Sanity CDN and the published perspective.
+- Published reads use the published perspective without a token.
+- Case Study reads bypass the Sanity CDN so webhook path revalidation fetches fresh published content immediately after publish, update, or delete events.
 - User-derived values such as slugs must be passed to GROQ through parameters.
 - Raw CMS response types stay separate from future application-facing content types.
 - Application-facing content types live outside the CMS layer.
