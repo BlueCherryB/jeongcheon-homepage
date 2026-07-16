@@ -1,5 +1,4 @@
 import {defineField, defineType} from 'sanity'
-import {RequiredField} from '../../components/RequiredField'
 
 const caseCategoryTitles: Record<string, string> = {
   criminal: '형사',
@@ -18,7 +17,6 @@ const caseCategoryOptions = [
 const sanityApiVersion = '2025-02-19'
 const slugPattern = /^[a-z0-9]+(?:[-_][a-z0-9]+)*$/
 const sequentialSlugPattern = /^case_(\d+)$/
-const requiredField = {field: RequiredField}
 
 type InitialValueContext = {
   getClient: (options: {apiVersion: string}) => {
@@ -134,7 +132,6 @@ export const caseStudy = defineType({
       type: 'string',
       group: 'basic',
       description: '수행사례 목록과 상세 페이지에 표시되는 제목입니다.',
-      components: requiredField,
       validation: (Rule) =>
         Rule.required()
           .custom((value) => isFilledString(value) || '제목을 입력해주세요.')
@@ -168,7 +165,6 @@ export const caseStudy = defineType({
         list: caseCategoryOptions,
         layout: 'radio',
       },
-      components: requiredField,
       validation: (Rule) =>
         Rule.required()
           .custom((value) => isValidCaseCategory(value) || '사건 분야를 올바르게 선택해주세요.')
@@ -180,7 +176,6 @@ export const caseStudy = defineType({
       type: 'string',
       group: 'basic',
       description: '목록과 상세 화면에서 강조할 사건 결과입니다. 예: 무혐의, 승소, 조정 성립',
-      components: requiredField,
       validation: (Rule) =>
         Rule.required()
           .custom((value) => isFilledString(value) || '사건 결과를 입력해주세요.')
@@ -193,12 +188,11 @@ export const caseStudy = defineType({
       type: 'contentImage',
       group: 'basic',
       description: '홈페이지, 수행사례 목록, 상세 페이지에 사용할 수 있는 이미지입니다.',
-      components: requiredField,
       validation: (Rule) => Rule.required().error('대표 이미지를 선택해주세요.'),
     }),
     defineField({
       name: 'overview',
-      title: '사건 개요 *',
+      title: '사건 개요',
       type: 'blockContent',
       group: 'content',
       validation: (Rule) =>
@@ -208,7 +202,7 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'legalIssues',
-      title: '주요 법적 쟁점 *',
+      title: '주요 법적 쟁점',
       type: 'blockContent',
       group: 'content',
       validation: (Rule) =>
@@ -218,7 +212,7 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'outcome',
-      title: '사건 결과 상세 *',
+      title: '사건 결과 상세',
       type: 'blockContent',
       group: 'content',
       validation: (Rule) =>

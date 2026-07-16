@@ -1,0 +1,14 @@
+label[for='title']::after,
+label[for='category']::after,
+label[for='result']::after,
+label[for='mainImage']::after,
+label[for='overview']::after,
+label[for='legalIssues']::after,
+label[for='outcome']::after {
+  color: #d14343;
+  content: ' *';
+}
+
+[data-testid='pt-input-placeholder'] {
+  display: none;
+}
