@@ -162,7 +162,7 @@ Implemented low-level CMS read layer in Task #025:
 - `src/lib/cms/caseStudies.ts`: exposes low-level raw CMS fetch functions.
 - `src/lib/cms/types/caseStudy.ts`: stores raw projected CMS response types.
 
-The Task #025 client uses `@sanity/client` directly with `useCdn: true`, `perspective: "published"`, and no token. The slug detail query uses GROQ parameters instead of string interpolation. No current page or component imports this layer yet.
+The Task #025 client uses `@sanity/client` directly with `perspective: "published"` and no token. The slug detail query uses GROQ parameters instead of string interpolation. No current page or component imports this layer yet.
 
 Implemented application content boundary in Task #026:
 
@@ -350,6 +350,7 @@ Webhook revalidation:
 - Environment variable: `SANITY_REVALIDATE_SECRET`.
 - The secret must be configured in Vercel Preview and Production environments and must never be prefixed with `NEXT_PUBLIC_`.
 - The route revalidates `/`, `/cases`, the current `/cases/[slug]`, and the previous `/cases/[slug]` when a slug changes.
+- Published Case Study reads intentionally bypass the Sanity CDN so revalidated paths fetch fresh published content immediately after webhook delivery.
 - Invalid or missing secrets return `401`; missing server configuration returns `500`.
 - The route does not expose the secret in browser bundles or response bodies.
 
