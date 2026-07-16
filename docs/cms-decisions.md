@@ -134,6 +134,9 @@ Rules:
 - Sanity crop metadata may be applied as a CDN source rectangle, but final fixed-ratio card and hero cropping should remain in CSS so Sanity hotspot values can control `object-position`.
 - The website may allow `https://cdn.sanity.io/images/**` in Next.js image remote patterns.
 - Do not add `@sanity/image-url` unless the manual helper becomes insufficient for approved crop/hotspot behavior.
+- Sanity publish/update/delete webhook revalidation uses the server-only `SANITY_REVALIDATE_SECRET`.
+- The webhook sends the secret in the `x-sanity-revalidate-secret` request header to `/api/revalidate/sanity`.
+- The revalidation secret must be configured in Vercel Preview and Production and must never be exposed with `NEXT_PUBLIC_`.
 
 Do not add secrets to `.env`, `.env.local`, Git-tracked files, or documentation examples with real values.
 
