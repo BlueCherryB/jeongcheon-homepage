@@ -11,12 +11,12 @@ import type {
   SanityCaseStudySlug,
 } from "@/lib/cms/types/caseStudy";
 
-const caseStudySlugPattern = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const caseStudySlugPattern = /^[a-z0-9]+(?:[-_][a-z0-9]+)*$/;
 
 export function assertValidCaseStudySlug(slug: string): void {
   if (!caseStudySlugPattern.test(slug)) {
     throw new TypeError(
-      "Case Study slug must use lowercase letters, numbers, and single hyphens only.",
+      "Case Study slug must use lowercase letters, numbers, hyphens, and underscores only.",
     );
   }
 }
