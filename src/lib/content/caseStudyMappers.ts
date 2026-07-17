@@ -270,7 +270,7 @@ export function mapSanityCaseStudyDetail(
     issues: mapPortableTextBlocks(caseStudy.legalIssues),
     response: [],
     outcome: mapPortableTextBlocks(caseStudy.outcome),
-    keywords: [],
+    keywords: mapKeywords(caseStudy.tags),
     relatedPracticeIds: [],
     relatedCaseSlugs: [],
     seo: mapSeo(caseStudy.seo),

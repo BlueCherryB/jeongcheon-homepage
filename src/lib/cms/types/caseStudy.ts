@@ -64,6 +64,7 @@ export type SanityCaseStudyListItem = {
 };
 
 export type SanityCaseStudyDetail = SanityCaseStudyListItem & {
+  tags?: string[];
   legalIssues?: SanityPortableTextBlock[];
   response?: SanityPortableTextBlock[];
   seo?: SanitySeoFields;

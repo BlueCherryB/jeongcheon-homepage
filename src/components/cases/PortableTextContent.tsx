@@ -139,9 +139,9 @@ export function PortableTextContent({
 
   if (variant === "list") {
     return (
-      <ul className="space-y-3">
+      <ul className="space-y-3.5">
         {blocks.map((block) => (
-          <li key={block._key} className="flex gap-3">
+          <li key={block._key} className="flex gap-3.5">
             <span
               aria-hidden="true"
               className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-[#C8A96A]"
@@ -154,7 +154,7 @@ export function PortableTextContent({
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4">
       {blocks.map((block) => (
         <p key={block._key}>{renderBlockText(block)}</p>
       ))}
