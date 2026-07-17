@@ -47,6 +47,7 @@ export const publishedCaseStudyBySlugQuery = `*[
   "slug": slug.current,
   category,
   result,
+  tags,
   summary,
   mainImage {
     image {

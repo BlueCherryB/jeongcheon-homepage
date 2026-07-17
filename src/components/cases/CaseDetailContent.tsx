@@ -36,6 +36,24 @@ export function CaseDetailContent({
         </CaseDetailSection>
       </div>
 
+      {caseStudy.keywords.length > 0 ? (
+        <section className="mt-10 border-y border-[#E8E2D7] py-8">
+          <h2 className="text-sm font-semibold tracking-[0.08em] text-[#C8A96A]">
+            관련 키워드
+          </h2>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {caseStudy.keywords.map((keyword) => (
+              <span
+                key={keyword}
+                className="rounded-full border border-[#E8E2D7] bg-[#FAF8F4] px-4 py-2 text-sm font-semibold text-[#111B36]"
+              >
+                {keyword}
+              </span>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
       {caseStudy.relatedPracticeIds.length > 0 ? (
         <div className="mt-10 flex flex-wrap gap-2">
           {caseStudy.relatedPracticeIds.map((practiceId) => (

@@ -52,31 +52,28 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
           </ol>
         </nav>
 
-        <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-center lg:gap-16">
-          <div>
+        <div className="mt-9 grid gap-10 lg:grid-cols-[minmax(0,680px)_340px] lg:items-center lg:justify-between lg:gap-14">
+          <div className="min-w-0">
             <p className="font-semibold text-[#C8A96A]">
               {caseStudy.categoryLabel}
             </p>
 
-            <div className="mt-5 flex flex-col gap-6 sm:flex-row sm:items-start">
-              <h1 className="font-chosun max-w-3xl text-[34px] font-normal leading-[1.25] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
+            <div className="mt-4 max-w-[680px]">
+              <h1 className="font-chosun text-[34px] font-normal leading-[1.2] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
                 {caseStudy.title}
               </h1>
-              <div className="flex h-28 w-28 shrink-0 flex-col items-center justify-center rounded-full border border-[#C8A96A] text-center">
-                <p className="text-xl font-bold text-[#C8A96A]">
-                  {caseStudy.result}
-                </p>
-                <p className="mt-1 px-3 text-xs font-semibold leading-5 text-[#111B36]">
-                  {caseStudy.resultDetail}
-                </p>
-              </div>
+              <p className="mt-4 inline-flex max-w-full items-center rounded-full border border-[#D9C89E] bg-white/75 px-4 py-2 text-sm font-semibold text-[#111B36] shadow-[0_10px_28px_rgba(17,27,54,0.04)]">
+                <span className="shrink-0 text-[#C8A96A]">결과</span>
+                <span aria-hidden="true" className="mx-2 h-3 w-px bg-[#D9C89E]" />
+                <span className="truncate">{caseStudy.result}</span>
+              </p>
             </div>
 
-            <p className="mt-7 max-w-2xl text-base leading-8 text-[#111B36]/78 sm:text-lg">
+            <p className="mt-5 max-w-[620px] text-base leading-8 text-[#111B36]/78 sm:text-lg">
               {caseStudy.summary}
             </p>
 
-            <div className="mt-7 flex flex-wrap items-center gap-4 text-sm font-medium text-[#111B36]/70">
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-medium text-[#111B36]/70">
               {caseStudy.publishedAt ? (
                 <time dateTime={caseStudy.publishedAt}>
                   {caseStudy.displayDate ?? caseStudy.publishedAt}

@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 const caseCategoryTitles: Record<string, string> = {
   criminal: '형사',
@@ -26,6 +26,12 @@ type ValidationContext = InitialValueContext & {
   document?: {
     _id?: string
   }
+}
+
+function hasDuplicateTags(tags: string[]): boolean {
+  const normalizedTags = tags.map((tag) => tag.trim().toLocaleLowerCase())
+
+  return normalizedTags.some((tag, index) => tag && normalizedTags.indexOf(tag) !== index)
 }
 
 function isValidCaseSlug(value: unknown): boolean {
@@ -160,6 +166,51 @@ export const caseStudy = defineType({
       group: 'basic',
       description: '목록과 상세 화면에서 강조할 사건 결과입니다. 예: 무혐의, 승소, 조정 성립',
       validation: (Rule) => Rule.max(120).error('사건 결과는 120자 이내로 입력해주세요.'),
+    }),
+    defineField({
+      name: 'tags',
+      title: '사건 태그',
+      type: 'array',
+      group: 'basic',
+      description: '사기, 폭행, 형사합의 등 사건 키워드를 입력합니다.',
+      of: [
+        defineArrayMember({
+          type: 'string',
+          validation: (Rule) =>
+            Rule.max(15).error('사건 태그는 15자 이내로 입력해주세요.').custom((value) => {
+              if (typeof value !== 'string') {
+                return true
+              }
+
+              if (!value.trim()) {
+                return '빈 사건 태그는 입력할 수 없습니다.'
+              }
+
+              if (value !== value.trim()) {
+                return '사건 태그의 앞뒤 공백을 제거해주세요.'
+              }
+
+              return true
+            }),
+        }),
+      ],
+      options: {
+        layout: 'tags',
+      },
+      validation: (Rule) =>
+        Rule.max(5)
+          .error('사건 태그는 최대 5개까지 입력할 수 있습니다.')
+          .custom((value) => {
+            if (!Array.isArray(value)) {
+              return true
+            }
+
+            const tags = value.filter((tag): tag is string => typeof tag === 'string')
+
+            return hasDuplicateTags(tags)
+              ? '중복된 사건 태그가 있습니다. 하나만 남겨주세요.'
+              : true
+          }),
     }),
     defineField({
       name: 'mainImage',
