@@ -62,11 +62,18 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
               <h1 className="font-chosun text-[34px] font-normal leading-[1.2] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
                 {caseStudy.title}
               </h1>
-              <p className="mt-4 inline-flex max-w-full items-center rounded-full border border-[#D9C89E] bg-white/75 px-4 py-2 text-sm font-semibold text-[#111B36] shadow-[0_10px_28px_rgba(17,27,54,0.04)]">
-                <span className="shrink-0 text-[#C8A96A]">결과</span>
-                <span aria-hidden="true" className="mx-2 h-3 w-px bg-[#D9C89E]" />
-                <span className="truncate">{caseStudy.result}</span>
-              </p>
+              <div className="mt-5 flex justify-start lg:justify-end">
+                <p className="inline-flex max-w-full items-center rounded-full border border-[#D9C89E] bg-white px-5 py-2.5 text-base font-bold text-[#111B36] shadow-[0_14px_34px_rgba(17,27,54,0.07)] sm:px-6 sm:py-3 sm:text-[17px]">
+                  <span className="shrink-0 text-sm text-[#C8A96A] sm:text-base">
+                    결과
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="mx-3 h-4 w-px bg-[#D9C89E]"
+                  />
+                  <span className="truncate">{caseStudy.result}</span>
+                </p>
+              </div>
             </div>
 
             <p className="mt-5 max-w-[620px] text-base leading-8 text-[#111B36]/78 sm:text-lg">
