@@ -104,6 +104,7 @@ export const caseStudy = defineType({
   name: 'caseStudy',
   title: '수행사례',
   type: 'document',
+  __experimental_formPreviewTitle: false,
   initialValue: async (_params, context) => ({
     slug: {
       _type: 'slug',
@@ -240,18 +241,20 @@ export const caseStudy = defineType({
   ],
   preview: {
     select: {
+      id: '_id',
       title: 'title',
       category: 'category',
       result: 'result',
       publishedAt: 'publishedAt',
       media: 'mainImage.image',
     },
-    prepare({title, category, result, publishedAt, media}) {
+    prepare({id, title, category, result, publishedAt, media}) {
       const categoryTitle = category ? caseCategoryTitles[category] || '분야 미지정' : '분야 미지정'
       const subtitleItems = [categoryTitle, result, publishedAt?.slice(0, 10)].filter(Boolean)
+      const isDraft = typeof id === 'string' && id.startsWith('drafts.')
 
       return {
-        title: title || '제목 없음',
+        title: isDraft ? '작성 중인 수행사례' : title || '제목 없음',
         subtitle: subtitleItems.join(' · '),
         media,
       }
