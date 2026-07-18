@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import { AttorneyHero } from "@/components/attorney/AttorneyHero";
 import { AttorneySections } from "@/components/attorney/AttorneySections";
 import { attorneyProfile } from "@/data/attorney";
-import type { CaseStudy } from "@/data/cases";
-import { getCaseStudyBySlug } from "@/lib/cases";
+import { getFeaturedCaseStudies } from "@/lib/content/caseStudies";
 
 export const metadata: Metadata = {
   title: `${attorneyProfile.name} 소개 | 법률사무소 정천`,
@@ -26,10 +25,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function AttorneyPage() {
-  const representativeCases = attorneyProfile.representativeCaseSlugs
-    .map((slug) => getCaseStudyBySlug(slug))
-    .filter((caseStudy): caseStudy is CaseStudy => Boolean(caseStudy));
+export default async function AttorneyPage() {
+  const representativeCases = (await getFeaturedCaseStudies()).slice(0, 3);
 
   const jsonLd = {
     "@context": "https://schema.org",
