@@ -57,12 +57,12 @@ export function AttorneySection() {
               >
                 “
               </span>
-              <p className="font-chosun whitespace-pre-line text-[32px] font-normal leading-[1.34] tracking-[-0.02em] text-[#020617] sm:text-[30px] sm:leading-[1.42]">
+              <p className="font-chosun whitespace-pre-line text-center text-[32px] font-normal leading-[1.34] tracking-[-0.02em] text-[#020617] sm:text-left sm:text-[30px] sm:leading-[1.42]">
                 {attorney.quote}
               </p>
             </blockquote>
 
-            <p className="mt-5 max-w-xl whitespace-pre-line text-[17px] leading-[1.7] text-zinc-700 sm:mt-6 sm:text-lg sm:leading-[1.75]">
+            <p className="mx-auto mt-5 max-w-[21rem] whitespace-pre-line text-center text-[17px] leading-[1.7] text-zinc-700 sm:mx-0 sm:mt-6 sm:max-w-xl sm:text-left sm:text-lg sm:leading-[1.75]">
               {attorney.description}
             </p>
 

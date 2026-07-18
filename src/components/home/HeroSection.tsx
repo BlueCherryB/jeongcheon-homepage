@@ -11,7 +11,7 @@ export function HeroSection() {
   return (
     <Section bordered={false} spacing="hero">
       <div className="grid items-center gap-0 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
-        <div className="max-w-2xl">
+        <div className="max-w-2xl text-center sm:text-left">
           <div className="flex w-full flex-col items-center sm:inline-flex sm:w-auto sm:items-start">
             <p className="text-[18px] font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
               {hero.eyebrow}
@@ -26,7 +26,7 @@ export function HeroSection() {
             title={hero.title}
             description={hero.description}
             titleClassName="font-chosun mt-6 max-w-2xl whitespace-pre-line text-[34px] font-normal leading-[1.35] tracking-[-0.02em] text-[#0F172A] sm:mt-7 sm:text-[52px] sm:leading-[1.4]"
-            descriptionClassName="mt-5 max-w-md whitespace-pre-line text-base leading-[1.7] text-zinc-600"
+            descriptionClassName="mx-auto mt-5 max-w-md whitespace-pre-line text-base leading-[1.7] text-zinc-600 sm:mx-0"
           />
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
             <Button href={hero.primaryCta.href} className="h-12 px-6 text-base sm:h-14 sm:px-7 sm:text-[17px]">

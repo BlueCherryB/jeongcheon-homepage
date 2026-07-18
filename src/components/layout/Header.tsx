@@ -106,7 +106,7 @@ export function Header() {
           <nav
             id="mobile-navigation"
             aria-label="모바일 주요 메뉴"
-            className="absolute inset-y-0 right-0 w-[min(75vw,320px)] animate-[mobileDrawerIn_220ms_ease-out] bg-[#0F172A] px-6 py-7 shadow-[-20px_0_44px_rgba(2,6,23,0.28)]"
+            className="absolute inset-y-0 right-0 w-[min(68vw,280px)] animate-[mobileDrawerIn_220ms_ease-out] bg-[#0F172A] px-6 py-7 shadow-[-20px_0_44px_rgba(2,6,23,0.28)]"
           >
             <ul className="space-y-3 text-base font-semibold text-white">
               {mobileNavigationItems.map((item) => (
