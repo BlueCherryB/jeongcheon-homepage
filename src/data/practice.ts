@@ -40,6 +40,9 @@ export type PracticeArea = {
 export const criminalCertificateAssetPath =
   "/images/kba-criminal-specialist-certificate.png";
 
+export const civilCertificateAssetPath =
+  "/images/kba-civil-specialist-certificate.png";
+
 export const practiceAreas: PracticeArea[] = [
   {
     slug: "criminal",

@@ -1,11 +1,16 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { CaseStudyCard } from "@/components/home/CaseStudyCard";
 import { PracticeAreaIcon } from "@/components/practice/PracticeAreaIcon";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import type { PracticeArea } from "@/data/practice";
-import { criminalCertificateAssetPath, practiceAreas } from "@/data/practice";
+import {
+  civilCertificateAssetPath,
+  criminalCertificateAssetPath,
+  practiceAreas,
+} from "@/data/practice";
 import { buildCasesHref } from "@/lib/cases";
 import type { CaseStudyListItem } from "@/types/content/caseStudy";
 
@@ -31,30 +36,58 @@ function SectionTitle({
   );
 }
 
-function CriminalCertificateSection() {
+const certificateByPracticeSlug = {
+  criminal: {
+    eyebrow: "대한변호사협회 등록",
+    title: "형사 전문 변호사 등록증서",
+    description:
+      "김찬협 변호사의 대한변호사협회 형사법 전문분야 등록증서입니다.",
+    imageSrc: criminalCertificateAssetPath,
+    imageAlt: "김찬협 변호사 대한변호사협회 형사법 전문분야 등록증서",
+  },
+  civil: {
+    eyebrow: "대한변호사협회 등록",
+    title: "민사 전문 변호사 등록증서",
+    description:
+      "김찬협 변호사의 대한변호사협회 민사법 전문분야 등록증서입니다.",
+    imageSrc: civilCertificateAssetPath,
+    imageAlt: "김찬협 변호사 대한변호사협회 민사법 전문분야 등록증서",
+  },
+} as const;
+
+function CertificateSection({ area }: { area: PracticeArea }) {
+  const certificate =
+    area.slug === "criminal" || area.slug === "civil"
+      ? certificateByPracticeSlug[area.slug]
+      : null;
+
+  if (!certificate) {
+    return null;
+  }
+
   return (
     <div className="mt-8 rounded-[18px] border border-[#E8E2D7] bg-white p-7">
       <div className="grid gap-6 lg:grid-cols-[0.58fr_0.42fr] lg:items-center">
         <div>
           <p className="text-sm font-semibold text-[#C8A96A]">
-            대한변호사협회 등록
+            {certificate.eyebrow}
           </p>
           <h3 className="mt-3 text-xl font-semibold text-[#111B36]">
-            형사 전문 변호사 등록
+            {certificate.title}
           </h3>
           <p className="mt-4 break-keep text-sm leading-7 text-[#111B36]/68">
-            김찬협 변호사는 대한변호사협회에 형사 전문 분야로 등록되어
-            있습니다. 등록증 이미지는 현재 저장소에 포함되어 있지 않아, 아래
-            경로로 업로드되면 이 영역에 배치할 수 있습니다.
+            {certificate.description}
           </p>
         </div>
-        <div className="rounded-[14px] border border-dashed border-[#C8A96A]/70 bg-[#FAF8F4] p-5">
-          <p className="text-xs font-semibold text-[#111B36]/55">
-            필요한 인증서 이미지 경로
-          </p>
-          <p className="mt-2 break-all text-sm font-semibold leading-6 text-[#111B36]">
-            {criminalCertificateAssetPath}
-          </p>
+        <div className="overflow-hidden rounded-[14px] border border-[#E8E2D7] bg-[#FAF8F4] p-3 shadow-[0_18px_44px_rgba(17,27,54,0.08)]">
+          <Image
+            src={certificate.imageSrc}
+            alt={certificate.imageAlt}
+            width={744}
+            height={1039}
+            className="h-auto w-full rounded-[10px] bg-white object-contain"
+            sizes="(min-width: 1024px) 360px, 100vw"
+          />
         </div>
       </div>
     </div>
@@ -150,7 +183,7 @@ export function PracticeDetailPage({
               </div>
             ))}
           </div>
-          {area.slug === "criminal" ? <CriminalCertificateSection /> : null}
+          <CertificateSection area={area} />
         </Container>
       </section>
 
