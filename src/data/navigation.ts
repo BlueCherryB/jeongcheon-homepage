@@ -10,5 +10,4 @@ export const navigationItems: NavigationItem[] = [
   // Temporarily hidden until the legal information and FAQ sections are restored.
   // { label: "법률 정보", href: "/#articles" },
   // { label: "자주 묻는 질문", href: "/#faq" },
-  { label: "상담 안내", href: "/#consultation" },
 ];
