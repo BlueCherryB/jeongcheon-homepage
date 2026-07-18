@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { homepageContent } from "@/data/homepage";
@@ -91,7 +90,7 @@ export function PracticeSection() {
           {practice.areas.map((area) => (
             <article
               key={area.title}
-              className="group flex min-h-[520px] flex-col rounded-[22px] border border-[#E8E2D7] bg-white px-10 py-12 shadow-[0_18px_50px_rgba(17,27,54,0.07)] transition duration-300 ease-out hover:-translate-y-1.5 hover:border-[#C8A96A]/70 hover:shadow-[0_24px_70px_rgba(17,27,54,0.12)]"
+              className="group flex min-h-[470px] flex-col rounded-[22px] border border-[#E8E2D7] bg-white px-10 py-12 shadow-[0_18px_50px_rgba(17,27,54,0.07)] transition duration-300 ease-out hover:-translate-y-1.5 hover:border-[#C8A96A]/70 hover:shadow-[0_24px_70px_rgba(17,27,54,0.12)]"
             >
               <div className="mx-auto flex h-32 w-32 items-center justify-center rounded-full bg-[#F3EEE6] text-[#C8A96A]">
                 <PracticeIcon type={area.icon} />
@@ -128,11 +127,12 @@ export function PracticeSection() {
                 ))}
               </ul>
 
+              {/* Restore this detail link after practice area detail pages are implemented.
               <Button
-                  href={area.href}
-                  variant="secondary"
-                  className="group/link mx-auto mt-auto translate-y-3 border-transparent bg-transparent px-0 pb-3 pt-4 text-base font-semibold text-[#111B36] hover:bg-transparent hover:text-[#C8A96A] focus-visible:outline-[#C8A96A]"
-                >
+                href={area.href}
+                variant="secondary"
+                className="group/link mx-auto mt-auto translate-y-3 border-transparent bg-transparent px-0 pb-3 pt-4 text-base font-semibold text-[#111B36] hover:bg-transparent hover:text-[#C8A96A] focus-visible:outline-[#C8A96A]"
+              >
                 <span>자세히 보기</span>
                 <span
                   aria-hidden="true"
@@ -141,6 +141,7 @@ export function PracticeSection() {
                   →
                 </span>
               </Button>
+              */}
             </article>
           ))}
         </div>

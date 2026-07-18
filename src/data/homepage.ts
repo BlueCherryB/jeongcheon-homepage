@@ -51,7 +51,7 @@ type CasesContent = {
 
 export const homepageContent = {
   hero: {
-    eyebrow: "대한변협 형사전문",
+    eyebrow: "대한변협 형사·민사 전문",
     title: "의뢰인의 상황을\n정확하게 이해합니다.",
     description:
       "차분한 상담과 전략적인 대응으로\n가장 적합한 해결 방향을 제시합니다.",

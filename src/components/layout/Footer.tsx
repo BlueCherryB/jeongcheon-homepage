@@ -7,7 +7,7 @@ import { eulyoo1945 } from "@/lib/fonts";
 
 type FooterIcon = "location" | "phone";
 
-const copyrightYear = 2026;
+const currentYear = new Date().getFullYear();
 
 function FooterInfoIcon({ icon }: { icon: FooterIcon }) {
   if (icon === "phone") {
@@ -70,18 +70,13 @@ export function Footer() {
             <Link
               href="/"
               aria-label="법률사무소 정천 홈으로 이동"
-              className="inline-flex items-center gap-2.5 text-[#111B36] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
+              className="inline-flex items-center gap-1.5 text-[#111B36] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
             >
-              <span className="flex flex-col text-right">
-                <span className="text-sm font-semibold leading-none">
-                  법률사무소
-                </span>
-                <span className="mt-1 text-[9px] font-medium leading-none tracking-wide">
-                  LAW FIRM JEONG CHEON
-                </span>
+              <span className="whitespace-nowrap text-sm font-semibold leading-none">
+                법률사무소
               </span>
               <span
-                className={`${eulyoo1945.className} text-3xl font-normal leading-none tracking-[-0.03em]`}
+                className={`${eulyoo1945.className} whitespace-nowrap text-3xl font-normal leading-none tracking-[-0.03em]`}
               >
                 정천
               </span>
@@ -125,7 +120,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-5 border-t border-[#E8E2D7] pt-6 text-sm text-[#111B36]/65 md:flex-row md:items-center md:justify-between">
-          <p>© {copyrightYear} 법률사무소 정천. All rights reserved.</p>
+          <p>© {currentYear} 법률사무소 정천. All rights reserved.</p>
 
           <nav aria-label="Legal">
             <ul className="flex flex-wrap gap-x-6 gap-y-2">

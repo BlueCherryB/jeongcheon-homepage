@@ -11,18 +11,13 @@ export function Header() {
         <Link
           href="/"
           aria-label="법률사무소 정천 홈으로 이동"
-          className="flex shrink-0 items-center gap-2.5 text-[#0F172A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0F172A]"
+          className="flex shrink-0 items-center gap-1.5 text-[#0F172A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0F172A]"
         >
-          <span className="flex flex-col text-right">
-            <span className="text-[12px] font-semibold leading-none">
-              법률사무소
-            </span>
-            <span className="mt-1 text-[8px] font-medium leading-none tracking-wide sm:text-[9px]">
-              LAW FIRM JEONG CHEON
-            </span>
+          <span className="whitespace-nowrap text-[13px] font-semibold leading-none sm:text-sm">
+            법률사무소
           </span>
           <span
-            className={`${eulyoo1945.className} text-[34px] font-normal leading-none tracking-[-0.03em] sm:text-4xl`}
+            className={`${eulyoo1945.className} whitespace-nowrap text-[34px] font-normal leading-none tracking-[-0.03em] sm:text-4xl`}
           >
             정천
           </span>
