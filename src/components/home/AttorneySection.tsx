@@ -24,13 +24,13 @@ export function AttorneySection() {
           </div>
 
           <div>
-            <div className="inline-flex flex-col items-start">
+            <div className="flex w-full flex-col items-center sm:inline-flex sm:w-auto sm:items-start">
               <p className="text-xl font-semibold tracking-wide text-[#C8A96A] sm:text-2xl">
                 {attorney.eyebrow}
               </p>
               <span
                 aria-hidden="true"
-                className="mt-0.5 h-px w-30 bg-[#C8A96A]"
+                className="mt-0.5 h-px w-56 bg-[#C8A96A] sm:w-30"
               />
             </div>
 

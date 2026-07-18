@@ -69,39 +69,54 @@ export function Header() {
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#E8E2D7] text-[#0F172A] transition-colors hover:border-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F172A]"
         >
           <span className="sr-only">{isMenuOpen ? "메뉴 닫기" : "메뉴 열기"}</span>
-          <span aria-hidden="true" className="flex flex-col gap-1.5">
-            <span className="h-0.5 w-5 bg-current" />
-            <span className="h-0.5 w-5 bg-current" />
-            <span className="h-0.5 w-5 bg-current" />
+          <span
+            aria-hidden="true"
+            className="relative flex h-5 w-5 items-center justify-center"
+          >
+            <span
+              className={[
+                "absolute h-0.5 w-5 bg-current transition-transform",
+                isMenuOpen ? "rotate-45" : "-translate-y-1.5",
+              ].join(" ")}
+            />
+            <span
+              className={[
+                "absolute h-0.5 w-5 bg-current transition-opacity",
+                isMenuOpen ? "opacity-0" : "opacity-100",
+              ].join(" ")}
+            />
+            <span
+              className={[
+                "absolute h-0.5 w-5 bg-current transition-transform",
+                isMenuOpen ? "-rotate-45" : "translate-y-1.5",
+              ].join(" ")}
+            />
           </span>
         </button>
       </div>
 
       {isMenuOpen ? (
-        <div
-          id="mobile-navigation"
-          className="fixed inset-x-0 top-16 z-50 border-y border-[#E8E2D7] bg-white px-5 py-5 shadow-[0_18px_40px_rgba(15,23,42,0.12)] md:hidden"
-        >
-          <div className="mb-4 flex justify-end">
-            <button
-              type="button"
-              onClick={() => setIsMenuOpen(false)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[#E8E2D7] text-2xl leading-none text-[#0F172A] transition-colors hover:border-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F172A]"
-            >
-              <span className="sr-only">메뉴 닫기</span>
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <nav aria-label="모바일 주요 메뉴">
-            <ul className="space-y-2 text-base font-semibold text-[#0F172A]">
+        <div className="fixed inset-x-0 bottom-0 top-16 z-50 md:hidden">
+          <button
+            type="button"
+            aria-label="메뉴 닫기"
+            onClick={() => setIsMenuOpen(false)}
+            className="absolute inset-0 animate-[mobileOverlayIn_180ms_ease-out] bg-[#020617]/55"
+          />
+          <nav
+            id="mobile-navigation"
+            aria-label="모바일 주요 메뉴"
+            className="absolute inset-y-0 right-0 w-[min(82vw,360px)] animate-[mobileDrawerIn_220ms_ease-out] bg-[#0F172A] px-6 py-7 shadow-[-20px_0_44px_rgba(2,6,23,0.28)]"
+          >
+            <ul className="space-y-3 text-base font-semibold text-white">
               {mobileNavigationItems.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
                     onClick={() => setIsMenuOpen(false)}
                     className={[
-                      "flex min-h-12 items-center justify-between border-b border-[#E8E2D7] px-1 py-3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F172A]",
-                      item.emphasized ? "text-[#9F7F37]" : undefined,
+                      "flex min-h-14 items-center justify-between border-b border-white/12 py-3.5 transition-colors hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8A96A]",
+                      item.emphasized ? "text-[#C8A96A]" : undefined,
                     ]
                       .filter(Boolean)
                       .join(" ")}

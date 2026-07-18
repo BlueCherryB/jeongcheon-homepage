@@ -57,11 +57,11 @@ export const homepageContent = {
       "차분한 상담과 전략적인 대응으로\n가장 적합한 해결 방향을 제시합니다.",
     primaryCta: {
       label: "상담 예약",
-      href: "#consultation",
+      href: "/#consultation",
     },
     secondaryCta: {
       label: "전화 상담",
-      href: "#consultation",
+      href: "tel:01026901699",
     },
     image: {
       src: "/hero-law-office.png",
@@ -74,7 +74,7 @@ export const homepageContent = {
     name: "김찬협 변호사",
     quote: "사건은 숫자가 아니라\n한 사람의 삶입니다.",
     description:
-      "형사사건은 초기 대응이 결과를 크게 좌우합니다.\n사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로\n절차와 대응 방향을 설명드립니다.",
+      "형사사건은 초기 대응이 결과를 크게 좌우합니다.\n사실관계를 면밀히 분석하고,\n의뢰인이 이해할 수 있는 언어로\n절차와 대응 방향을 설명드립니다.",
     strengths: [
       {
         title: "상담부터 종결까지 직접 수행",
@@ -135,7 +135,7 @@ export const homepageContent = {
   cases: {
     id: "cases",
     eyebrow: "수행 사례",
-    heading: "정천의 수행사례를 소개합니다.",
+    heading: "정천의 수행사례를\n소개합니다.",
     filters: ["전체", "형사", "민사", "이혼·가사"],
     viewAllLabel: "전체 사례 보기",
     viewAllHref: "/cases",

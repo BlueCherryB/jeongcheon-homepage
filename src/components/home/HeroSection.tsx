@@ -12,8 +12,8 @@ export function HeroSection() {
     <Section bordered={false} spacing="hero">
       <div className="grid items-center gap-0 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
         <div className="max-w-2xl">
-          <div className="inline-flex flex-col items-start">
-            <p className="text-[17px] font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
+          <div className="flex w-full flex-col items-center sm:inline-flex sm:w-auto sm:items-start">
+            <p className="text-[18px] font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
               {hero.eyebrow}
             </p>
             <span
