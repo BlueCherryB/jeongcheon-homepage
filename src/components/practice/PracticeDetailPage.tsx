@@ -38,16 +38,14 @@ function SectionTitle({
 
 const certificateByPracticeSlug = {
   criminal: {
-    eyebrow: "대한변호사협회 등록",
-    title: "형사 전문 변호사 등록증서",
+    title: "형사법 전문분야 등록",
     description:
       "김찬협 변호사의 대한변호사협회 형사법 전문분야 등록증서입니다.",
     imageSrc: criminalCertificateAssetPath,
     imageAlt: "김찬협 변호사 대한변호사협회 형사법 전문분야 등록증서",
   },
   civil: {
-    eyebrow: "대한변호사협회 등록",
-    title: "민사 전문 변호사 등록증서",
+    title: "민사법 전문분야 등록",
     description:
       "김찬협 변호사의 대한변호사협회 민사법 전문분야 등록증서입니다.",
     imageSrc: civilCertificateAssetPath,
@@ -66,28 +64,35 @@ function CertificateSection({ area }: { area: PracticeArea }) {
   }
 
   return (
-    <div className="mt-8 rounded-[18px] border border-[#E8E2D7] bg-white p-7">
-      <div className="grid gap-6 lg:grid-cols-[0.58fr_0.42fr] lg:items-center">
-        <div>
-          <p className="text-sm font-semibold text-[#C8A96A]">
-            {certificate.eyebrow}
-          </p>
-          <h3 className="mt-3 text-xl font-semibold text-[#111B36]">
-            {certificate.title}
-          </h3>
-          <p className="mt-4 break-keep text-sm leading-7 text-[#111B36]/68">
-            {certificate.description}
-          </p>
-        </div>
-        <div className="overflow-hidden rounded-[14px] border border-[#E8E2D7] bg-[#FAF8F4] p-3 shadow-[0_18px_44px_rgba(17,27,54,0.08)]">
+    <div className="mx-auto mt-10 max-w-5xl border-t border-[#E8E2D7] pt-8">
+      <h3 className="font-chosun text-[26px] font-normal tracking-[-0.02em] text-[#111B36]">
+        대한변호사협회 전문분야 등록
+      </h3>
+      <div className="mt-6 grid gap-6 md:grid-cols-[minmax(0,360px)_1fr] lg:grid-cols-[minmax(0,380px)_1fr]">
+        <div className="w-full max-w-[360px] justify-self-start overflow-hidden rounded-[12px] border border-[#E8E2D7] bg-white p-2 shadow-[0_14px_34px_rgba(17,27,54,0.08)] lg:max-w-[380px]">
           <Image
             src={certificate.imageSrc}
             alt={certificate.imageAlt}
             width={744}
             height={1039}
-            className="h-auto w-full rounded-[10px] bg-white object-contain"
-            sizes="(min-width: 1024px) 360px, 100vw"
+            className="h-auto w-full rounded-[8px] object-contain"
+            sizes="(min-width: 1024px) 380px, (min-width: 768px) 360px, 100vw"
           />
+        </div>
+        <div className="pt-1">
+          <p className="text-sm font-semibold text-[#C8A96A]">
+            Specialist Registration
+          </p>
+          <h4 className="mt-3 text-xl font-semibold text-[#111B36]">
+            {certificate.title}
+          </h4>
+          <p className="mt-4 break-keep text-sm leading-7 text-[#111B36]/68">
+            {certificate.description}
+          </p>
+          <p className="mt-3 break-keep text-sm leading-7 text-[#111B36]/60">
+            등록 분야와 증서 내용을 확인할 수 있도록 원본 비율을 유지해
+            표시합니다.
+          </p>
         </div>
       </div>
     </div>
