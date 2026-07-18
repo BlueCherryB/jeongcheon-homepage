@@ -27,6 +27,11 @@ const caseStudyOrdering = `order(
   _createdAt desc
 )`;
 
+const featuredCaseStudyOrdering = `order(
+  sortOrder asc,
+  publishedAt desc
+)`;
+
 export const publishedCaseStudiesQuery = `*[
   _type == "caseStudy" &&
   defined(slug.current)
@@ -35,8 +40,10 @@ export const publishedCaseStudiesQuery = `*[
 export const featuredCaseStudiesQuery = `*[
   _type == "caseStudy" &&
   defined(slug.current) &&
-  featured == true
-] | ${caseStudyOrdering} ${caseStudyListProjection}`;
+  featured == true &&
+  sortOrder >= 1 &&
+  sortOrder <= 5
+] | ${featuredCaseStudyOrdering} [0...5] ${caseStudyListProjection}`;
 
 export const publishedCaseStudyBySlugQuery = `*[
   _type == "caseStudy" &&
