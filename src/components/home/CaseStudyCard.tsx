@@ -8,7 +8,7 @@ export type CaseStudyCardItem = {
   title: string;
   summary: string;
   result: string;
-  resultDetail: string;
+  resultDetail?: string;
   publishedAt?: string;
   displayDate?: string;
   image?: CaseStudyImage;
@@ -68,9 +68,11 @@ export function CaseStudyCard({
             <p className="text-xl font-bold text-[#C8A96A]">
               {caseStudy.result}
             </p>
-            <p className="mt-1 px-3 text-xs font-semibold leading-5">
-              {caseStudy.resultDetail}
-            </p>
+            {caseStudy.resultDetail ? (
+              <p className="mt-1 px-3 text-xs font-semibold leading-5 text-[#111B36]">
+                {caseStudy.resultDetail}
+              </p>
+            ) : null}
           </div>
         </div>
 
@@ -78,7 +80,7 @@ export function CaseStudyCard({
           <time dateTime={caseStudy.publishedAt}>
             {caseStudy.displayDate ?? caseStudy.publishedAt}
           </time>
-          <span className="inline-flex items-center justify-end whitespace-nowrap text-right text-sm font-semibold text-[#C8A96A]">
+          <span className="inline-flex items-center justify-end whitespace-nowrap text-right text-sm font-semibold text-[#111B36] transition-colors group-hover:text-[#C8A96A]">
             사례 자세히 보기
             <span
               aria-hidden="true"

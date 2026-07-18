@@ -33,6 +33,16 @@ function requireTrimmedString(fieldName: string, value: unknown): string {
   return trimmedValue;
 }
 
+function optionalTrimmedString(value: unknown): string | undefined {
+  if (typeof value !== "string") {
+    return undefined;
+  }
+
+  const trimmedValue = value.trim();
+
+  return trimmedValue || undefined;
+}
+
 function mapStringArray(value: unknown): string[] {
   if (!Array.isArray(value)) {
     return [];
@@ -95,7 +105,7 @@ export function mapLocalCaseStudy(
     categoryId: category,
     categoryLabel: caseStudyCategoryLabels[category],
     result: requireTrimmedString("result", caseStudy.result),
-    resultDetail: requireTrimmedString("resultDetail", caseStudy.resultDetail),
+    resultDetail: optionalTrimmedString(caseStudy.resultDetail),
     summary: requireTrimmedString("summary", caseStudy.summary),
     publishedAt: requireTrimmedString("publishedAt", caseStudy.publishedAt),
     displayDate: requireTrimmedString("displayDate", caseStudy.displayDate),

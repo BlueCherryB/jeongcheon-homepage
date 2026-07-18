@@ -58,7 +58,7 @@ export type CaseStudyListItem = {
   categoryId: CaseStudyCategory;
   categoryLabel: CaseStudyCategoryLabel;
   result: string;
-  resultDetail: string;
+  resultDetail?: string;
   summary: string;
   publishedAt?: string;
   displayDate?: string;
