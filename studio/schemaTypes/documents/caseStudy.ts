@@ -25,6 +25,8 @@ type InitialValueContext = {
 type ValidationContext = InitialValueContext & {
   document?: {
     _id?: string
+    featured?: boolean
+    sortOrder?: number
   }
 }
 
@@ -104,6 +106,50 @@ async function isUniqueCaseSlug(
 
 function validateUniqueCaseSlug(value: unknown, context: unknown): Promise<true | string> {
   return isUniqueCaseSlug(value, context as ValidationContext)
+}
+
+async function validateFeaturedSortOrder(
+  value: unknown,
+  context: ValidationContext,
+): Promise<true | string> {
+  const document = context.document
+
+  if (document?.featured !== true) {
+    return true
+  }
+
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 1 || value > 5) {
+    return '대표 사례로 노출하려면 1부터 5 사이의 메인 노출 순서를 입력해주세요.'
+  }
+
+  const documentId = document._id?.replace(/^drafts\./, '')
+
+  if (!documentId) {
+    return true
+  }
+
+  const client = context.getClient({apiVersion: sanityApiVersion})
+  const duplicateCount = await client.fetch<number>(
+    `count(*[
+      _type == "caseStudy" &&
+      featured == true &&
+      sortOrder == $sortOrder &&
+      !(_id in [$publishedId, $draftId])
+    ])`,
+    {
+      sortOrder: value,
+      publishedId: documentId,
+      draftId: `drafts.${documentId}`,
+    },
+  )
+
+  return duplicateCount > 0
+    ? '같은 메인 노출 순서를 사용하는 대표 사례가 있습니다.'
+    : true
+}
+
+function validateSortOrder(value: unknown, context: unknown): Promise<true | string> {
+  return validateFeaturedSortOrder(value, context as ValidationContext)
 }
 
 export const caseStudy = defineType({
@@ -267,7 +313,7 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'featured',
-      title: '주요 사례로 표시',
+      title: '메인 대표 사례로 노출',
       type: 'boolean',
       group: 'settings',
       description: '향후 홈페이지나 강조 영역에 표시할 때 사용할 편집 설정입니다.',
@@ -275,13 +321,17 @@ export const caseStudy = defineType({
     }),
     defineField({
       name: 'sortOrder',
-      title: '노출 순서',
+      title: '메인 노출 순서',
       type: 'number',
       group: 'settings',
       description:
-        '수동 정렬을 사용할 때 낮은 숫자가 먼저 표시됩니다. 비워두면 날짜 기준 정렬을 사용합니다.',
+        '대표 사례로 노출할 때 1부터 5 사이의 순서를 입력합니다.',
       validation: (Rule) =>
-        Rule.integer().min(0).error('노출 순서는 0 이상의 정수로 입력해주세요.'),
+        Rule.integer()
+          .min(1)
+          .max(5)
+          .custom(validateSortOrder)
+          .error('메인 노출 순서는 1부터 5 사이의 정수로 입력해주세요.'),
     }),
     defineField({
       name: 'seo',
@@ -296,14 +346,20 @@ export const caseStudy = defineType({
       category: 'category',
       result: 'result',
       publishedAt: 'publishedAt',
+      featured: 'featured',
+      sortOrder: 'sortOrder',
       media: 'mainImage.image',
     },
-    prepare({title, category, result, publishedAt, media}) {
+    prepare({title, category, result, publishedAt, featured, sortOrder, media}) {
       const categoryTitle = category ? caseCategoryTitles[category] || '분야 미지정' : '분야 미지정'
       const subtitleItems = [categoryTitle, result, publishedAt?.slice(0, 10)].filter(Boolean)
+      const previewTitle =
+        featured && typeof sortOrder === 'number'
+          ? `[대표 ${sortOrder}] ${title || '제목 없음'}`
+          : title || '제목 없음'
 
       return {
-        title: title || '제목 없음',
+        title: previewTitle,
         subtitle: subtitleItems.join(' · '),
         media,
       }

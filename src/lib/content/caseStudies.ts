@@ -48,7 +48,7 @@ export async function getFeaturedCaseStudies(): Promise<CaseStudyListItem[]> {
       await getFeaturedSanityCaseStudies(),
     );
 
-    return caseStudies.length > 0 ? caseStudies : getLocalFeaturedCaseStudies();
+    return caseStudies;
   } catch (error) {
     if (error instanceof CaseStudyMappingError) {
       throw error;
