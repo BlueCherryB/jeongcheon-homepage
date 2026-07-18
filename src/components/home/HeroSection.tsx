@@ -18,7 +18,7 @@ export function HeroSection() {
             </p>
             <span
               aria-hidden="true"
-              className="mt-0.5 h-px w-40 bg-[#C8980A] sm:w-49"
+              className="mt-0.5 h-px w-56 bg-[#C8980A] sm:w-64"
             />
           </div>
           <SectionHeading
