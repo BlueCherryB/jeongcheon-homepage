@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import Link from "next/link";
 
 import { Container } from "@/components/ui/Container";
 import { officeContact } from "@/data/contact";
@@ -6,7 +7,7 @@ import { eulyoo1945 } from "@/lib/fonts";
 
 type FooterIcon = "location" | "phone";
 
-const currentYear = new Date().getFullYear();
+const copyrightYear = 2026;
 
 function FooterInfoIcon({ icon }: { icon: FooterIcon }) {
   if (icon === "phone") {
@@ -66,16 +67,25 @@ export function Footer() {
       <Container className="py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[1.15fr_0.5fr_1.25fr_1fr] lg:gap-10">
           <div>
-            <div className="flex items-end gap-2 text-[#111B36]">
+            <Link
+              href="/"
+              aria-label="법률사무소 정천 홈으로 이동"
+              className="inline-flex items-center gap-2.5 text-[#111B36] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
+            >
+              <span className="flex flex-col text-right">
+                <span className="text-sm font-semibold leading-none">
+                  법률사무소
+                </span>
+                <span className="mt-1 text-[9px] font-medium leading-none tracking-wide">
+                  LAW FIRM JEONG CHEON
+                </span>
+              </span>
               <span
                 className={`${eulyoo1945.className} text-3xl font-normal leading-none tracking-[-0.03em]`}
               >
                 정천
               </span>
-              <span className="pb-0.5 text-lg font-semibold leading-none">
-                법률사무소
-              </span>
-            </div>
+            </Link>
             <p className="mt-7 break-keep text-sm leading-7 text-[#111B36]/72">
               의뢰인의 권익을 지키고
               <br />
@@ -115,7 +125,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col gap-5 border-t border-[#E8E2D7] pt-6 text-sm text-[#111B36]/65 md:flex-row md:items-center md:justify-between">
-          <p>© {currentYear} 정천 법률사무소. All rights reserved.</p>
+          <p>© {copyrightYear} 법률사무소 정천. All rights reserved.</p>
 
           <nav aria-label="Legal">
             <ul className="flex flex-wrap gap-x-6 gap-y-2">
