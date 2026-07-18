@@ -10,10 +10,10 @@ export function HeroSection() {
 
   return (
     <Section bordered={false} spacing="hero">
-      <div className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+      <div className="grid items-center gap-0 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
         <div className="max-w-2xl">
           <div className="inline-flex flex-col items-start">
-            <p className="text-[18px] font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
+            <p className="text-[17px] font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
               {hero.eyebrow}
             </p>
             <span
@@ -25,24 +25,24 @@ export function HeroSection() {
             level={1}
             title={hero.title}
             description={hero.description}
-            titleClassName="font-chosun mt-7 max-w-2xl whitespace-pre-line text-[40px] font-normal leading-[1.4] tracking-[-0.02em] text-[#0F172A] sm:text-[52px]"
+            titleClassName="font-chosun mt-6 max-w-2xl whitespace-pre-line text-[34px] font-normal leading-[1.35] tracking-[-0.02em] text-[#0F172A] sm:mt-7 sm:text-[52px] sm:leading-[1.4]"
             descriptionClassName="mt-5 max-w-md whitespace-pre-line text-base leading-[1.7] text-zinc-600"
           />
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <Button href={hero.primaryCta.href} className="h-14 px-7 text-[17px]">
+            <Button href={hero.primaryCta.href} className="h-12 px-6 text-base sm:h-14 sm:px-7 sm:text-[17px]">
               {hero.primaryCta.label}
             </Button>
             <Button
               href={hero.secondaryCta.href}
               variant="secondary"
-              className="h-14 px-7 text-[17px]"
+              className="h-12 px-6 text-base sm:h-14 sm:px-7 sm:text-[17px]"
             >
               {hero.secondaryCta.label}
             </Button>
           </div>
         </div>
 
-        <div className="relative min-h-[360px] overflow-hidden bg-zinc-100 sm:min-h-[480px] lg:min-h-[560px]">
+        <div className="relative hidden min-h-[360px] overflow-hidden bg-zinc-100 sm:block sm:min-h-[480px] lg:min-h-[560px]">
           <Image
             src={hero.image.src}
             alt={hero.image.alt}

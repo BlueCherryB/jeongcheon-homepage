@@ -9,7 +9,7 @@ export function AttorneySection() {
 
   return (
     <section id={attorney.id} className="bg-[#FAFAF8]">
-      <Container className="py-28 lg:py-32">
+      <Container className="py-16 sm:py-28 lg:py-32">
         <div className="grid gap-12 lg:grid-cols-[0.47fr_0.53fr] lg:items-start lg:gap-20">
           <div className="relative max-w-xl lg:mt-14 lg:max-w-[34rem]">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-zinc-100">
@@ -34,31 +34,31 @@ export function AttorneySection() {
               />
             </div>
 
-            <h2 className="font-chosun mt-6 text-[42px] font-normal leading-tight tracking-[-0.02em] text-[#0F172A] sm:text-[54px]">
+            <h2 className="font-chosun mt-5 text-[44px] font-normal leading-tight tracking-[-0.02em] text-[#0F172A] sm:mt-6 sm:text-[54px]">
               {attorney.name}
             </h2>
 
-            <blockquote className="relative mt-10">
+            <blockquote className="relative mt-7 sm:mt-10">
               <span
                 aria-hidden="true"
-                className="absolute -left-1 -top-6 font-chosun text-6xl leading-none text-[#C8A96A]"
+                className="absolute -left-1 -top-5 font-chosun text-5xl leading-none text-[#C8A96A] sm:-top-6 sm:text-6xl"
               >
                 “
               </span>
-              <p className="font-chosun whitespace-pre-line text-[31px] font-normal leading-[1.42] tracking-[-0.02em] text-[#020617] sm:text-[30px]">
+              <p className="font-chosun whitespace-pre-line text-[36px] font-normal leading-[1.32] tracking-[-0.02em] text-[#020617] sm:text-[30px] sm:leading-[1.42]">
                 {attorney.quote}
               </p>
             </blockquote>
 
-            <p className="mt-6 max-w-xl whitespace-pre-line text-base leading-[1.75] text-zinc-700 sm:text-lg">
+            <p className="mt-5 max-w-xl whitespace-pre-line text-[17px] leading-[1.7] text-zinc-700 sm:mt-6 sm:text-lg sm:leading-[1.75]">
               {attorney.description}
             </p>
 
-            <div className="mt-8 border-y border-[#C8A96A]/25">
+            <div className="mt-6 border-y border-[#C8A96A]/25 sm:mt-8">
               {attorney.strengths.map((strength) => (
                 <div
                   key={strength.title}
-                  className="flex gap-4 border-b border-[#C8A96A]/20 py-4 last:border-b-0"
+                  className="flex gap-3.5 border-b border-[#C8A96A]/20 py-3.5 last:border-b-0 sm:gap-4 sm:py-4"
                 >
                   <span
                     aria-hidden="true"
@@ -67,10 +67,10 @@ export function AttorneySection() {
                     ✓
                   </span>
                   <div>
-                    <h3 className="font-semibold text-[#0F172A]">
+                    <h3 className="text-lg font-semibold text-[#0F172A] sm:text-base">
                       {strength.title}
                     </h3>
-                    <p className="mt-1 text-sm leading-6 text-zinc-600">
+                    <p className="mt-1 text-[15px] leading-6 text-zinc-600 sm:text-sm">
                       {strength.description}
                     </p>
                   </div>
@@ -78,7 +78,7 @@ export function AttorneySection() {
               ))}
             </div>
 
-            <Button href={attorney.cta.href} className="mt-5 h-14 px-7 max-sm:w-full">
+            <Button href={attorney.cta.href} className="mt-5 h-12 px-6 max-sm:w-full sm:h-14 sm:px-7">
               <span>{attorney.cta.label}</span>
               <span aria-hidden="true" className="ml-2 text-[#C8A96A]">
                 →
