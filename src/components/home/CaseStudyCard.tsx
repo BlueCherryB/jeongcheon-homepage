@@ -55,10 +55,10 @@ export function CaseStudyCard({
         </div>
 
         <div className="min-w-0 lg:pr-4">
-          <h3 className="text-xl font-semibold leading-snug tracking-[-0.01em] text-[#111B36] transition-colors group-hover:text-[#9F7F37]">
+          <h3 className="line-clamp-2 text-xl font-semibold leading-snug tracking-[-0.01em] text-[#111B36] transition-colors group-hover:text-[#9F7F37]">
             {caseStudy.title}
           </h3>
-          <p className="mt-3 text-sm leading-7 text-zinc-600 sm:text-base">
+          <p className="mt-3 line-clamp-3 text-sm leading-7 text-zinc-600 sm:line-clamp-2 sm:text-base">
             {caseStudy.summary}
           </p>
         </div>
