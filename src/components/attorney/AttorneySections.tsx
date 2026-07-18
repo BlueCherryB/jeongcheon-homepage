@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { CaseStudyCard } from "@/components/home/CaseStudyCard";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import type { AttorneyProfile, AttorneyTimelineItem } from "@/data/attorney";
-import type { CaseStudy } from "@/data/cases";
+import type { CaseStudyListItem } from "@/types/content/caseStudy";
 
 type AttorneySectionsProps = {
   attorney: AttorneyProfile;
-  representativeCases: CaseStudy[];
+  representativeCases: CaseStudyListItem[];
 };
 
 function SmallIcon() {
@@ -87,9 +88,14 @@ export function AttorneySections({
                   {credential.label}
                 </p>
                 {credential.year ? (
-                  <p className="mt-1 text-sm font-semibold text-[#111B36]/70">
-                    ({credential.year})
-                  </p>
+                  <div className="mt-2 space-y-1">
+                    <p className="text-xs font-semibold text-[#111B36]/58">
+                      자격 취득
+                    </p>
+                    <p className="text-sm font-semibold text-[#111B36]/70">
+                      ({credential.year})
+                    </p>
+                  </div>
                 ) : null}
                 {credential.note ? (
                   <p className="mt-1 text-xs font-semibold text-[#111B36]/60">
@@ -164,41 +170,28 @@ export function AttorneySections({
         </Container>
       </section>
 
-      <section className="bg-[#FAF8F4]">
-        <Container className="py-20">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <h2 className="font-chosun text-[36px] font-normal tracking-[-0.02em] text-[#111B36]">
-              대표 수행사례
-            </h2>
-            <Link
-              href="/cases"
-              className="text-sm font-semibold text-[#111B36] hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
-            >
-              더 많은 수행사례 보기 →
-            </Link>
-          </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {representativeCases.map((caseStudy) => (
+      {representativeCases.length > 0 ? (
+        <section className="bg-[#FAF8F4]">
+          <Container className="py-20">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <h2 className="font-chosun text-[36px] font-normal tracking-[-0.02em] text-[#111B36]">
+                대표 수행사례
+              </h2>
               <Link
-                key={caseStudy.slug}
-                href={`/cases/${caseStudy.slug}`}
-                aria-label={`${caseStudy.title} 수행사례 보기`}
-                className="rounded-[18px] border border-[#E8E2D7] bg-white p-6 transition-colors hover:border-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
+                href="/cases"
+                className="text-sm font-semibold text-[#111B36] hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
               >
-                <p className="text-sm font-semibold text-[#C8A96A]">
-                  {caseStudy.categoryLabel}
-                </p>
-                <h3 className="mt-3 min-h-14 font-semibold leading-7 text-[#111B36]">
-                  {caseStudy.title}
-                </h3>
-                <p className="mt-5 text-sm font-semibold text-[#111B36]/70">
-                  {caseStudy.result} · {caseStudy.resultDetail}
-                </p>
+                더 많은 수행사례 보기 →
               </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
+            </div>
+            <div className="mt-8 flex flex-col gap-3">
+              {representativeCases.map((caseStudy) => (
+                <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       <section className="bg-white">
         <Container className="py-20">
