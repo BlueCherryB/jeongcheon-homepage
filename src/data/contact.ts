@@ -5,7 +5,6 @@ export type OfficeContact = {
   emailHref: string;
   address: string;
   addressDetail: string;
-  businessHours: string;
   closedDays: string;
   urgentNotice: string;
   mapImage: {
@@ -16,13 +15,12 @@ export type OfficeContact = {
 };
 
 export const officeContact: OfficeContact = {
-  phoneDisplay: "02-3012-2671",
-  phoneHref: "tel:0230122671",
+  phoneDisplay: "010-2690-1699",
+  phoneHref: "tel:01026901699",
   email: "kimch@jclaw.co.kr",
   emailHref: "mailto:kimch@jclaw.co.kr",
   address: "서울특별시 송파구 법원로8길 13, 517호 (문정동, 문정헤리움써밋타워)",
   addressDetail: "8호선 문정역 3번 출구",
-  businessHours: "평일 09:00 - 18:00",
   closedDays: "주말 및 공휴일 휴무",
   urgentNotice: "긴급 상담은 전화로 문의해 주십시오.",
   mapImage: {

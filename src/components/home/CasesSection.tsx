@@ -7,6 +7,7 @@ import {
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { homepageContent } from "@/data/homepage";
+import { buildCasesHref, type CaseFilterValue } from "@/lib/cases";
 
 type CasesSectionProps = {
   caseStudies: CaseStudyCardItem[];
@@ -14,6 +15,7 @@ type CasesSectionProps = {
 
 export function CasesSection({ caseStudies }: CasesSectionProps) {
   const { cases } = homepageContent;
+  const filterHrefs: CaseFilterValue[] = ["all", "criminal", "civil", "family"];
 
   return (
     <section id={cases.id} className="bg-[#FAF8F4]">
@@ -43,21 +45,21 @@ export function CasesSection({ caseStudies }: CasesSectionProps) {
           >
             {cases.filters.map((filter, index) => {
               const isSelected = index === 0;
+              const category = filterHrefs[index] ?? "all";
 
               return (
-                <button
+                <Link
                   key={filter}
-                  type="button"
-                  aria-pressed={isSelected}
+                  href={buildCasesHref({ category, page: 1 })}
                   className={[
-                    "min-w-24 rounded-full border px-7 py-2.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8A96A]",
+                    "inline-flex min-w-24 items-center justify-center rounded-full border px-7 py-2.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8A96A]",
                     isSelected
                       ? "border-[#111B36] bg-[#111B36] text-white"
                       : "border-[#D8D1C5] bg-white/70 text-[#111B36] hover:border-[#C8A96A] hover:text-[#9F7F37]",
                   ].join(" ")}
                 >
                   {filter}
-                </button>
+                </Link>
               );
             })}
           </div>

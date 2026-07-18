@@ -119,18 +119,8 @@ export function Footer() {
           </FooterColumn>
         </div>
 
-        <div className="mt-10 flex flex-col gap-5 border-t border-[#E8E2D7] pt-6 text-sm text-[#111B36]/65 md:flex-row md:items-center md:justify-between">
+        <div className="mt-10 border-t border-[#E8E2D7] pt-6 text-sm text-[#111B36]/65">
           <p>© {currentYear} 법률사무소 정천. All rights reserved.</p>
-
-          <nav aria-label="Legal">
-            <ul className="flex flex-wrap gap-x-6 gap-y-2">
-              <li>개인정보처리방침</li>
-              <li className="hidden text-[#E8E2D7] md:block" aria-hidden="true">
-                |
-              </li>
-              <li>이용약관</li>
-            </ul>
-          </nav>
         </div>
       </Container>
     </footer>

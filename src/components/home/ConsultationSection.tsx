@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { officeContact } from "@/data/contact";
 
-type ConsultationIcon = "phone" | "mail" | "location";
+type ConsultationIcon = "phone" | "location";
 
 type ConsultationInfoItemProps = {
   icon: ConsultationIcon;
@@ -15,20 +15,6 @@ type ConsultationInfoItemProps = {
 };
 
 function InfoIcon({ icon }: { icon: ConsultationIcon }) {
-  if (icon === "mail") {
-    return (
-      <svg aria-hidden="true" className="h-6 w-6" fill="none" viewBox="0 0 24 24">
-        <path
-          d="M4 6h16v12H4V6Zm1.5 1.5L12 13l6.5-5.5"
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth="1.6"
-        />
-      </svg>
-    );
-  }
-
   if (icon === "location") {
     return (
       <svg aria-hidden="true" className="h-6 w-6" fill="none" viewBox="0 0 24 24">
@@ -110,57 +96,47 @@ export function ConsultationSection() {
         </div>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[0.46fr_0.54fr] lg:items-stretch">
-          <div className="rounded-[22px] border border-[#E8E2D7] bg-white px-7 py-6 shadow-[0_18px_54px_rgba(17,27,54,0.05)] sm:px-8">
-            <ConsultationInfoItem
-              icon="phone"
-              label="전화 상담"
-              value={officeContact.phoneDisplay}
-              href={officeContact.phoneHref}
-              supportingText={officeContact.businessHours}
-            />
-            <ConsultationInfoItem
-              icon="mail"
-              label="이메일 상담"
-              value={officeContact.email}
-              href={officeContact.emailHref}
-              supportingText="24시간 접수 가능"
-            />
-            <ConsultationInfoItem
-              icon="location"
-              label="주소"
-              value={officeContact.address}
-              supportingText={officeContact.addressDetail}
-            />
+          <div className="flex h-full flex-col justify-center rounded-[22px] border border-[#E8E2D7] bg-white px-7 py-8 shadow-[0_18px_54px_rgba(17,27,54,0.05)] sm:px-8 lg:py-10">
+            <div>
+              <p className="break-keep text-base leading-7 text-[#111B36]/70">
+                사건에 대한 상담이 필요하시면 전화로 문의해 주세요.
+              </p>
+              <ConsultationInfoItem
+                icon="phone"
+                label="전화 상담"
+                value={officeContact.phoneDisplay}
+                href={officeContact.phoneHref}
+              />
+              <ConsultationInfoItem
+                icon="location"
+                label="주소"
+                value={officeContact.address}
+                supportingText={officeContact.addressDetail}
+              />
+            </div>
 
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-7 flex flex-col">
               <Button
-                href={officeContact.emailHref}
-                className="h-14 flex-1 px-6 max-sm:w-full"
+                href={officeContact.phoneHref}
+                className="h-14 px-6 max-sm:w-full"
               >
                 상담 문의하기
                 <span aria-hidden="true" className="ml-2 text-[#C8A96A]">
                   →
                 </span>
               </Button>
-              <Button
-                href={officeContact.phoneHref}
-                variant="secondary"
-                className="h-14 flex-1 border-[#C8A96A] px-6 text-[#111B36] max-sm:w-full"
-              >
-                전화 상담하기
-              </Button>
             </div>
           </div>
 
-          <div>
+          <div className="flex h-full flex-col">
             <a
               href={officeContact.mapUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="네이버 지도에서 법률사무소 정천 위치 보기"
-              className="group block rounded-[22px] border border-[#E8E2D7] bg-white p-3 shadow-[0_18px_54px_rgba(17,27,54,0.06)] transition-colors hover:border-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
+              className="group block rounded-[22px] border border-[#E8E2D7] bg-white p-3 shadow-[0_18px_54px_rgba(17,27,54,0.06)] transition-colors hover:border-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A] lg:flex-1"
             >
-              <div className="relative aspect-[3/2] overflow-hidden rounded-[16px] bg-[#F3EEE6]">
+              <div className="relative aspect-[3/2] overflow-hidden rounded-[16px] bg-[#F3EEE6] lg:h-full lg:aspect-auto">
                 <Image
                   src={officeContact.mapImage.src}
                   alt={officeContact.mapImage.alt}
