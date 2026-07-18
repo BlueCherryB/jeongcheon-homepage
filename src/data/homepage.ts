@@ -105,7 +105,7 @@ export const homepageContent = {
       {
         title: "형사",
         icon: "scale",
-        href: "#consultation",
+        href: "/practice/criminal",
         items: [
           "경찰조사 및 수사 대응",
           "고소 · 고발 대리",
@@ -116,7 +116,7 @@ export const homepageContent = {
       {
         title: "민사",
         icon: "document",
-        href: "#consultation",
+        href: "/practice/civil",
         items: [
           "계약 분쟁",
           "손해배상 청구",
@@ -127,7 +127,7 @@ export const homepageContent = {
       {
         title: "이혼·가사",
         icon: "family",
-        href: "#consultation",
+        href: "/practice/family",
         items: ["이혼 소송", "재산분할", "양육권 · 양육비", "상속 · 유류분"],
       },
     ],
