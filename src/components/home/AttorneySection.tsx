@@ -10,8 +10,8 @@ export function AttorneySection() {
   return (
     <section id={attorney.id} className="bg-[#FAFAF8]">
       <Container className="py-16 sm:py-28 lg:py-32">
-        <div className="grid gap-12 lg:grid-cols-[0.47fr_0.53fr] lg:items-start lg:gap-20">
-          <div className="relative max-w-xl lg:mt-14 lg:max-w-[34rem]">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[0.47fr_0.53fr] lg:items-start lg:gap-20">
+          <div className="relative hidden max-w-xl sm:block lg:mt-14 lg:max-w-[34rem]">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-zinc-100">
               <Image
                 src={attorney.image.src}
@@ -25,27 +25,39 @@ export function AttorneySection() {
 
           <div>
             <div className="flex w-full flex-col items-center sm:inline-flex sm:w-auto sm:items-start">
-              <p className="text-xl font-semibold tracking-wide text-[#C8A96A] sm:text-2xl">
+              <p className="text-xl font-semibold tracking-wide text-[#C8980A] sm:text-2xl sm:text-[#C8A96A]">
                 {attorney.eyebrow}
               </p>
               <span
                 aria-hidden="true"
-                className="mt-0.5 h-px w-56 bg-[#C8A96A] sm:w-30"
+                className="mt-0.5 h-px w-36 bg-[#C8980A] sm:w-30 sm:bg-[#C8A96A]"
               />
             </div>
 
-            <h2 className="font-chosun mt-5 text-[44px] font-normal leading-tight tracking-[-0.02em] text-[#0F172A] sm:mt-6 sm:text-[54px]">
+            <h2 className="font-chosun mt-4 text-center text-[40px] font-normal leading-tight tracking-[-0.02em] text-[#0F172A] sm:mt-6 sm:text-left sm:text-[54px]">
               {attorney.name}
             </h2>
 
-            <blockquote className="relative mt-7 sm:mt-10">
+            <div className="relative mt-6 max-w-xl sm:hidden">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-zinc-100">
+                <Image
+                  src={attorney.image.src}
+                  alt={attorney.image.alt}
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-[center_35%]"
+                />
+              </div>
+            </div>
+
+            <blockquote className="relative mt-8 sm:mt-10">
               <span
                 aria-hidden="true"
-                className="absolute -left-1 -top-5 font-chosun text-5xl leading-none text-[#C8A96A] sm:-top-6 sm:text-6xl"
+                className="absolute -left-1 -top-4 font-chosun text-4xl leading-none text-[#C8980A] sm:-top-6 sm:text-6xl sm:text-[#C8A96A]"
               >
                 “
               </span>
-              <p className="font-chosun whitespace-pre-line text-[36px] font-normal leading-[1.32] tracking-[-0.02em] text-[#020617] sm:text-[30px] sm:leading-[1.42]">
+              <p className="font-chosun whitespace-pre-line text-[32px] font-normal leading-[1.34] tracking-[-0.02em] text-[#020617] sm:text-[30px] sm:leading-[1.42]">
                 {attorney.quote}
               </p>
             </blockquote>
@@ -62,7 +74,7 @@ export function AttorneySection() {
                 >
                   <span
                     aria-hidden="true"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-base font-semibold text-[#C8A96A]"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-base font-semibold text-[#C8980A] sm:text-[#C8A96A]"
                   >
                     ✓
                   </span>
@@ -80,7 +92,7 @@ export function AttorneySection() {
 
             <Button href={attorney.cta.href} className="mt-5 h-12 px-6 max-sm:w-full sm:h-14 sm:px-7">
               <span>{attorney.cta.label}</span>
-              <span aria-hidden="true" className="ml-2 text-[#C8A96A]">
+              <span aria-hidden="true" className="ml-2 text-[#C8980A] sm:text-[#C8A96A]">
                 →
               </span>
             </Button>
