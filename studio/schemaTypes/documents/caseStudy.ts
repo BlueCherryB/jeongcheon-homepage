@@ -214,6 +214,14 @@ export const caseStudy = defineType({
       validation: (Rule) => Rule.max(120).error('사건 결과는 120자 이내로 입력해주세요.'),
     }),
     defineField({
+      name: 'resultDetail',
+      title: '세부 결과',
+      type: 'string',
+      group: 'basic',
+      description: '결과 배지 아래에 작게 표시할 추가 결과를 입력합니다. 예: 위자료 3천만원, 집행유예, 벌금 감경',
+      validation: (Rule) => Rule.max(120).error('세부 결과는 120자 이내로 입력해주세요.'),
+    }),
+    defineField({
       name: 'tags',
       title: '사건 태그',
       type: 'array',

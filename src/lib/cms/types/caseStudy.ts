@@ -54,6 +54,7 @@ export type SanityCaseStudyListItem = {
   slug?: string;
   category?: SanityCaseCategory;
   result?: string;
+  resultDetail?: string;
   overview?: SanityPortableTextBlock[];
   outcome?: SanityPortableTextBlock[];
   summary?: string;

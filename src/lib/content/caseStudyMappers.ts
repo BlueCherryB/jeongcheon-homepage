@@ -235,7 +235,7 @@ export function mapSanityCaseStudyListItem(
     categoryId: category,
     categoryLabel: caseStudyCategoryLabels[category],
     result: requireTrimmedString("result", caseStudy.result),
-    resultDetail: requireTrimmedString("result", caseStudy.result),
+    resultDetail: optionalTrimmedString(caseStudy.resultDetail),
     summary: deriveSummary(caseStudy),
     publishedAt: optionalTrimmedString(caseStudy.publishedAt),
     displayDate: formatDisplayDate(optionalTrimmedString(caseStudy.publishedAt)),
