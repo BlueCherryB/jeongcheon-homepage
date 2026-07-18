@@ -1,13 +1,17 @@
 import Link from "next/link";
 
+import { CaseStudyCard } from "@/components/home/CaseStudyCard";
 import { PracticeAreaIcon } from "@/components/practice/PracticeAreaIcon";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import type { PracticeArea } from "@/data/practice";
-import { practiceAreas } from "@/data/practice";
+import { criminalCertificateAssetPath, practiceAreas } from "@/data/practice";
+import { buildCasesHref } from "@/lib/cases";
+import type { CaseStudyListItem } from "@/types/content/caseStudy";
 
 type PracticeDetailPageProps = {
   area: PracticeArea;
+  relatedCases: CaseStudyListItem[];
 };
 
 function SectionTitle({
@@ -27,7 +31,42 @@ function SectionTitle({
   );
 }
 
-export function PracticeDetailPage({ area }: PracticeDetailPageProps) {
+function CriminalCertificateSection() {
+  return (
+    <div className="mt-8 rounded-[18px] border border-[#E8E2D7] bg-white p-7">
+      <div className="grid gap-6 lg:grid-cols-[0.58fr_0.42fr] lg:items-center">
+        <div>
+          <p className="text-sm font-semibold text-[#C8A96A]">
+            대한변호사협회 등록
+          </p>
+          <h3 className="mt-3 text-xl font-semibold text-[#111B36]">
+            형사 전문 변호사 등록
+          </h3>
+          <p className="mt-4 break-keep text-sm leading-7 text-[#111B36]/68">
+            김찬협 변호사는 대한변호사협회에 형사 전문 분야로 등록되어
+            있습니다. 등록증 이미지는 현재 저장소에 포함되어 있지 않아, 아래
+            경로로 업로드되면 이 영역에 배치할 수 있습니다.
+          </p>
+        </div>
+        <div className="rounded-[14px] border border-dashed border-[#C8A96A]/70 bg-[#FAF8F4] p-5">
+          <p className="text-xs font-semibold text-[#111B36]/55">
+            필요한 인증서 이미지 경로
+          </p>
+          <p className="mt-2 break-all text-sm font-semibold leading-6 text-[#111B36]">
+            {criminalCertificateAssetPath}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function PracticeDetailPage({
+  area,
+  relatedCases,
+}: PracticeDetailPageProps) {
+  const casesHref = buildCasesHref({ category: area.category, page: 1 });
+
   return (
     <main className="bg-white text-[#111B36]">
       <section className="bg-[#FAF8F4]">
@@ -87,15 +126,12 @@ export function PracticeDetailPage({ area }: PracticeDetailPageProps) {
           <div className="grid gap-10 lg:grid-cols-[0.35fr_0.65fr]">
             <SectionTitle eyebrow="Overview" title="사건을 이해하는 방식" />
             <div className="space-y-5 break-keep text-base leading-8 text-[#111B36]/72">
-              <p>
-                이 영역에는 업무 분야별 핵심 설명이 들어갈 예정입니다. 현재는
-                전체 페이지 구조와 이동 흐름을 먼저 확인하기 위한 기본 문구만
-                배치합니다.
-              </p>
-              <p>
-                상담 단계에서 쟁점과 필요한 자료를 정리하고, 의뢰인이 절차를
-                이해할 수 있도록 안내합니다.
-              </p>
+              <h2 className="font-chosun text-[28px] font-normal tracking-[-0.02em] text-[#111B36]">
+                {area.introductionTitle}
+              </h2>
+              {area.introduction.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
           </div>
         </Container>
@@ -105,15 +141,16 @@ export function PracticeDetailPage({ area }: PracticeDetailPageProps) {
         <Container className="py-18 lg:py-20">
           <SectionTitle eyebrow="Trust" title="전문성과 신뢰" />
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {["전문 분야 검토", "직접 상담", "절차별 대응"].map((item) => (
-              <div key={item} className="rounded-[14px] border border-[#E8E2D7] bg-white p-6">
-                <p className="text-sm font-semibold text-[#C8A96A]">{item}</p>
+            {area.trustItems.map((item) => (
+              <div key={item.title} className="rounded-[14px] border border-[#E8E2D7] bg-white p-6">
+                <p className="text-sm font-semibold text-[#C8A96A]">{item.title}</p>
                 <p className="mt-3 break-keep text-sm leading-7 text-[#111B36]/68">
-                  세부 인증과 설명 자료는 추후 콘텐츠 단계에서 보강합니다.
+                  {item.description}
                 </p>
               </div>
             ))}
           </div>
+          {area.slug === "criminal" ? <CriminalCertificateSection /> : null}
         </Container>
       </section>
 
@@ -122,10 +159,10 @@ export function PracticeDetailPage({ area }: PracticeDetailPageProps) {
           <SectionTitle eyebrow="Services" title="주요 서비스" />
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {area.services.map((service) => (
-              <div key={service} className="border-t border-[#E8E2D7] pt-5">
-                <p className="font-semibold text-[#111B36]">{service}</p>
+              <div key={service.title} className="border-t border-[#E8E2D7] pt-5">
+                <p className="font-semibold text-[#111B36]">{service.title}</p>
                 <p className="mt-2 break-keep text-sm leading-7 text-[#111B36]/65">
-                  구체적인 서비스 설명은 추후 분야별 콘텐츠와 함께 정리합니다.
+                  {service.description}
                 </p>
               </div>
             ))}
@@ -138,38 +175,50 @@ export function PracticeDetailPage({ area }: PracticeDetailPageProps) {
           <SectionTitle eyebrow="Process" title="진행 절차" />
           <ol className="mt-8 grid gap-4 md:grid-cols-4">
             {area.process.map((step, index) => (
-              <li key={step} className="rounded-[14px] border border-[#E8E2D7] bg-white p-6">
+              <li key={step.title} className="rounded-[14px] border border-[#E8E2D7] bg-white p-6">
                 <p className="text-sm font-semibold text-[#C8A96A]">
                   0{index + 1}
                 </p>
-                <p className="mt-4 font-semibold text-[#111B36]">{step}</p>
+                <p className="mt-4 font-semibold text-[#111B36]">{step.title}</p>
+                <p className="mt-3 break-keep text-sm leading-7 text-[#111B36]/65">
+                  {step.description}
+                </p>
               </li>
             ))}
           </ol>
         </Container>
       </section>
 
-      <section className="bg-white">
-        <Container className="py-18 lg:py-20">
-          <div className="rounded-[18px] border border-[#E8E2D7] bg-[#FAF8F4] p-8">
-            <SectionTitle eyebrow="Cases" title="관련 수행사례" />
-            <p className="mt-5 break-keep text-base leading-8 text-[#111B36]/70">
-              분야별 대표 수행사례는 추후 Sanity 콘텐츠와 연결하여 표시할
-              예정입니다.
-            </p>
-          </div>
-        </Container>
-      </section>
+      {relatedCases.length > 0 ? (
+        <section className="bg-white">
+          <Container className="py-18 lg:py-20">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <SectionTitle eyebrow="Cases" title="관련 수행사례" />
+              <Link
+                href={casesHref}
+                className="text-sm font-semibold text-[#111B36] hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
+              >
+                {area.title} 사례 더 보기 →
+              </Link>
+            </div>
+            <div className="mt-8 flex flex-col gap-3">
+              {relatedCases.map((caseStudy) => (
+                <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       <section className="bg-[#111B36]">
         <Container className="py-14">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
             <div>
               <h2 className="font-chosun text-[32px] font-normal tracking-[-0.02em] text-white">
-                지금 필요한 대응을 함께 정리하겠습니다.
+                {area.ctaTitle}
               </h2>
               <p className="mt-4 max-w-2xl break-keep text-base leading-8 text-white/72">
-                사건의 현재 상황을 바탕으로 가능한 선택지를 안내합니다.
+                {area.ctaDescription}
               </p>
             </div>
             <Button href="/#consultation" className="h-14 border-[#C8A96A] px-7">

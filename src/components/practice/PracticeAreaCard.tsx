@@ -37,7 +37,7 @@ export function PracticeAreaCard({ area, large = false }: PracticeAreaCardProps)
       <ul className="mt-6">
         {area.services.map((item) => (
           <li
-            key={item}
+            key={item.title}
             className="flex items-center gap-4 border-b border-[#E8E2D7]/70 py-3.5 text-base font-medium text-[#111B36] last:border-b-0"
           >
             <span
@@ -46,7 +46,7 @@ export function PracticeAreaCard({ area, large = false }: PracticeAreaCardProps)
             >
               ✓
             </span>
-            <span>{item}</span>
+            <span>{item.title}</span>
           </li>
         ))}
       </ul>

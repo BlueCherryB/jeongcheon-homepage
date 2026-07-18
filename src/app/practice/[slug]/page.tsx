@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 
 import { PracticeDetailPage } from "@/components/practice/PracticeDetailPage";
 import { getPracticeAreaBySlug, practiceAreas } from "@/data/practice";
+import { filterCases, sortCasesLatestFirst } from "@/lib/cases";
+import { getCaseStudies } from "@/lib/content/caseStudies";
 
 type PracticeDetailRouteProps = {
   params: Promise<{
@@ -28,7 +30,7 @@ export async function generateMetadata({
 
   return {
     title: `${area.title} | 업무 분야 | 법률사무소 정천`,
-    description: `법률사무소 정천의 ${area.title} 업무 분야 안내 페이지입니다.`,
+    description: area.metadataDescription,
     alternates: {
       canonical: area.href,
     },
@@ -45,5 +47,10 @@ export default async function PracticeDetailRoute({
     notFound();
   }
 
-  return <PracticeDetailPage area={area} />;
+  const relatedCases = filterCases(
+    sortCasesLatestFirst(await getCaseStudies()),
+    area.category,
+  ).slice(0, 3);
+
+  return <PracticeDetailPage area={area} relatedCases={relatedCases} />;
 }
