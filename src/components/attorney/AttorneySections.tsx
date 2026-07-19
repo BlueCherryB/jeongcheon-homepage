@@ -119,7 +119,7 @@ export function AttorneySections({
 
             <p className="mt-6 max-w-2xl whitespace-pre-line break-keep text-base leading-8 text-[#111B36]/75">
               {
-                "법적 분쟁은 초기 대응이\n결과를 크게 좌우합니다. 사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로 절차와 대응 방향을 설명드립니다."
+                "법적 분쟁은 초기 대응이 결과를 크게 좌우합니다. 사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로 절차와 대응 방향을 설명드립니다."
               }
             </p>
 
@@ -195,7 +195,7 @@ export function AttorneySections({
                 <TimelineList items={attorney.qualifications} />
               </div>
             </div>
-            <div>
+            <div className="pt-6 sm:pt-0">
               <h2 className="font-chosun text-3xl font-normal text-[#111B36]">
                 주요 경력
               </h2>
