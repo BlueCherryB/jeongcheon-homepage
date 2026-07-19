@@ -11,14 +11,14 @@ export function HeroSection() {
   return (
     <Section bordered={false} spacing="hero">
       <div className="grid items-center gap-0 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
-        <div className="max-w-2xl text-center sm:text-left">
-          <div className="flex w-full flex-col items-center sm:inline-flex sm:w-auto sm:items-start">
-            <p className="text-[18px] font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
+        <div className="max-w-2xl text-left sm:text-left">
+          <div className="flex w-full flex-col items-start sm:inline-flex sm:w-auto sm:items-start">
+            <p className="text-xl font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
               {hero.eyebrow}
             </p>
             <span
               aria-hidden="true"
-              className="mt-0.5 h-px w-56 bg-[#C8980A] sm:w-64"
+              className="mt-0.5 h-px w-49 bg-[#C8980A] sm:w-64"
             />
           </div>
           <SectionHeading
@@ -29,13 +29,13 @@ export function HeroSection() {
             descriptionClassName="mx-auto mt-5 max-w-md whitespace-pre-line text-base leading-[1.7] text-zinc-600 sm:mx-0"
           />
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <Button href={hero.primaryCta.href} className="h-12 px-6 text-base sm:h-14 sm:px-7 sm:text-[17px]">
+            <Button href={hero.primaryCta.href} className="h-12 px-6 text-[18px] sm:h-14 sm:px-7 sm:text-[17px]">
               {hero.primaryCta.label}
             </Button>
             <Button
               href={hero.secondaryCta.href}
               variant="secondary"
-              className="h-12 px-6 text-base sm:h-14 sm:px-7 sm:text-[17px]"
+              className="h-12 px-6 text-[18px] sm:h-14 sm:px-7 sm:text-[17px]"
             >
               {hero.secondaryCta.label}
             </Button>

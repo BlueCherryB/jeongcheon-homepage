@@ -30,11 +30,11 @@ export function AttorneySection() {
               </p>
               <span
                 aria-hidden="true"
-                className="mt-0.5 h-px w-36 bg-[#C8980A] sm:w-30 sm:bg-[#C8A96A]"
+                className="mt-0.5 h-px w-30 bg-[#C8980A] sm:w-30 sm:bg-[#C8A96A]"
               />
             </div>
 
-            <h2 className="font-chosun mt-4 text-center text-[40px] font-normal leading-tight tracking-[-0.02em] text-[#0F172A] sm:mt-6 sm:text-left sm:text-[54px]">
+            <h2 className="font-chosun mt-4 text-center text-[36px] font-normal leading-tight tracking-[-0.02em] text-[#0F172A] sm:mt-6 sm:text-left sm:text-[54px]">
               {attorney.name}
             </h2>
 
@@ -57,12 +57,12 @@ export function AttorneySection() {
               >
                 “
               </span>
-              <p className="font-chosun whitespace-pre-line text-center text-[32px] font-normal leading-[1.34] tracking-[-0.02em] text-[#020617] sm:text-left sm:text-[30px] sm:leading-[1.42]">
+              <p className="font-chosun whitespace-pre-line text-center text-[30px] font-normal leading-[1.34] tracking-[-0.02em] text-[#020617] sm:text-left sm:text-[30px] sm:leading-[1.42]">
                 {attorney.quote}
               </p>
             </blockquote>
 
-            <p className="mx-auto mt-5 max-w-[21rem] whitespace-pre-line text-center text-[17px] leading-[1.7] text-zinc-700 sm:mx-0 sm:mt-6 sm:max-w-xl sm:text-left sm:text-lg sm:leading-[1.75]">
+            <p className="mx-auto mt-10 max-w-[21rem] whitespace-pre-line text-start text-[17px] leading-[1.7] text-zinc-700 sm:mx-0 sm:mt-6 sm:max-w-xl sm:text-left sm:text-lg sm:leading-[1.75]">
               {attorney.description}
             </p>
 
@@ -90,7 +90,7 @@ export function AttorneySection() {
               ))}
             </div>
 
-            <Button href={attorney.cta.href} className="mt-5 h-12 px-6 max-sm:w-full sm:h-14 sm:px-7">
+            <Button href={attorney.cta.href} className="mt-5 h-14 px-6 text-[18px] max-sm:w-full sm:h-14 sm:px-7">
               <span>{attorney.cta.label}</span>
               <span aria-hidden="true" className="ml-2 text-[#C8980A] sm:text-[#C8A96A]">
                 →

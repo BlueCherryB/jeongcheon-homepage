@@ -56,7 +56,7 @@ export const homepageContent = {
     description:
       "차분한 상담과 전략적인 대응으로\n가장 적합한 해결 방향을 제시합니다.",
     primaryCta: {
-      label: "상담 예약",
+      label: "상담 안내",
       href: "/#consultation",
     },
     secondaryCta: {
@@ -92,7 +92,7 @@ export const homepageContent = {
       alt: "김찬협 변호사 프로필 사진",
     },
     cta: {
-      label: "변호사 소개 보기",
+      label: "변호사 소개 자세히 보기",
       href: "/attorney",
     },
   },

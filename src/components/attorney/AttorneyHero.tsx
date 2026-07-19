@@ -15,12 +15,12 @@ export function AttorneyHero({ attorney }: AttorneyHeroProps) {
         <div className="grid gap-12 lg:grid-cols-[0.55fr_0.65fr] lg:items-start lg:gap-12">
           <div className="pb-14 lg:pb-16 lg:pl-12">
             <div className="inline-flex flex-col items-start">
-              <p className="text-xl font-semibold tracking-wide text-[#C8A96A]">
+              <p className="text-xl font-semibold tracking-wide text-[#C8980A]">
                 변호사 소개
               </p>
               <span
                 aria-hidden="true"
-                className="mt-1.5 h-px w-26 bg-[#C8A96A]"
+                className="mt-1.5 h-px w-26 bg-[#C8980A]"
               />
             </div>
 

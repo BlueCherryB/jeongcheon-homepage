@@ -59,7 +59,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
             </p>
 
             <div className="mt-4 max-w-[680px]">
-              <h1 className="font-chosun text-[34px] font-normal leading-[1.2] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
+              <h1 className="font-chosun text-[32px] font-normal leading-[1.5] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
                 {caseStudy.title}
               </h1>
               <div className="mt-5 flex justify-start lg:justify-end">
