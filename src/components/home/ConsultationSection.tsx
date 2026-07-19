@@ -135,7 +135,16 @@ export function ConsultationSection() {
               aria-label="네이버 지도에서 법률사무소 정천 위치 보기"
               className="group block rounded-[22px] border border-[#E8E2D7] bg-white p-3 shadow-[0_18px_54px_rgba(17,27,54,0.06)] transition-colors hover:border-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A] lg:flex-1"
             >
-              <div className="relative aspect-[3/2] overflow-hidden rounded-[16px] bg-[#F3EEE6] lg:h-full lg:aspect-auto">
+              <div className="relative aspect-[1147/1372] overflow-hidden rounded-[16px] bg-[#F3EEE6] sm:hidden">
+                <Image
+                  src="/images/map-jeong-cheon-mobile.png"
+                  alt={officeContact.mapImage.alt}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative hidden aspect-[3/2] overflow-hidden rounded-[16px] bg-[#F3EEE6] sm:block lg:h-full lg:aspect-auto">
                 <Image
                   src={officeContact.mapImage.src}
                   alt={officeContact.mapImage.alt}
