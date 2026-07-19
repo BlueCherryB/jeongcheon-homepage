@@ -86,7 +86,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
               </div>
             </div>
 
-            <p className="mt-5 max-w-[620px] text-base leading-8 text-[#111B36]/78 sm:text-lg">
+            <p className="mt-5 hidden max-w-[620px] text-base leading-8 text-[#111B36]/78 sm:block sm:text-lg">
               {caseStudy.summary}
             </p>
 
