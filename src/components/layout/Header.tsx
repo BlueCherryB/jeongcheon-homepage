@@ -47,7 +47,7 @@ export function Header() {
         <Link
           href="/"
           aria-label="법률사무소 정천 홈으로 이동"
-          className="flex shrink-0 items-center gap-1.5 text-[#0F172A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0F172A]"
+          className="inline-flex shrink-0 items-center gap-1.5 text-[#0F172A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0F172A]"
           onClick={() => setIsMenuOpen(false)}
         >
           <span className="whitespace-nowrap text-[15px] font-semibold leading-none sm:text-base">
@@ -139,7 +139,7 @@ export function Header() {
         <Link
           href="/"
           aria-label="법률사무소 정천 홈으로 이동"
-          className="flex shrink-0 items-center gap-1.5 text-[#0F172A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0F172A]"
+          className="inline-flex shrink-0 items-center gap-1.5 text-[#0F172A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#0F172A]"
         >
           <span className="whitespace-nowrap text-[15px] font-semibold leading-none sm:text-base">
             법률사무소

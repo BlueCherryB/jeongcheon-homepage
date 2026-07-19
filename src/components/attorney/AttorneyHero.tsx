@@ -13,7 +13,7 @@ export function AttorneyHero({ attorney }: AttorneyHeroProps) {
     <section className="bg-[#FAF8F4]">
       <Container className="pt-16 pb-0 lg:pt-15">
         <div className="grid gap-12 lg:grid-cols-[0.55fr_0.65fr] lg:items-start lg:gap-12">
-          <div className="pb-14 lg:pb-16 lg:pl-12">
+          <div className="pb-8 sm:pb-14 lg:pb-16 lg:pl-12">
             <div className="inline-flex flex-col items-start">
               <p className="text-xl font-semibold tracking-wide text-[#C8980A]">
                 변호사 소개
@@ -31,7 +31,7 @@ export function AttorneyHero({ attorney }: AttorneyHeroProps) {
               {attorney.name}
             </h1>
 
-            <div className="relative mx-auto mt-6 w-full max-w-[420px] sm:hidden">
+            <div className="relative mx-auto mt-4 w-full max-w-[420px] sm:hidden">
               <div className="relative aspect-[1/1]">
                 <Image
                   src={attorney.imageSrc}

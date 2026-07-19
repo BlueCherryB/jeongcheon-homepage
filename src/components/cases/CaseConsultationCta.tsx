@@ -9,8 +9,7 @@ export function CaseConsultationCta() {
           유사한 법적 문제가 있으신가요?
         </h2>
         <p className="mt-4 max-w-2xl text-base leading-8 text-[#111B36]/75">
-          정천의 변호사들이 의뢰인의 상황에 맞는 최적의 해결책을
-          제시해드립니다.
+          의뢰인의 상황에 맞는 최적의 해결책을 제시해드립니다.
         </p>
       </div>
 
