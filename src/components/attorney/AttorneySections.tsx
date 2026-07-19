@@ -111,6 +111,37 @@ export function AttorneySections({
               </div>
             ))}
           </div>
+
+          <div className="pt-10 sm:hidden">
+            <p className="font-chosun whitespace-pre-line text-[28px] font-normal leading-[1.32] tracking-[-0.02em] text-[#111B36]">
+              {attorney.heroStatement}
+            </p>
+
+            <p className="mt-6 max-w-2xl whitespace-pre-line break-keep text-base leading-8 text-[#111B36]/75">
+              {
+                "법적 분쟁은 초기 대응이\n결과를 크게 좌우합니다. 사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로 절차와 대응 방향을 설명드립니다."
+              }
+            </p>
+
+            <div className="mt-6 flex max-w-md flex-col gap-4">
+              <Button
+                href="/#consultation"
+                className="h-[52px] min-w-40 justify-center px-7"
+              >
+                상담 문의하기
+                <span aria-hidden="true" className="ml-2 text-[#C8A96A]">
+                  →
+                </span>
+              </Button>
+              <Button
+                href="/cases"
+                variant="secondary"
+                className="h-[52px] min-w-40 justify-center border-[#C8A96A] px-7"
+              >
+                수행사례 보기
+              </Button>
+            </div>
+          </div>
         </Container>
       </section>
 

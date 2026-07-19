@@ -9,9 +9,6 @@ type AttorneyHeroProps = {
 };
 
 export function AttorneyHero({ attorney }: AttorneyHeroProps) {
-  const mobileHeroDescription =
-    "법적 분쟁은 초기 대응이\n결과를 크게 좌우합니다. 사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로 절차와 대응 방향을 설명드립니다.";
-
   return (
     <section className="bg-[#FAF8F4]">
       <Container className="pt-16 pb-0 lg:pt-15">
@@ -34,18 +31,30 @@ export function AttorneyHero({ attorney }: AttorneyHeroProps) {
               {attorney.name}
             </h1>
 
-            <p className="font-chosun mt-5 whitespace-pre-line text-[28px] font-normal leading-[1.32] tracking-[-0.02em] text-[#111B36] sm:text-[30px]">
-              {attorney.heroStatement}
-            </p>
+            <div className="relative mx-auto mt-6 w-full max-w-[420px] sm:hidden">
+              <div className="relative aspect-[1/1]">
+                <Image
+                  src={attorney.imageSrc}
+                  alt={attorney.imageAlt}
+                  fill
+                  priority
+                  sizes="100vw"
+                  className="object-contain object-center"
+                />
+              </div>
+            </div>
 
-            <p className="mt-6 max-w-2xl whitespace-pre-line break-keep text-base leading-8 text-[#111B36]/75 sm:hidden">
-              {mobileHeroDescription}
-            </p>
-            <p className="mt-6 hidden max-w-2xl break-keep text-lg leading-8 text-[#111B36]/75 sm:block">
-              {attorney.heroDescription}
-            </p>
+            <div className="hidden sm:block">
+              <p className="font-chosun mt-5 whitespace-pre-line text-[30px] font-normal leading-[1.32] tracking-[-0.02em] text-[#111B36]">
+                {attorney.heroStatement}
+              </p>
 
-            <div className="mt-6 flex max-w-md flex-col gap-4 sm:flex-row sm:items-center">
+              <p className="mt-6 max-w-2xl break-keep text-lg leading-8 text-[#111B36]/75">
+                {attorney.heroDescription}
+              </p>
+            </div>
+
+            <div className="mt-6 hidden max-w-md flex-col gap-4 sm:flex sm:flex-row sm:items-center">
               <Button
                 href="/#consultation"
                 className="h-[52px] min-w-40 justify-center px-7"
@@ -65,7 +74,7 @@ export function AttorneyHero({ attorney }: AttorneyHeroProps) {
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-[560px] lg:ml-0 lg:mr-auto lg:translate-y-5">
+          <div className="relative mx-auto hidden w-full max-w-[560px] sm:block lg:ml-0 lg:mr-auto lg:translate-y-5">
             <div className="relative aspect-[1/1]">
               <Image
                 src={attorney.imageSrc}

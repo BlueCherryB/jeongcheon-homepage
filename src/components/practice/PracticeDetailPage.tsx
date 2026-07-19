@@ -100,7 +100,7 @@ export function PracticeDetailPage({
                 {area.summary}
               </p>
             </div>
-            <div className="flex justify-start lg:justify-end">
+            <div className="hidden justify-start sm:flex lg:justify-end">
               <div className="flex h-44 w-44 items-center justify-center rounded-full border border-[#E8E2D7] bg-white text-[#C8A96A] shadow-[0_18px_48px_rgba(17,27,54,0.06)]">
                 <PracticeAreaIcon type={area.icon} className="h-24 w-24" />
               </div>
@@ -143,7 +143,7 @@ export function PracticeDetailPage({
           <div className="grid gap-10 lg:grid-cols-[0.35fr_0.65fr]">
             <SectionTitle eyebrow="Overview" title="사건을 이해하는 방식" />
             <div className="space-y-5 break-keep text-base leading-8 text-[#111B36]/72">
-              <h2 className="font-chosun text-[28px] font-normal tracking-[-0.02em] text-[#111B36]">
+              <h2 className="font-chosun text-[25px] font-normal leading-[1.55] tracking-[-0.02em] text-[#111B36] sm:text-[28px] sm:leading-normal">
                 {area.introductionTitle}
               </h2>
               {area.introduction.map((paragraph) => (
