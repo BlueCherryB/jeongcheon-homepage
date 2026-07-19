@@ -43,10 +43,13 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
                 수행사례
               </Link>
             </li>
-            <li aria-hidden="true" className="text-[#C8A96A]">
+            <li aria-hidden="true" className="hidden text-[#C8A96A] sm:block">
               /
             </li>
-            <li aria-current="page" className="max-w-full text-[#111B36]">
+            <li
+              aria-current="page"
+              className="hidden max-w-full text-[#111B36] sm:block"
+            >
               {caseStudy.title}
             </li>
           </ol>
@@ -87,7 +90,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
               {caseStudy.summary}
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-medium text-[#111B36]/70">
+            <div className="mt-6 hidden flex-wrap items-center gap-4 text-sm font-medium text-[#111B36]/70 sm:flex">
               {caseStudy.publishedAt ? (
                 <time dateTime={caseStudy.publishedAt}>
                   {caseStudy.displayDate ?? caseStudy.publishedAt}

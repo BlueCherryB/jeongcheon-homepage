@@ -9,6 +9,9 @@ type AttorneyHeroProps = {
 };
 
 export function AttorneyHero({ attorney }: AttorneyHeroProps) {
+  const mobileHeroDescription =
+    "법적 분쟁은 초기 대응이\n결과를 크게 좌우합니다. 사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로 절차와 대응 방향을 설명드립니다.";
+
   return (
     <section className="bg-[#FAF8F4]">
       <Container className="pt-16 pb-0 lg:pt-15">
@@ -35,7 +38,10 @@ export function AttorneyHero({ attorney }: AttorneyHeroProps) {
               {attorney.heroStatement}
             </p>
 
-            <p className="mt-6 max-w-2xl break-keep text-base leading-8 text-[#111B36]/75 sm:text-lg">
+            <p className="mt-6 max-w-2xl whitespace-pre-line break-keep text-base leading-8 text-[#111B36]/75 sm:hidden">
+              {mobileHeroDescription}
+            </p>
+            <p className="mt-6 hidden max-w-2xl break-keep text-lg leading-8 text-[#111B36]/75 sm:block">
               {attorney.heroDescription}
             </p>
 
@@ -67,7 +73,7 @@ export function AttorneyHero({ attorney }: AttorneyHeroProps) {
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-contain object-left-top"
+                className="object-contain object-center sm:object-left-top"
               />
             </div>
           </div>

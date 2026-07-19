@@ -6,6 +6,8 @@ import { homepageContent } from "@/data/homepage";
 
 export function AttorneySection() {
   const { attorney } = homepageContent;
+  const mobileDescription =
+    "법적 분쟁은 초기 대응이\n결과를 크게 좌우합니다.\n사실관계를 면밀히 분석하고,\n의뢰인이 이해할 수 있는 언어로\n절차와 대응 방향을 설명드립니다.";
 
   return (
     <section id={attorney.id} className="bg-[#FAFAF8]">
@@ -62,7 +64,10 @@ export function AttorneySection() {
               </p>
             </blockquote>
 
-            <p className="mx-auto mt-10 max-w-[21rem] whitespace-pre-line text-start text-[17px] leading-[1.7] text-zinc-700 sm:mx-0 sm:mt-6 sm:max-w-xl sm:text-left sm:text-lg sm:leading-[1.75]">
+            <p className="mx-auto mt-10 max-w-[21rem] whitespace-pre-line text-start text-[17px] leading-[1.7] text-zinc-700 sm:hidden">
+              {mobileDescription}
+            </p>
+            <p className="mt-6 hidden max-w-xl whitespace-pre-line text-left text-lg leading-[1.75] text-zinc-700 sm:block">
               {attorney.description}
             </p>
 
