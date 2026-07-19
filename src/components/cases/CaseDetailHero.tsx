@@ -62,7 +62,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
               <h1 className="font-chosun text-[32px] font-normal leading-[1.5] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
                 {caseStudy.title}
               </h1>
-              <div className="mt-5 flex justify-start lg:justify-end">
+              <div className="mt-5 flex justify-end pr-3 sm:justify-start sm:pr-0">
                 <div className="inline-flex max-w-full items-center rounded-full border border-[#D9C89E] bg-white px-5 py-2.5 text-base font-bold text-[#111B36] shadow-[0_14px_34px_rgba(17,27,54,0.07)] sm:px-6 sm:py-3 sm:text-[17px]">
                   <span className="shrink-0 text-sm text-[#C8A96A] sm:text-base">
                     결과
