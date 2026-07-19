@@ -79,6 +79,7 @@ export function buildGlobalStructuredData(): JsonLdObject {
   const siteUrl = `${getCanonicalSiteUrl()}/`;
   const organizationId = getOrganizationId();
   const legalServiceId = getLegalServiceId();
+  const logoUrl = buildImageUrl("/images/logo.png");
 
   return {
     "@context": schemaContext,
@@ -98,6 +99,8 @@ export function buildGlobalStructuredData(): JsonLdObject {
         "@id": organizationId,
         name: siteName,
         url: siteUrl,
+        image: logoUrl,
+        logo: logoUrl,
         telephone: officeContact.phoneDisplay,
         email: officeContact.email,
         address: buildOfficeAddress(),
@@ -107,6 +110,7 @@ export function buildGlobalStructuredData(): JsonLdObject {
         "@id": legalServiceId,
         name: siteName,
         url: siteUrl,
+        image: logoUrl,
         telephone: officeContact.phoneDisplay,
         email: officeContact.email,
         address: buildOfficeAddress(),
