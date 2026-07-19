@@ -98,8 +98,8 @@ export function ConsultationSection() {
         <div className="mt-12 grid gap-8 lg:grid-cols-[0.46fr_0.54fr] lg:items-stretch">
           <div className="flex h-full flex-col justify-center rounded-[22px] border border-[#E8E2D7] bg-white px-7 py-8 shadow-[0_18px_54px_rgba(17,27,54,0.05)] sm:px-8 lg:py-10">
             <div>
-              <p className="break-keep text-base leading-7 text-[#111B36]/70">
-                사건에 대한 상담이 필요하시면 전화로 문의해 주세요.
+              <p className="whitespace-pre-line break-keep text-base leading-7 text-[#111B36]/70">
+                {"법률적인 도움이 필요하신가요?\n전화로 편하게 상담해 주세요."}
               </p>
               <ConsultationInfoItem
                 icon="phone"
@@ -118,7 +118,7 @@ export function ConsultationSection() {
             <div className="mt-7 flex flex-col">
               <Button
                 href={officeContact.phoneHref}
-                className="h-14 px-6 max-sm:w-full"
+                className="h-14 px-6 text-lg font-semibold max-sm:w-full"
               >
                 상담 문의하기
                 <span aria-hidden="true" className="ml-2 text-[#C8A96A]">
