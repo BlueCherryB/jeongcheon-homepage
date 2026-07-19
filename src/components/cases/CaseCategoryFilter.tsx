@@ -1,7 +1,6 @@
 import Link from "next/link";
 
-import { caseCategoryFilters } from "@/data/cases";
-import { buildCasesHref } from "@/lib/cases";
+import { buildCasesHref, caseCategoryFilters } from "@/lib/cases";
 import type { CaseFilterValue } from "@/lib/cases";
 
 type CaseCategoryFilterProps = {

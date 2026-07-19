@@ -9,7 +9,7 @@ export type CaseStudy = {
   publishedAt: string;
   displayDate: string;
   result: string;
-  resultDetail: string;
+  resultDetail?: string;
   overview: string[];
   issues: string[];
   strategy: string[];

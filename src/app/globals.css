@@ -32,3 +32,21 @@ body {
 .font-eulyoo1945 {
   font-family: var(--font-eulyoo1945), serif;
 }
+
+@keyframes mobileDrawerIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes mobileOverlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

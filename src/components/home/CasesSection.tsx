@@ -1,12 +1,20 @@
 import Link from "next/link";
 
-import { CaseStudyCard } from "@/components/home/CaseStudyCard";
+import {
+  CaseStudyCard,
+  type CaseStudyCardItem,
+} from "@/components/home/CaseStudyCard";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { homepageContent } from "@/data/homepage";
+import { buildCasesHref, type CaseFilterValue } from "@/lib/cases";
 
-export function CasesSection() {
+type CasesSectionProps = {
+  caseStudies: CaseStudyCardItem[];
+};
+
+export function CasesSection({ caseStudies }: CasesSectionProps) {
   const { cases } = homepageContent;
+  const filterHrefs: CaseFilterValue[] = ["all", "criminal", "civil", "family"];
 
   return (
     <section id={cases.id} className="bg-[#FAF8F4]">
@@ -22,10 +30,15 @@ export function CasesSection() {
             />
           </div>
 
-          <SectionHeading
-            title={cases.heading}
-            titleClassName="font-chosun mx-auto mt-9 max-w-4xl text-[28px] font-normal leading-[1.45] tracking-[-0.02em] text-[#111B36] sm:text-[34px] lg:text-[38px]"
-          />
+          <h2 className="font-chosun mx-auto mt-9 max-w-4xl text-[28px] font-normal leading-[1.45] tracking-[-0.02em] text-[#111B36] sm:text-[34px] lg:text-[38px]">
+            <span className="block sm:inline">정천의 수행사례를</span>
+            <span aria-hidden="true" className="hidden sm:inline">
+              {" "}
+            </span>
+            <span className="block sm:inline">
+              소개합니다.
+            </span>
+          </h2>
         </div>
 
         <div className="mt-16 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
@@ -36,21 +49,21 @@ export function CasesSection() {
           >
             {cases.filters.map((filter, index) => {
               const isSelected = index === 0;
+              const category = filterHrefs[index] ?? "all";
 
               return (
-                <button
+                <Link
                   key={filter}
-                  type="button"
-                  aria-pressed={isSelected}
+                  href={buildCasesHref({ category, page: 1 })}
                   className={[
-                    "min-w-24 rounded-full border px-7 py-2.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8A96A]",
+                    "inline-flex min-w-24 items-center justify-center rounded-full border px-7 py-2.5 text-sm font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8A96A]",
                     isSelected
                       ? "border-[#111B36] bg-[#111B36] text-white"
                       : "border-[#D8D1C5] bg-white/70 text-[#111B36] hover:border-[#C8A96A] hover:text-[#9F7F37]",
                   ].join(" ")}
                 >
                   {filter}
-                </button>
+                </Link>
               );
             })}
           </div>
@@ -66,11 +79,13 @@ export function CasesSection() {
           </Link>
         </div>
 
-        <div className="mt-8 flex flex-col gap-3">
-          {cases.studies.map((caseStudy) => (
-            <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
-          ))}
-        </div>
+        {caseStudies.length > 0 ? (
+          <div className="mt-8 flex flex-col gap-3">
+            {caseStudies.map((caseStudy) => (
+              <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
+            ))}
+          </div>
+        ) : null}
       </Container>
     </section>
   );

@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { CaseStudyCard } from "@/components/home/CaseStudyCard";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import type { AttorneyProfile, AttorneyTimelineItem } from "@/data/attorney";
-import type { CaseStudy } from "@/data/cases";
+import type { CaseStudyListItem } from "@/types/content/caseStudy";
 
 type AttorneySectionsProps = {
   attorney: AttorneyProfile;
-  representativeCases: CaseStudy[];
+  representativeCases: CaseStudyListItem[];
 };
 
 function SmallIcon() {
@@ -26,9 +27,15 @@ function CredentialIcon({ src }: { src: string }) {
   return (
     <span
       aria-hidden="true"
-      className="mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-[#C8A96A] bg-white"
+      className="mx-auto flex h-10 w-10 items-center justify-center rounded-full border border-[#C8A96A] bg-white sm:h-14 sm:w-14"
     >
-      <Image src={src} alt="" width={32} height={32} />
+      <Image
+        src={src}
+        alt=""
+        width={28}
+        height={28}
+        className="h-6 w-6 sm:h-8 sm:w-8"
+      />
     </span>
   );
 }
@@ -76,28 +83,64 @@ export function AttorneySections({
     <>
       <section className="relative">
         <Container className="pt-0 pb-12">
-          <div className="grid overflow-hidden rounded-[22px] border border-[#E8E2D7] bg-white shadow-[0_18px_54px_rgba(17,27,54,0.05)] sm:grid-cols-2 lg:grid-cols-6">
+          <div className="grid grid-cols-3 overflow-hidden rounded-[22px] border border-[#E8E2D7] bg-white shadow-[0_18px_54px_rgba(17,27,54,0.05)] sm:grid-cols-2 lg:grid-cols-6">
             {attorney.credentials.map((credential) => (
               <div
                 key={credential.id}
-                className="border-b border-[#E8E2D7] px-5 py-7 text-center last:border-b-0 sm:border-r sm:last:border-r-0 lg:border-b-0"
+                className="flex min-h-33 flex-col items-center border-b border-r border-[#E8E2D7] px-2 py-4 text-center last:border-r-0 sm:min-h-0 sm:px-5 sm:py-7 lg:border-b-0"
               >
                 <CredentialIcon src={credential.iconSrc} />
-                <p className="mt-4 font-bold text-[#111B36]">
+                <p className="mt-3 text-sm font-bold leading-snug text-[#111B36] sm:mt-4 sm:text-base">
                   {credential.label}
                 </p>
                 {credential.year ? (
-                  <p className="mt-1 text-sm font-semibold text-[#111B36]/70">
-                    ({credential.year})
-                  </p>
+                  <div className="mt-1.5 space-y-0.5 sm:mt-2 sm:space-y-1">
+                    <p className="text-[11px] font-semibold leading-snug text-[#111B36]/58 sm:text-xs">
+                      자격 취득
+                    </p>
+                    <p className="text-xs font-semibold text-[#111B36]/70 sm:text-sm">
+                      ({credential.year})
+                    </p>
+                  </div>
                 ) : null}
                 {credential.note ? (
-                  <p className="mt-1 text-xs font-semibold text-[#111B36]/60">
+                  <p className="mt-1 text-[11px] font-semibold leading-snug text-[#111B36]/60 sm:text-xs">
                     {credential.note}
                   </p>
                 ) : null}
               </div>
             ))}
+          </div>
+
+          <div className="pt-10 sm:hidden">
+            <p className="font-chosun whitespace-pre-line text-[28px] font-normal leading-[1.32] tracking-[-0.02em] text-[#111B36]">
+              {attorney.heroStatement}
+            </p>
+
+            <p className="mt-6 max-w-2xl whitespace-pre-line break-keep text-base leading-8 text-[#111B36]/75">
+              {
+                "법적 분쟁은 초기 대응이 결과를 크게 좌우합니다. 사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로 절차와 대응 방향을 설명드립니다."
+              }
+            </p>
+
+            <div className="mt-6 flex max-w-md flex-col gap-4">
+              <Button
+                href="/#consultation"
+                className="h-[52px] min-w-40 justify-center px-7"
+              >
+                상담 문의하기
+                <span aria-hidden="true" className="ml-2 text-[#C8A96A]">
+                  →
+                </span>
+              </Button>
+              <Button
+                href="/cases"
+                variant="secondary"
+                className="h-[52px] min-w-40 justify-center border-[#C8A96A] px-7"
+              >
+                수행사례 보기
+              </Button>
+            </div>
           </div>
         </Container>
       </section>
@@ -136,7 +179,7 @@ export function AttorneySections({
       <section className="bg-white">
         <Container className="py-20">
           <div className="grid gap-8 lg:grid-cols-3">
-            <div>
+            <div className="pt-4 sm:pt-0">
               <h2 className="font-chosun text-3xl font-normal text-[#111B36]">
                 학력
               </h2>
@@ -144,7 +187,7 @@ export function AttorneySections({
                 <TimelineList items={attorney.education} />
               </div>
             </div>
-            <div>
+            <div className="pt-6 sm:pt-0">
               <h2 className="font-chosun text-3xl font-normal text-[#111B36]">
                 자격
               </h2>
@@ -152,7 +195,7 @@ export function AttorneySections({
                 <TimelineList items={attorney.qualifications} />
               </div>
             </div>
-            <div>
+            <div className="pt-6 sm:pt-0">
               <h2 className="font-chosun text-3xl font-normal text-[#111B36]">
                 주요 경력
               </h2>
@@ -164,41 +207,28 @@ export function AttorneySections({
         </Container>
       </section>
 
-      <section className="bg-[#FAF8F4]">
-        <Container className="py-20">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <h2 className="font-chosun text-[36px] font-normal tracking-[-0.02em] text-[#111B36]">
-              대표 수행사례
-            </h2>
-            <Link
-              href="/cases"
-              className="text-sm font-semibold text-[#111B36] hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
-            >
-              더 많은 수행사례 보기 →
-            </Link>
-          </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-3">
-            {representativeCases.map((caseStudy) => (
+      {representativeCases.length > 0 ? (
+        <section className="bg-[#FAF8F4]">
+          <Container className="py-20">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <h2 className="font-chosun text-[36px] font-normal tracking-[-0.02em] text-[#111B36]">
+                대표 수행사례
+              </h2>
               <Link
-                key={caseStudy.slug}
-                href={`/cases/${caseStudy.slug}`}
-                aria-label={`${caseStudy.title} 수행사례 보기`}
-                className="rounded-[18px] border border-[#E8E2D7] bg-white p-6 transition-colors hover:border-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
+                href="/cases"
+                className="text-sm font-semibold text-[#111B36] hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
               >
-                <p className="text-sm font-semibold text-[#C8A96A]">
-                  {caseStudy.categoryLabel}
-                </p>
-                <h3 className="mt-3 min-h-14 font-semibold leading-7 text-[#111B36]">
-                  {caseStudy.title}
-                </h3>
-                <p className="mt-5 text-sm font-semibold text-[#111B36]/70">
-                  {caseStudy.result} · {caseStudy.resultDetail}
-                </p>
+                더 많은 수행사례 보기 →
               </Link>
-            ))}
-          </div>
-        </Container>
-      </section>
+            </div>
+            <div className="mt-8 flex flex-col gap-3">
+              {representativeCases.map((caseStudy) => (
+                <CaseStudyCard key={caseStudy.slug} caseStudy={caseStudy} />
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       <section className="bg-white">
         <Container className="py-20">

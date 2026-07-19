@@ -44,7 +44,7 @@ export const attorneyProfile: AttorneyProfile = {
   heroStatement: "사건은 숫자가 아니라\n한 사람의 삶입니다.",
   heroDescription:
     "법적 분쟁은 초기 대응이 결과를 크게 좌우합니다. 사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로 절차와 대응 방향을 설명드립니다.",
-  imageSrc: "/images/attorney-kim-chan-hyeop-transparent2.png",
+  imageSrc: "/images/attorney-kim-chan-hyeop-transparent4.png",
   imageAlt: "법률사무소 정천 김찬협 변호사",
   specialties: ["형사", "민사", "이혼·가사"],
   credentials: [

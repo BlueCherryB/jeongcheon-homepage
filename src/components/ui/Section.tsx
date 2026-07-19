@@ -16,7 +16,8 @@ export function Section({
   spacing = "default",
 }: SectionProps) {
   const sectionClassName = bordered ? "border-t border-zinc-200" : undefined;
-  const spacingClassName = spacing === "hero" ? "py-20" : "py-16";
+  const spacingClassName =
+    spacing === "hero" ? "pt-14 pb-10 sm:py-20" : "py-16";
 
   return (
     <section id={id} className={sectionClassName}>

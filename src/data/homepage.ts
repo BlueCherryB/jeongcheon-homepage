@@ -1,7 +1,3 @@
-import { caseCategoryFilters } from "@/data/cases";
-import type { CaseStudy } from "@/data/cases";
-import { getLatestCaseStudies } from "@/lib/cases";
-
 type HomeSectionContent = {
   id: string;
   title: string;
@@ -51,22 +47,21 @@ type CasesContent = {
   filters: string[];
   viewAllLabel: string;
   viewAllHref: string;
-  studies: CaseStudy[];
 };
 
 export const homepageContent = {
   hero: {
-    eyebrow: "대한변협 형사전문",
+    eyebrow: "대한변협 형사·민사 전문",
     title: "의뢰인의 상황을\n정확하게 이해합니다.",
     description:
       "차분한 상담과 전략적인 대응으로\n가장 적합한 해결 방향을 제시합니다.",
     primaryCta: {
-      label: "상담 예약",
-      href: "#consultation",
+      label: "상담 안내",
+      href: "/#consultation",
     },
     secondaryCta: {
       label: "전화 상담",
-      href: "#consultation",
+      href: "tel:01026901699",
     },
     image: {
       src: "/hero-law-office.png",
@@ -79,7 +74,7 @@ export const homepageContent = {
     name: "김찬협 변호사",
     quote: "사건은 숫자가 아니라\n한 사람의 삶입니다.",
     description:
-      "형사사건은 초기 대응이 결과를 크게 좌우합니다.\n사실관계를 면밀히 분석하고, 의뢰인이 이해할 수 있는 언어로\n절차와 대응 방향을 설명드립니다.",
+      "법적 분쟁은 초기 대응이 결과를 크게 좌우합니다.\n사실관계를 면밀히 분석하고,\n의뢰인이 이해할 수 있는 언어로\n절차와 대응 방향을 설명드립니다.",
     strengths: [
       {
         title: "상담부터 종결까지 직접 수행",
@@ -97,7 +92,7 @@ export const homepageContent = {
       alt: "김찬협 변호사 프로필 사진",
     },
     cta: {
-      label: "변호사 소개 보기",
+      label: "변호사 소개 자세히 보기",
       href: "/attorney",
     },
   },
@@ -110,7 +105,7 @@ export const homepageContent = {
       {
         title: "형사",
         icon: "scale",
-        href: "#consultation",
+        href: "/practice/criminal",
         items: [
           "경찰조사 및 수사 대응",
           "고소 · 고발 대리",
@@ -121,7 +116,7 @@ export const homepageContent = {
       {
         title: "민사",
         icon: "document",
-        href: "#consultation",
+        href: "/practice/civil",
         items: [
           "계약 분쟁",
           "손해배상 청구",
@@ -132,7 +127,7 @@ export const homepageContent = {
       {
         title: "이혼·가사",
         icon: "family",
-        href: "#consultation",
+        href: "/practice/family",
         items: ["이혼 소송", "재산분할", "양육권 · 양육비", "상속 · 유류분"],
       },
     ],
@@ -140,11 +135,10 @@ export const homepageContent = {
   cases: {
     id: "cases",
     eyebrow: "수행 사례",
-    heading: "정천의 수행사례를 소개합니다.",
-    filters: caseCategoryFilters.map((filter) => filter.label),
+    heading: "정천의 수행사례를\n소개합니다.",
+    filters: ["전체", "형사", "민사", "이혼·가사"],
     viewAllLabel: "전체 사례 보기",
     viewAllHref: "/cases",
-    studies: getLatestCaseStudies(5),
   },
   articles: {
     id: "articles",

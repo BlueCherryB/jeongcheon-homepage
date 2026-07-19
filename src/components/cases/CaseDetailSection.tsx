@@ -68,17 +68,17 @@ export function CaseDetailSection({
   children,
 }: CaseDetailSectionProps) {
   return (
-    <section className="grid gap-6 border-b border-[#E8E2D7] py-12 last:border-b-0 md:grid-cols-[170px_minmax(0,1fr)] md:gap-10">
-      <div className="flex items-center gap-4 md:block md:border-r md:border-[#E8E2D7] md:pr-8">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#E8E2D7] bg-[#FAF8F4] text-[#C8A96A]">
+    <section className="grid gap-6 border-b border-[#E8E2D7] py-10 last:border-b-0 md:grid-cols-[150px_minmax(0,1fr)] md:gap-10 lg:py-12">
+      <div className="flex items-center gap-3 md:block md:border-r md:border-[#E8E2D7] md:pr-7">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#E8E2D7] bg-[#FAF8F4] text-[#C8A96A]">
           <SectionIcon icon={icon} />
         </div>
-        <h2 className="font-chosun break-keep text-xl font-normal tracking-[-0.02em] text-[#111B36] md:mt-5">
+        <h2 className="font-chosun break-keep text-xl font-semibold tracking-[-0.02em] text-[#111B36] md:mt-5">
           {title}
         </h2>
       </div>
 
-      <div className="max-w-3xl text-base leading-8 text-[#111B36]/78 sm:text-lg">
+      <div className="max-w-[720px] text-base leading-8 text-[#111B36]/78 sm:text-[17px] sm:leading-8">
         {children}
       </div>
     </section>

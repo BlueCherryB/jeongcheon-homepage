@@ -1,24 +1,48 @@
 import { caseStudies } from "@/data/cases";
-import type { CaseCategoryId, CaseStudy } from "@/data/cases";
+import type { CaseStudy } from "@/data/cases";
+import {
+  caseStudyCategoryLabels,
+  type CaseStudyCategory,
+  type CaseStudyDetail,
+  type CaseStudyListItem,
+} from "@/types/content/caseStudy";
 
 export const CASES_PER_PAGE = 10;
 
-export type CaseFilterValue = "all" | CaseCategoryId;
+export type CaseFilterValue = "all" | CaseStudyCategory;
+
+export type CaseCategoryFilter = {
+  label: string;
+  value: CaseFilterValue;
+};
+
+type CaseListItem = {
+  categoryId: CaseStudyCategory;
+  publishedAt?: string;
+};
 
 type PaginationInput = {
   category: CaseFilterValue;
   page: number;
 };
 
-const caseCategoryValues: CaseCategoryId[] = ["criminal", "civil", "family"];
+const caseCategoryValues: CaseStudyCategory[] = ["criminal", "civil", "family"];
+
+export const caseCategoryFilters: CaseCategoryFilter[] = [
+  { label: "전체", value: "all" },
+  ...caseCategoryValues.map((category) => ({
+    label: caseStudyCategoryLabels[category],
+    value: category,
+  })),
+];
 
 export function parseCaseCategory(value: unknown): CaseFilterValue {
   if (typeof value !== "string") {
     return "all";
   }
 
-  return caseCategoryValues.includes(value as CaseCategoryId)
-    ? (value as CaseCategoryId)
+  return caseCategoryValues.includes(value as CaseStudyCategory)
+    ? (value as CaseStudyCategory)
     : "all";
 }
 
@@ -32,18 +56,18 @@ export function parsePage(value: unknown): number {
   return Number.isFinite(page) && page > 0 ? page : 1;
 }
 
-export function sortCasesLatestFirst(caseStudies: CaseStudy[]): CaseStudy[] {
+export function sortCasesLatestFirst<T extends CaseListItem>(caseStudies: T[]): T[] {
   return [...caseStudies].sort(
     (first, second) =>
-      new Date(second.publishedAt).getTime() -
-      new Date(first.publishedAt).getTime(),
+      new Date(second.publishedAt ?? "").getTime() -
+      new Date(first.publishedAt ?? "").getTime(),
   );
 }
 
-export function filterCases(
-  caseStudies: CaseStudy[],
+export function filterCases<T extends CaseListItem>(
+  caseStudies: T[],
   category: CaseFilterValue,
-): CaseStudy[] {
+): T[] {
   if (category === "all") {
     return caseStudies;
   }
@@ -117,4 +141,37 @@ export function getRelatedCaseStudies(caseStudy: CaseStudy): CaseStudy[] {
   return caseStudy.relatedCaseSlugs
     .map((slug) => getCaseStudyBySlug(slug))
     .filter((relatedCase): relatedCase is CaseStudy => Boolean(relatedCase));
+}
+
+export function getRelatedCaseStudyListItems(
+  caseStudy: CaseStudyDetail,
+  caseStudies: CaseStudyListItem[],
+  limit = 2,
+): CaseStudyListItem[] {
+  const seenSlugs = new Set<string>([caseStudy.slug]);
+  const casesBySlug = new Map(
+    caseStudies.map((relatedCase) => [relatedCase.slug, relatedCase]),
+  );
+  const relatedCases: CaseStudyListItem[] = [];
+
+  for (const relatedSlug of caseStudy.relatedCaseSlugs) {
+    if (seenSlugs.has(relatedSlug)) {
+      continue;
+    }
+
+    const relatedCase = casesBySlug.get(relatedSlug);
+
+    if (!relatedCase) {
+      continue;
+    }
+
+    relatedCases.push(relatedCase);
+    seenSlugs.add(relatedSlug);
+
+    if (relatedCases.length >= limit) {
+      break;
+    }
+  }
+
+  return relatedCases;
 }
