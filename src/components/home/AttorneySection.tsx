@@ -6,12 +6,14 @@ import { homepageContent } from "@/data/homepage";
 
 export function AttorneySection() {
   const { attorney } = homepageContent;
+  const mobileDescription =
+    "법적 분쟁은 초기 대응이\n결과를 크게 좌우합니다.\n사실관계를 면밀히 분석하고,\n의뢰인이 이해할 수 있는 언어로\n절차와 대응 방향을 설명드립니다.";
 
   return (
     <section id={attorney.id} className="bg-[#FAFAF8]">
-      <Container className="py-28 lg:py-32">
-        <div className="grid gap-12 lg:grid-cols-[0.47fr_0.53fr] lg:items-start lg:gap-20">
-          <div className="relative max-w-xl lg:mt-14 lg:max-w-[34rem]">
+      <Container className="py-16 sm:py-28 lg:py-32">
+        <div className="grid gap-8 sm:gap-12 lg:grid-cols-[0.47fr_0.53fr] lg:items-start lg:gap-20">
+          <div className="relative hidden max-w-xl sm:block lg:mt-14 lg:max-w-[34rem]">
             <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-zinc-100">
               <Image
                 src={attorney.image.src}
@@ -24,53 +26,68 @@ export function AttorneySection() {
           </div>
 
           <div>
-            <div className="inline-flex flex-col items-start">
-              <p className="text-xl font-semibold tracking-wide text-[#C8A96A] sm:text-2xl">
+            <div className="flex w-full flex-col items-center sm:inline-flex sm:w-auto sm:items-start">
+              <p className="text-xl font-semibold tracking-wide text-[#C8980A] sm:text-2xl sm:text-[#C8A96A]">
                 {attorney.eyebrow}
               </p>
               <span
                 aria-hidden="true"
-                className="mt-0.5 h-px w-30 bg-[#C8A96A]"
+                className="mt-0.5 h-px w-30 bg-[#C8980A] sm:w-30 sm:bg-[#C8A96A]"
               />
             </div>
 
-            <h2 className="font-chosun mt-6 text-[42px] font-normal leading-tight tracking-[-0.02em] text-[#0F172A] sm:text-[54px]">
+            <h2 className="font-chosun mt-4 text-center text-[36px] font-normal leading-tight tracking-[-0.02em] text-[#0F172A] sm:mt-6 sm:text-left sm:text-[54px]">
               {attorney.name}
             </h2>
 
-            <blockquote className="relative mt-10">
+            <div className="relative mt-6 max-w-xl sm:hidden">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[22px] bg-zinc-100">
+                <Image
+                  src={attorney.image.src}
+                  alt={attorney.image.alt}
+                  fill
+                  sizes="100vw"
+                  className="object-cover object-[center_35%]"
+                />
+              </div>
+            </div>
+
+            <blockquote className="relative mt-8 sm:mt-10">
               <span
                 aria-hidden="true"
-                className="absolute -left-1 -top-6 font-chosun text-6xl leading-none text-[#C8A96A]"
+                className="absolute -left-1 -top-4 font-chosun text-4xl leading-none text-[#C8980A] sm:-top-6 sm:text-6xl sm:text-[#C8A96A]"
               >
                 “
               </span>
-              <p className="font-chosun whitespace-pre-line text-[31px] font-normal leading-[1.42] tracking-[-0.02em] text-[#020617] sm:text-[30px]">
+              <p className="font-chosun whitespace-pre-line text-center text-[30px] font-normal leading-[1.34] tracking-[-0.02em] text-[#020617] sm:text-left sm:text-[30px] sm:leading-[1.42]">
                 {attorney.quote}
               </p>
             </blockquote>
 
-            <p className="mt-6 max-w-xl whitespace-pre-line text-base leading-[1.75] text-zinc-700 sm:text-lg">
+            <p className="mx-auto mt-10 max-w-[21rem] whitespace-pre-line text-start text-[17px] leading-[1.7] text-zinc-700 sm:hidden">
+              {mobileDescription}
+            </p>
+            <p className="mt-6 hidden max-w-xl whitespace-pre-line text-left text-lg leading-[1.75] text-zinc-700 sm:block">
               {attorney.description}
             </p>
 
-            <div className="mt-8 border-y border-[#C8A96A]/25">
+            <div className="mt-6 border-y border-[#C8A96A]/25 sm:mt-8">
               {attorney.strengths.map((strength) => (
                 <div
                   key={strength.title}
-                  className="flex gap-4 border-b border-[#C8A96A]/20 py-4 last:border-b-0"
+                  className="flex gap-3.5 border-b border-[#C8A96A]/20 py-3.5 last:border-b-0 sm:gap-4 sm:py-4"
                 >
                   <span
                     aria-hidden="true"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-base font-semibold text-[#C8A96A]"
+                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0F172A] text-base font-semibold text-[#C8980A] sm:text-[#C8A96A]"
                   >
                     ✓
                   </span>
                   <div>
-                    <h3 className="font-semibold text-[#0F172A]">
+                    <h3 className="text-lg font-semibold text-[#0F172A] sm:text-base">
                       {strength.title}
                     </h3>
-                    <p className="mt-1 text-sm leading-6 text-zinc-600">
+                    <p className="mt-1 text-[15px] leading-6 text-zinc-600 sm:text-sm">
                       {strength.description}
                     </p>
                   </div>
@@ -78,9 +95,9 @@ export function AttorneySection() {
               ))}
             </div>
 
-            <Button href={attorney.cta.href} className="mt-5 h-14 px-7 max-sm:w-full">
+            <Button href={attorney.cta.href} className="mt-5 h-14 px-6 text-[18px] max-sm:w-full sm:h-14 sm:px-7">
               <span>{attorney.cta.label}</span>
-              <span aria-hidden="true" className="ml-2 text-[#C8A96A]">
+              <span aria-hidden="true" className="ml-2 text-[#C8980A] sm:text-[#C8A96A]">
                 →
               </span>
             </Button>

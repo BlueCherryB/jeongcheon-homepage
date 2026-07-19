@@ -43,10 +43,13 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
                 수행사례
               </Link>
             </li>
-            <li aria-hidden="true" className="text-[#C8A96A]">
+            <li aria-hidden="true" className="hidden text-[#C8A96A] sm:block">
               /
             </li>
-            <li aria-current="page" className="max-w-full text-[#111B36]">
+            <li
+              aria-current="page"
+              className="hidden max-w-full text-[#111B36] sm:block"
+            >
               {caseStudy.title}
             </li>
           </ol>
@@ -59,10 +62,10 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
             </p>
 
             <div className="mt-4 max-w-[680px]">
-              <h1 className="font-chosun text-[34px] font-normal leading-[1.2] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
+              <h1 className="font-chosun text-[32px] font-normal leading-[1.5] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
                 {caseStudy.title}
               </h1>
-              <div className="mt-5 flex justify-start lg:justify-end">
+              <div className="mt-5 flex justify-end pr-3 sm:justify-start sm:pr-0">
                 <div className="inline-flex max-w-full items-center rounded-full border border-[#D9C89E] bg-white px-5 py-2.5 text-base font-bold text-[#111B36] shadow-[0_14px_34px_rgba(17,27,54,0.07)] sm:px-6 sm:py-3 sm:text-[17px]">
                   <span className="shrink-0 text-sm text-[#C8A96A] sm:text-base">
                     결과
@@ -83,11 +86,11 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
               </div>
             </div>
 
-            <p className="mt-5 max-w-[620px] text-base leading-8 text-[#111B36]/78 sm:text-lg">
+            <p className="mt-5 hidden max-w-[620px] text-base leading-8 text-[#111B36]/78 sm:block sm:text-lg">
               {caseStudy.summary}
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm font-medium text-[#111B36]/70">
+            <div className="mt-6 hidden flex-wrap items-center gap-4 text-sm font-medium text-[#111B36]/70 sm:flex">
               {caseStudy.publishedAt ? (
                 <time dateTime={caseStudy.publishedAt}>
                   {caseStudy.displayDate ?? caseStudy.publishedAt}

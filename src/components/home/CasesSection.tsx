@@ -5,7 +5,6 @@ import {
   type CaseStudyCardItem,
 } from "@/components/home/CaseStudyCard";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { homepageContent } from "@/data/homepage";
 import { buildCasesHref, type CaseFilterValue } from "@/lib/cases";
 
@@ -31,10 +30,12 @@ export function CasesSection({ caseStudies }: CasesSectionProps) {
             />
           </div>
 
-          <SectionHeading
-            title={cases.heading}
-            titleClassName="font-chosun mx-auto mt-9 max-w-4xl text-[28px] font-normal leading-[1.45] tracking-[-0.02em] text-[#111B36] sm:text-[34px] lg:text-[38px]"
-          />
+          <h2 className="font-chosun mx-auto mt-9 max-w-4xl text-[28px] font-normal leading-[1.45] tracking-[-0.02em] text-[#111B36] sm:text-[34px] lg:text-[38px]">
+            <span className="block sm:inline">정천의 수행사례를</span>
+            <span className="block sm:inline sm:before:content-['\\00a0']">
+              소개합니다.
+            </span>
+          </h2>
         </div>
 
         <div className="mt-16 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">

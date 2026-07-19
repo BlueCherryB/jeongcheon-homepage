@@ -92,15 +92,14 @@ export function ConsultationSection() {
               className="mt-2.5 h-px w-28 bg-[#C8A96A]"
             />
           </div>
-
+          <p className="mx-auto mt-5 max-w-xl break-keep text-base leading-7 text-[#111B36]/70">
+            의뢰인의 상황에 맞는 최적의 해결책을 제시해드립니다.
+          </p>
         </div>
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[0.46fr_0.54fr] lg:items-stretch">
           <div className="flex h-full flex-col justify-center rounded-[22px] border border-[#E8E2D7] bg-white px-7 py-8 shadow-[0_18px_54px_rgba(17,27,54,0.05)] sm:px-8 lg:py-10">
             <div>
-              <p className="break-keep text-base leading-7 text-[#111B36]/70">
-                사건에 대한 상담이 필요하시면 전화로 문의해 주세요.
-              </p>
               <ConsultationInfoItem
                 icon="phone"
                 label="전화 상담"
@@ -118,7 +117,7 @@ export function ConsultationSection() {
             <div className="mt-7 flex flex-col">
               <Button
                 href={officeContact.phoneHref}
-                className="h-14 px-6 max-sm:w-full"
+                className="h-14 px-6 text-xl font-semibold max-sm:w-full sm:text-lg"
               >
                 상담 문의하기
                 <span aria-hidden="true" className="ml-2 text-[#C8A96A]">
@@ -136,13 +135,22 @@ export function ConsultationSection() {
               aria-label="네이버 지도에서 법률사무소 정천 위치 보기"
               className="group block rounded-[22px] border border-[#E8E2D7] bg-white p-3 shadow-[0_18px_54px_rgba(17,27,54,0.06)] transition-colors hover:border-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A] lg:flex-1"
             >
-              <div className="relative aspect-[3/2] overflow-hidden rounded-[16px] bg-[#F3EEE6] lg:h-full lg:aspect-auto">
+              <div className="relative aspect-[1086/1448] overflow-hidden rounded-[16px] bg-[#F3EEE6] sm:hidden">
+                <Image
+                  src="/images/map-jeong-cheon-mobile.png"
+                  alt={officeContact.mapImage.alt}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative hidden aspect-[3/2] overflow-hidden rounded-[16px] bg-[#F3EEE6] sm:block lg:h-full lg:aspect-auto">
                 <Image
                   src={officeContact.mapImage.src}
                   alt={officeContact.mapImage.alt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 52vw"
-                  className="object-contain"
+                  className="object-cover"
                 />
               </div>
             </a>
