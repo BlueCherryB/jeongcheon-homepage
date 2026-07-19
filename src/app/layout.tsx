@@ -21,6 +21,14 @@ const geistMono = Geist_Mono({
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
 const isProduction = process.env.NODE_ENV === "production";
 
+// TEMP GA DEBUG: remove after verifying Cloudflare environment injection.
+console.log("[ga-debug]", {
+  NODE_ENV: process.env.NODE_ENV,
+  NEXT_PUBLIC_GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID,
+  gaMeasurementId,
+  isProduction,
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
@@ -52,6 +60,15 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${chosunNm.variable} ${eulyoo1945.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {/* TEMP GA DEBUG: remove this block after verifying Cloudflare environment injection. */}
+        <div
+          id="ga-debug"
+          className="fixed left-2 top-2 z-[9999] max-w-[calc(100vw-1rem)] rounded border border-red-500 bg-white p-3 text-xs text-red-700 shadow-lg"
+        >
+          <p>NODE_ENV: {process.env.NODE_ENV ?? "undefined"}</p>
+          <p>isProduction: {String(isProduction)}</p>
+          <p>GA_ID: {gaMeasurementId ?? "undefined"}</p>
+        </div>
         <Header />
         {children}
         <Footer />
