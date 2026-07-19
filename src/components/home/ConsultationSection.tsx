@@ -150,7 +150,7 @@ export function ConsultationSection() {
                   alt={officeContact.mapImage.alt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 52vw"
-                  className="object-contain"
+                  className="object-cover"
                 />
               </div>
             </a>
