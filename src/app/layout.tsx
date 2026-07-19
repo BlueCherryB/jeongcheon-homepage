@@ -4,8 +4,10 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
+import { JsonLdScript } from "@/components/seo/JsonLdScript";
 import { chosunNm, eulyoo1945 } from "@/lib/fonts";
 import { getSiteUrl } from "@/lib/site";
+import { buildGlobalStructuredData } from "@/lib/structuredData";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -58,6 +60,10 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} ${chosunNm.variable} ${eulyoo1945.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        <JsonLdScript
+          id="global-structured-data"
+          data={buildGlobalStructuredData()}
+        />
         <Header />
         {children}
         <Footer />

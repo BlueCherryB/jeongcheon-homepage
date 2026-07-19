@@ -1,3 +1,9 @@
+const productionSiteUrl = "https://jclaw.co.kr";
+
+export function getProductionSiteUrl(): string {
+  return productionSiteUrl;
+}
+
 export function getSiteUrl(): string {
   const rawUrl =
     process.env.NEXT_PUBLIC_SITE_URL ??
