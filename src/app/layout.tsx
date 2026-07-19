@@ -39,6 +39,13 @@ export const metadata: Metadata = {
         "54eaeda64f2dbefb9ce2b174337ab70a2ba257db",
     },
   },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
   openGraph: {
     title: "법률사무소 정천",
     description: "정천 법률사무소 공식 홈페이지입니다.",
