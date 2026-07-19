@@ -20,6 +20,7 @@ These values are required for local builds, Cloudflare Workers Builds, and futur
 
 ```bash
 NEXT_PUBLIC_SITE_URL=
+NEXT_PUBLIC_GA_MEASUREMENT_ID=
 NEXT_PUBLIC_SANITY_PROJECT_ID=
 NEXT_PUBLIC_SANITY_DATASET=
 NEXT_PUBLIC_SANITY_API_VERSION=
