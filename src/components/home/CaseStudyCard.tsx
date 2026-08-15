@@ -65,11 +65,11 @@ export function CaseStudyCard({
 
         <div className="flex justify-start lg:justify-center lg:border-l lg:border-[#E8E2D7] lg:pl-8">
           <div className="flex h-28 w-28 shrink-0 flex-col items-center justify-center rounded-full border border-[#C8A96A] text-center text-[#111B36]">
-            <p className="text-xl font-bold text-[#C8A96A]">
+            <p className="max-w-[88px] break-keep text-balance text-xl font-bold leading-snug text-[#C8A96A]">
               {caseStudy.result}
             </p>
             {caseStudy.resultDetail ? (
-              <p className="mt-1 px-3 text-xs font-semibold leading-5 text-[#111B36]">
+              <p className="mt-1 max-w-[88px] break-keep text-balance text-xs font-semibold leading-5 text-[#111B36]">
                 {caseStudy.resultDetail}
               </p>
             ) : null}
