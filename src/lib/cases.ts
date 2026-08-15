@@ -19,6 +19,9 @@ export type CaseCategoryFilter = {
 type CaseListItem = {
   categoryId: CaseStudyCategory;
   publishedAt?: string;
+  createdAt?: string;
+  featured?: boolean;
+  sortOrder?: number;
 };
 
 type PaginationInput = {
@@ -59,9 +62,49 @@ export function parsePage(value: unknown): number {
 export function sortCasesLatestFirst<T extends CaseListItem>(caseStudies: T[]): T[] {
   return [...caseStudies].sort(
     (first, second) =>
-      new Date(second.publishedAt ?? "").getTime() -
-      new Date(first.publishedAt ?? "").getTime(),
+      getCaseStudyDate(second) - getCaseStudyDate(first),
   );
+}
+
+function getCaseStudyDate(caseStudy: CaseListItem): number {
+  const timestamp = Date.parse(caseStudy.publishedAt ?? caseStudy.createdAt ?? "");
+
+  return Number.isFinite(timestamp) ? timestamp : 0;
+}
+
+function hasFeaturedSortOrder(caseStudy: CaseListItem): boolean {
+  const { sortOrder } = caseStudy;
+
+  return (
+    caseStudy.featured === true &&
+    Number.isInteger(sortOrder) &&
+    sortOrder !== undefined &&
+    sortOrder >= 1 &&
+    sortOrder <= 5
+  );
+}
+
+export function sortCaseStudiesForBoard<T extends CaseListItem>(
+  caseStudies: T[],
+): T[] {
+  return [...caseStudies].sort((first, second) => {
+    const firstIsFeatured = hasFeaturedSortOrder(first);
+    const secondIsFeatured = hasFeaturedSortOrder(second);
+
+    if (firstIsFeatured && secondIsFeatured) {
+      return (first.sortOrder ?? 0) - (second.sortOrder ?? 0);
+    }
+
+    if (firstIsFeatured) {
+      return -1;
+    }
+
+    if (secondIsFeatured) {
+      return 1;
+    }
+
+    return getCaseStudyDate(second) - getCaseStudyDate(first);
+  });
 }
 
 export function filterCases<T extends CaseListItem>(
