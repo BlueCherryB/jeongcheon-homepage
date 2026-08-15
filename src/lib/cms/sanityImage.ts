@@ -13,6 +13,7 @@ type SanityImageAsset = SanityImageDimensions & {
 type SanityImageUrlOptions = {
   width?: number;
   quality?: number;
+  ignoreCrop?: boolean;
 };
 
 const sanityImageRefPattern =
@@ -131,7 +132,14 @@ export function getSanityImageUrl(
   const url = new URL(
     `https://cdn.sanity.io/images/${env.projectId}/${env.dataset}/${imagePath}`,
   );
-  const cropRect = getSanityImageCropRect(image, asset);
+  const cropRect = options.ignoreCrop
+    ? {
+        left: 0,
+        top: 0,
+        width: asset.width,
+        height: asset.height,
+      }
+    : getSanityImageCropRect(image, asset);
 
   if (
     cropRect.left > 0 ||
