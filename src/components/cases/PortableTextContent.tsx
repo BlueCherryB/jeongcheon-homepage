@@ -7,7 +7,7 @@ import type {
 
 type PortableTextContentProps = {
   value: CaseStudyPortableText;
-  variant?: "paragraphs" | "list";
+  variant?: "paragraphs" | "list" | "article";
 };
 
 type PortableTextSpan = {
@@ -115,6 +115,38 @@ function getRenderableBlocks(value: CaseStudyPortableText) {
   });
 }
 
+function getBlockString(block: CaseStudyPortableTextBlock, property: string): string | undefined {
+  const value = block[property];
+
+  return typeof value === "string" ? value : undefined;
+}
+
+function ArticleBlock({block}: {block: CaseStudyPortableTextBlock}) {
+  const style = getBlockString(block, "style");
+  const listItem = getBlockString(block, "listItem");
+  const content = renderBlockText(block);
+
+  if (listItem === "bullet" || listItem === "number") {
+    const ListTag = listItem === "number" ? "ol" : "ul";
+
+    return (
+      <ListTag className="ml-5 list-outside space-y-2.5 pl-1 marker:text-[#C8A96A]">
+        <li>{content}</li>
+      </ListTag>
+    );
+  }
+
+  if (style === "h2") {
+    return <h2 className="pt-5 text-2xl font-semibold leading-snug text-[#111B36]">{content}</h2>;
+  }
+
+  if (style === "h3") {
+    return <h3 className="pt-3 text-lg font-semibold leading-snug text-[#111B36]">{content}</h3>;
+  }
+
+  return <p>{content}</p>;
+}
+
 export function portableTextToPlainText(value: CaseStudyPortableText): string {
   return getRenderableBlocks(value)
     .map((block) =>
@@ -150,6 +182,16 @@ export function PortableTextContent({
           </li>
         ))}
       </ul>
+    );
+  }
+
+  if (variant === "article") {
+    return (
+      <div className="space-y-5 text-[17px] leading-8 text-zinc-700 sm:text-lg sm:leading-9">
+        {blocks.map((block) => (
+          <ArticleBlock key={block._key} block={block} />
+        ))}
+      </div>
     );
   }
 

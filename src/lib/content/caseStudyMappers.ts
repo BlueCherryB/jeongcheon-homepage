@@ -122,6 +122,10 @@ function mapImage(image: SanityContentImage | undefined): CaseStudyImage | undef
       type: "reference",
     },
     alt: optionalTrimmedString(image?.alt) ?? defaultCaseStudyImageAlt,
+    displayMode:
+      image?.displayMode === "contain" || image?.displayMode === "cover"
+        ? image.displayMode
+        : undefined,
     caption: optionalTrimmedString(image?.caption),
     crop: mapImageCrop(image?.image?.crop),
     hotspot: mapImageHotspot(image?.image?.hotspot),
