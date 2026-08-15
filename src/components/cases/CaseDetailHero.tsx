@@ -17,11 +17,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
   const imageAsset = caseStudy.image
     ? parseSanityImageAsset(caseStudy.image.asset.ref)
     : null;
-  const isPortraitImage =
-    imageAsset !== null && imageAsset.height > imageAsset.width;
-  const isDocumentImage =
-    caseStudy.image?.displayMode === "contain" ||
-    (caseStudy.image?.displayMode === undefined && isPortraitImage);
+  const isDocumentImage = caseStudy.image?.displayMode !== "cover";
   const imageSrc = getSanityImageUrl(caseStudy.image, {
     width: 680,
     quality: 80,
@@ -107,20 +103,31 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
             </div>
           </div>
 
-          {imageSrc ? (
+          {imageSrc && imageAsset ? (
             <div
               className={[
-                "relative hidden aspect-[3/4] overflow-hidden rounded-[22px] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block",
-                isDocumentImage ? "bg-[#F5F2EC] p-3" : "bg-[#D8D4CC]",
+                "hidden overflow-hidden rounded-[22px] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:flex lg:w-[340px] lg:items-center lg:justify-center",
+                isDocumentImage
+                  ? "bg-[#F5F2EC] p-3"
+                  : "relative aspect-[3/4] bg-[#D8D4CC]",
               ].join(" ")}
             >
               <Image
                 src={imageSrc}
                 alt={caseStudy.image?.alt ?? ""}
-                fill
+                width={imageAsset.width}
+                height={imageAsset.height}
                 sizes="340px"
-                className={isDocumentImage ? "object-contain" : "object-cover"}
-                style={{ objectPosition: imageObjectPosition }}
+                className={
+                  isDocumentImage
+                    ? "h-auto max-h-[560px] w-full object-contain"
+                    : "h-full w-full object-cover"
+                }
+                style={
+                  isDocumentImage
+                    ? undefined
+                    : { objectPosition: imageObjectPosition }
+                }
               />
             </div>
           ) : (

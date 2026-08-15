@@ -53,6 +53,7 @@ export type CaseStudySeo = {
 
 export type CaseStudyListItem = {
   id: string;
+  createdAt?: string;
   title: string;
   slug: string;
   category: CaseStudyCategory;

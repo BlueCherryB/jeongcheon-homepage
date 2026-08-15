@@ -1,5 +1,6 @@
 const caseStudyListProjection = `{
   _id,
+  _createdAt,
   title,
   "slug": slug.current,
   category,
@@ -24,8 +25,7 @@ const caseStudyListProjection = `{
 }`;
 
 const caseStudyOrdering = `order(
-  coalesce(sortOrder, 999999) asc,
-  publishedAt desc,
+  coalesce(publishedAt, _createdAt) desc,
   _createdAt desc
 )`;
 
@@ -52,6 +52,7 @@ export const publishedCaseStudyBySlugQuery = `*[
   slug.current == $slug
 ] | ${caseStudyOrdering} [0] {
   _id,
+  _createdAt,
   title,
   "slug": slug.current,
   category,
