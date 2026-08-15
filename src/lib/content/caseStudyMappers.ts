@@ -233,6 +233,7 @@ export function mapSanityCaseStudyListItem(
 
   return {
     id: requireTrimmedString("_id", caseStudy._id),
+    createdAt: optionalTrimmedString(caseStudy._createdAt),
     title: requireTrimmedString("title", caseStudy.title),
     slug: requireTrimmedString("slug", caseStudy.slug),
     category,

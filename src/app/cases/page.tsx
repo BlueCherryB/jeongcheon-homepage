@@ -11,7 +11,7 @@ import {
   getPaginationState,
   parseCaseCategory,
   parsePage,
-  sortCasesLatestFirst,
+  sortCaseStudiesForBoard,
 } from "@/lib/cases";
 import { getCaseStudies } from "@/lib/content/caseStudies";
 import { buildBreadcrumbStructuredData } from "@/lib/structuredData";
@@ -40,7 +40,7 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
   );
   const requestedPage = parsePage(getSingleSearchParam(resolvedSearchParams.page));
   const caseStudies = await getCaseStudies();
-  const sortedCases = sortCasesLatestFirst(caseStudies);
+  const sortedCases = sortCaseStudiesForBoard(caseStudies);
   const filteredCases = filterCases(sortedCases, activeCategory);
   const { currentPage, totalPages, startIndex, endIndex } = getPaginationState(
     filteredCases.length,
@@ -70,7 +70,7 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
                 className="w-full appearance-none bg-transparent font-semibold outline-none"
                 defaultValue="latest"
               >
-                <option value="latest">최신순</option>
+                <option value="latest">대표순 · 최신순</option>
               </select>
               <span aria-hidden="true" className="ml-3 text-[#111B36]/70">
                 ˅
