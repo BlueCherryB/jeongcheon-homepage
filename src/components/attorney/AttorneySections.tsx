@@ -138,7 +138,7 @@ export function AttorneySections({
                 variant="secondary"
                 className="h-[52px] min-w-40 justify-center border-[#C8A96A] px-7"
               >
-                수행사례 보기
+                수행 사례 보기
               </Button>
             </div>
           </div>
@@ -212,13 +212,13 @@ export function AttorneySections({
           <Container className="py-20">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <h2 className="font-chosun text-[36px] font-normal tracking-[-0.02em] text-[#111B36]">
-                대표 수행사례
+                대표 수행 사례
               </h2>
               <Link
                 href="/cases"
                 className="text-sm font-semibold text-[#111B36] hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"
               >
-                더 많은 수행사례 보기 →
+                더 많은 수행 사례 보기 →
               </Link>
             </div>
             <div className="mt-8 flex flex-col gap-3">

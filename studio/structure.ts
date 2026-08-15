@@ -7,11 +7,11 @@ export const structure: StructureResolver = (S) =>
     .items([
       S.documentTypeListItem('caseStudy')
         .id('caseStudies')
-        .title('수행사례')
+        .title('수행 사례')
         .child(
           S.documentTypeList('caseStudy')
             .id('publishedCaseStudies')
-            .title('수행사례')
+            .title('수행 사례')
             .filter('_type == $type && !(_id in path("drafts.**"))')
             .params({type: 'caseStudy'})
             .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
