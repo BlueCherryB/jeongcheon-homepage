@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="법률사무소 정천">
+  <rect width="64" height="64" fill="#123D73"/>
+  <path
+    fill="#FFFFFF"
+    d="M12 13h40v6H36v8h15v6H36v4c0 7.5-3.3 13.2-10 17l-3.5-5.1c5.1-2.9 7.5-6.8 7.5-11.9v-4H20v15h9v6H11v-6h4V27h5v-8h-8v-6Zm14 6v8h10v-8H26Z"
+  />
+</svg>

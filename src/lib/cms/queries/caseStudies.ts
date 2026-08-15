@@ -12,6 +12,7 @@ const caseStudyListProjection = `{
   featured,
   sortOrder,
   mainImage {
+    displayMode,
     image {
       asset,
       crop,
@@ -59,6 +60,7 @@ export const publishedCaseStudyBySlugQuery = `*[
   tags,
   summary,
   mainImage {
+    displayMode,
     image {
       asset,
       crop,

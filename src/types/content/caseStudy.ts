@@ -30,6 +30,7 @@ export type CaseStudyImageHotspot = {
 export type CaseStudyImage = {
   asset: CaseStudyImageAssetReference;
   alt: string;
+  displayMode?: "cover" | "contain";
   caption?: string;
   crop?: CaseStudyImageCrop;
   hotspot?: CaseStudyImageHotspot;

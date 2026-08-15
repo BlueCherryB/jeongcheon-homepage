@@ -18,6 +18,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
     quality: 80,
   });
   const imageObjectPosition = getSanityImageObjectPosition(caseStudy.image);
+  const isDocumentImage = caseStudy.image?.displayMode === "contain";
 
   return (
     <section className="overflow-hidden border-b border-[#E8E2D7] bg-[#FAF8F4]">
@@ -86,10 +87,6 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
               </div>
             </div>
 
-            <p className="mt-5 hidden max-w-[620px] text-base leading-8 text-[#111B36]/78 sm:block sm:text-lg">
-              {caseStudy.summary}
-            </p>
-
             <div className="mt-6 hidden flex-wrap items-center gap-4 text-sm font-medium text-[#111B36]/70 sm:flex">
               {caseStudy.publishedAt ? (
                 <time dateTime={caseStudy.publishedAt}>
@@ -102,13 +99,18 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
           </div>
 
           {imageSrc ? (
-            <div className="relative hidden aspect-[3/4] overflow-hidden rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block">
+            <div
+              className={[
+                "relative hidden aspect-[3/4] overflow-hidden rounded-[22px] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block",
+                isDocumentImage ? "bg-[#F5F2EC] p-3" : "bg-[#D8D4CC]",
+              ].join(" ")}
+            >
               <Image
                 src={imageSrc}
                 alt={caseStudy.image?.alt ?? ""}
                 fill
                 sizes="340px"
-                className="object-cover"
+                className={isDocumentImage ? "object-contain" : "object-cover"}
                 style={{ objectPosition: imageObjectPosition }}
               />
             </div>

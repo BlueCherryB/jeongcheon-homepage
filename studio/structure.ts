@@ -32,4 +32,13 @@ export const structure: StructureResolver = (S) =>
               {field: 'publishedAt', direction: 'desc'},
             ]),
         ),
+      S.documentTypeListItem('legalArticle')
+        .id('legalArticles')
+        .title('법률 정보')
+        .child(
+          S.documentTypeList('legalArticle')
+            .id('legalArticlesList')
+            .title('법률 정보')
+            .initialValueTemplates([S.initialValueTemplateItem('legalArticle')]),
+        ),
     ])

@@ -4,6 +4,7 @@ import { CaseCategoryFilter } from "@/components/cases/CaseCategoryFilter";
 import { CasePagination } from "@/components/cases/CasePagination";
 import { CasesPageHero } from "@/components/cases/CasesPageHero";
 import { CaseStudyList } from "@/components/cases/CaseStudyList";
+import { JsonLdScript } from "@/components/seo/JsonLdScript";
 import { Container } from "@/components/ui/Container";
 import {
   filterCases,
@@ -13,6 +14,7 @@ import {
   sortCasesLatestFirst,
 } from "@/lib/cases";
 import { getCaseStudies } from "@/lib/content/caseStudies";
+import { buildBreadcrumbStructuredData } from "@/lib/structuredData";
 
 export const metadata: Metadata = {
   title: "수행사례 | 법률사무소 정천",
@@ -48,6 +50,13 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
 
   return (
     <main className="bg-[#FAF8F4] text-[#111B36]">
+      <JsonLdScript
+        id="cases-breadcrumb-structured-data"
+        data={buildBreadcrumbStructuredData("/cases", [
+          { name: "홈", path: "/" },
+          { name: "수행사례", path: "/cases" },
+        ])}
+      />
       <CasesPageHero />
 
       <section className="py-8 lg:py-10">

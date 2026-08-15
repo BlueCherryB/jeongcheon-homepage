@@ -6,7 +6,20 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 const revalidateSecretHeader = "x-sanity-revalidate-secret";
-const detailPathPrefix = "/cases/";
+const documentPaths = {
+  caseStudy: {
+    list: "/cases",
+    detailPrefix: "/cases/",
+    additionalPaths: ["/"],
+  },
+  legalArticle: {
+    list: "/legal-info",
+    detailPrefix: "/legal-info/",
+    additionalPaths: [],
+  },
+} as const;
+
+type SupportedDocumentType = keyof typeof documentPaths;
 
 type SanitySlugValue =
   | string
@@ -80,7 +93,10 @@ function readSlug(value: SanitySlugValue | undefined): string | undefined {
   return undefined;
 }
 
-function normalizeDetailPath(slug: string | undefined): string | undefined {
+function normalizeDetailPath(
+  slug: string | undefined,
+  detailPathPrefix: string,
+): string | undefined {
   if (!slug) {
     return undefined;
   }
@@ -96,7 +112,11 @@ function uniquePaths(paths: Array<string | undefined>): string[] {
   return Array.from(new Set(paths.filter((path): path is string => Boolean(path))));
 }
 
-function getAffectedPaths(payload: SanityWebhookPayload): string[] {
+function getAffectedPaths(
+  payload: SanityWebhookPayload,
+  documentType: SupportedDocumentType,
+): string[] {
+  const paths = documentPaths[documentType];
   const currentSlug =
     readSlug(payload.currentSlug) ??
     readSlug(payload.slug) ??
@@ -104,10 +124,10 @@ function getAffectedPaths(payload: SanityWebhookPayload): string[] {
   const previousSlug = readSlug(payload.previousSlug) ?? readSlug(payload.before?.slug);
 
   return uniquePaths([
-    "/",
-    "/cases",
-    normalizeDetailPath(currentSlug),
-    normalizeDetailPath(previousSlug),
+    ...paths.additionalPaths,
+    paths.list,
+    normalizeDetailPath(currentSlug, paths.detailPrefix),
+    normalizeDetailPath(previousSlug, paths.detailPrefix),
   ]);
 }
 
@@ -164,7 +184,10 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
   }
 
-  if (payload._type && payload._type !== "caseStudy") {
+  const documentType =
+    payload._type === undefined ? "caseStudy" : (payload._type as SupportedDocumentType);
+
+  if (!documentType || !(documentType in documentPaths)) {
     return jsonResponse(
       {
         ok: false,
@@ -174,7 +197,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     );
   }
 
-  const revalidatedPaths = getAffectedPaths(payload);
+  const revalidatedPaths = getAffectedPaths(payload, documentType);
 
   for (const path of revalidatedPaths) {
     revalidatePath(path);

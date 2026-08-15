@@ -281,6 +281,20 @@ export const caseStudy = defineType({
             hotspot: true,
           },
         }),
+        defineField({
+          name: 'displayMode',
+          title: '상세 이미지 표시 방식',
+          type: 'string',
+          description: '사진은 채우기를, 문서·판결문·스크린샷은 전체 표시를 선택해 주세요.',
+          initialValue: 'cover',
+          options: {
+            list: [
+              {title: '사진 채우기', value: 'cover'},
+              {title: '문서 전체 표시', value: 'contain'},
+            ],
+            layout: 'radio',
+          },
+        }),
       ],
       preview: {
         select: {

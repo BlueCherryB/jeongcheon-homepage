@@ -3,13 +3,15 @@ import { notFound } from "next/navigation";
 
 import { CaseDetailContent } from "@/components/cases/CaseDetailContent";
 import { CaseDetailHero } from "@/components/cases/CaseDetailHero";
+import { portableTextToPlainText } from "@/components/cases/PortableTextContent";
+import { JsonLdScript } from "@/components/seo/JsonLdScript";
 import { getRelatedCaseStudyListItems } from "@/lib/cases";
 import {
   getCaseStudies,
   getCaseStudyBySlug,
   getCaseStudySlugs,
 } from "@/lib/content/caseStudies";
-import { portableTextToPlainText } from "@/components/cases/PortableTextContent";
+import { buildCaseStudyArticleStructuredData } from "@/lib/structuredData";
 import type { CaseStudyDetail } from "@/types/content/caseStudy";
 
 type CaseDetailPageProps = {
@@ -118,36 +120,22 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
   ]
     .filter(Boolean)
     .join(" ");
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: caseStudy.title,
-    description: getCaseStudyDescription(caseStudy),
-    datePublished: caseStudy.publishedAt,
-    dateModified: caseStudy.publishedAt,
-    articleSection: caseStudy.categoryLabel,
-    keywords,
-    articleBody: articleBody || undefined,
-    mainEntityOfPage: url,
-    author: {
-      "@type": "Organization",
-      name: "정천 법률사무소",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "정천 법률사무소",
-    },
-    url,
-  };
-
   return (
     <>
       <main className="bg-white text-[#111B36]">
+        <JsonLdScript
+          id="case-study-structured-data"
+          data={buildCaseStudyArticleStructuredData({
+            caseStudy,
+            path: url,
+            description: getCaseStudyDescription(caseStudy),
+            keywords,
+            articleBody,
+          })}
+        />
         <CaseDetailHero caseStudy={caseStudy} />
         <CaseDetailContent caseStudy={caseStudy} relatedCases={relatedCases} />
       </main>
-
-      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
     </>
   );
 }
