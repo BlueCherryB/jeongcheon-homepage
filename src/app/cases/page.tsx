@@ -17,9 +17,9 @@ import { getCaseStudies } from "@/lib/content/caseStudies";
 import { buildBreadcrumbStructuredData } from "@/lib/structuredData";
 
 export const metadata: Metadata = {
-  title: "수행사례 | 법률사무소 정천",
+  title: "수행 사례 | 법률사무소 정천",
   description:
-    "법률사무소 정천의 형사, 민사, 이혼·가사 사건에서 의뢰인의 권익을 보호하고 해결한 수행사례를 소개합니다.",
+    "법률사무소 정천의 형사, 민사, 이혼·가사 사건에서 의뢰인의 권익을 보호하고 해결한 수행 사례를 소개합니다.",
   alternates: {
     canonical: "/cases",
   },
@@ -54,7 +54,7 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
         id="cases-breadcrumb-structured-data"
         data={buildBreadcrumbStructuredData("/cases", [
           { name: "홈", path: "/" },
-          { name: "수행사례", path: "/cases" },
+          { name: "수행 사례", path: "/cases" },
         ])}
       />
       <CasesPageHero />

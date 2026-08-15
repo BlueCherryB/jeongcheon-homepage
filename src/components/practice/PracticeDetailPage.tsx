@@ -210,7 +210,7 @@ export function PracticeDetailPage({
         <section className="bg-white">
           <Container className="py-18 lg:py-20">
             <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <SectionTitle eyebrow="Cases" title="관련 수행사례" />
+              <SectionTitle eyebrow="Cases" title="관련 수행 사례" />
               <Link
                 href={casesHref}
                 className="text-sm font-semibold text-[#111B36] hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A]"

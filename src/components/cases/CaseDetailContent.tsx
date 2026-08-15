@@ -70,7 +70,7 @@ export function CaseDetailContent({
       {relatedCases.length > 0 ? (
         <section className="mt-12">
           <h2 className="text-lg font-semibold text-[#111B36]">
-            관련 수행사례
+            관련 수행 사례
           </h2>
           <div className="mt-4 grid gap-3 md:grid-cols-2">
             {relatedCases.map((relatedCase) => (
@@ -94,7 +94,7 @@ export function CaseDetailContent({
       <div className="mt-10 flex justify-end">
         <Link
           href="/cases"
-          aria-label="수행사례 목록으로 이동"
+          aria-label="수행 사례 목록으로 이동"
           className="inline-flex items-center justify-center border border-[#C8A96A] bg-white px-6 py-3 text-sm font-semibold text-[#111B36] transition-colors hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C8A96A] max-sm:w-full"
         >
           목록

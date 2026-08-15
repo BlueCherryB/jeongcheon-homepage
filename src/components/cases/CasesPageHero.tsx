@@ -21,13 +21,13 @@ export function CasesPageHero() {
                 ›
               </li>
               <li aria-current="page" className="font-medium text-[#111B36]">
-                수행사례
+                수행 사례
               </li>
             </ol>
           </nav>
 
           <h1 className="font-chosun mt-7 text-[44px] font-normal leading-tight tracking-[-0.02em] text-[#111B36] sm:text-[56px]">
-            수행사례
+            수행 사례
           </h1>
           <p className="mt-5 max-w-xl text-base leading-8 text-[#111B36]/80 sm:text-lg">
             정천이 의뢰인의 권익을 지키고 최선의 결과를 이끌어낸 사례를 소개합니다.
