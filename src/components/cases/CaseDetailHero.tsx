@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import {
   getSanityImageObjectPosition,
   getSanityImageUrl,
+  parseSanityImageAsset,
 } from "@/lib/cms/sanityImage";
 import type { CaseStudyDetail } from "@/types/content/caseStudy";
 
@@ -13,12 +14,20 @@ type CaseDetailHeroProps = {
 };
 
 export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
+  const imageAsset = caseStudy.image
+    ? parseSanityImageAsset(caseStudy.image.asset.ref)
+    : null;
+  const isPortraitImage =
+    imageAsset !== null && imageAsset.height > imageAsset.width;
+  const isDocumentImage =
+    caseStudy.image?.displayMode === "contain" ||
+    (caseStudy.image?.displayMode === undefined && isPortraitImage);
   const imageSrc = getSanityImageUrl(caseStudy.image, {
     width: 680,
     quality: 80,
+    ignoreCrop: isDocumentImage,
   });
   const imageObjectPosition = getSanityImageObjectPosition(caseStudy.image);
-  const isDocumentImage = caseStudy.image?.displayMode === "contain";
 
   return (
     <section className="overflow-hidden border-b border-[#E8E2D7] bg-[#FAF8F4]">
