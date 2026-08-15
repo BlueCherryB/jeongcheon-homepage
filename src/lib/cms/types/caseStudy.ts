@@ -22,6 +22,7 @@ export type SanityImageHotspot = {
 };
 
 export type SanityContentImage = {
+  displayMode?: "cover" | "contain";
   image?: {
     asset?: SanityImageAssetReference;
     crop?: SanityImageCrop;

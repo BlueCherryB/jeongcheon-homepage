@@ -4,6 +4,7 @@ import { practiceAreas } from "@/data/practice";
 import { getSanityImageUrl } from "@/lib/cms/sanityImage";
 import { getProductionSiteUrl } from "@/lib/site";
 import type { CaseStudyDetail } from "@/types/content/caseStudy";
+import type { LegalArticleDetail } from "@/types/content/legalArticle";
 
 export type JsonLdPrimitive = string | number | boolean | null;
 
@@ -23,6 +24,12 @@ type ArticleStructuredDataInput = {
   path: string;
   description: string;
   keywords: string[];
+  articleBody?: string;
+};
+
+type LegalArticleStructuredDataInput = {
+  article: LegalArticleDetail;
+  path: string;
   articleBody?: string;
 };
 
@@ -216,6 +223,53 @@ export function buildCaseStudyArticleStructuredData({
         { name: "\ud648", path: "/" },
         { name: "\uc218\ud589\uc0ac\ub840", path: "/cases" },
         { name: caseStudy.title, path },
+      ]),
+    ],
+  };
+}
+
+export function buildLegalArticleStructuredData({
+  article,
+  path,
+  articleBody,
+}: LegalArticleStructuredDataInput): JsonLdObject {
+  const url = buildCanonicalUrl(path);
+  const imageUrl = getSanityImageUrl(article.coverImage, {
+    width: 1200,
+    quality: 85,
+  });
+  const description = article.seo.description ?? article.excerpt;
+
+  return {
+    "@context": schemaContext,
+    "@graph": [
+      {
+        "@type": "Article",
+        "@id": `${url}#article`,
+        headline: article.title,
+        description,
+        datePublished: isValidDate(article.publishedAt)
+          ? article.publishedAt
+          : undefined,
+        articleSection: article.categoryLabel,
+        keywords: article.seo.keywords.length > 0 ? article.seo.keywords : undefined,
+        articleBody: articleBody || undefined,
+        image: imageUrl ? [imageUrl] : undefined,
+        mainEntityOfPage: {
+          "@id": url,
+        },
+        author: {
+          "@id": getLegalServiceId(),
+        },
+        publisher: {
+          "@id": getOrganizationId(),
+        },
+        url,
+      },
+      buildBreadcrumbStructuredData(path, [
+        {name: "홈", path: "/"},
+        {name: "법률 정보", path: "/legal-info"},
+        {name: article.title, path},
       ]),
     ],
   };

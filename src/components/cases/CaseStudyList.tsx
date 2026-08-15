@@ -14,10 +14,10 @@ export function CaseStudyList({ caseStudies }: CaseStudyListProps) {
         aria-hidden="true"
         className="mb-1 hidden grid-cols-[120px_minmax(0,1fr)_150px_168px] rounded-md border border-[#E8E2D7] bg-white/45 px-10 py-3 text-sm font-semibold text-[#111B36] lg:grid lg:gap-8"
       >
-        <div className="text-center">분야</div>
+        <div>분야</div>
         <div>사건명</div>
         <div className="text-center">결과</div>
-        <div className="text-center">날짜</div>
+        <div />
       </div>
 
       {caseStudies.length > 0 ? (
