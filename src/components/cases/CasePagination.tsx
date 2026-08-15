@@ -22,7 +22,7 @@ export function CasePagination({
 
   return (
     <div className="mt-10 flex flex-col items-center gap-4">
-      <nav aria-label="수행사례 페이지네이션">
+      <nav aria-label="수행 사례 페이지네이션">
         <ul className="flex flex-wrap items-center justify-center gap-2">
           <li>
             {hasPrevious ? (

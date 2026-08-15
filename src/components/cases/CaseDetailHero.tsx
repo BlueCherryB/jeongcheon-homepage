@@ -46,7 +46,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
                 href="/cases"
                 className="hover:text-[#C8A96A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8A96A]"
               >
-                수행사례
+                수행 사례
               </Link>
             </li>
             <li aria-hidden="true" className="hidden text-[#C8A96A] sm:block">

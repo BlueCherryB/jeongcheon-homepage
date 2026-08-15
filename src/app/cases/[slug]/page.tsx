@@ -35,7 +35,7 @@ function getCaseStudyDescription(caseStudy: CaseStudyDetail): string {
 }
 
 function getCaseStudyTitle(caseStudy: CaseStudyDetail): string {
-  return caseStudy.seo.title ?? `${caseStudy.title} | 수행사례 | 법률사무소 정천`;
+  return caseStudy.seo.title ?? `${caseStudy.title} | 수행 사례 | 법률사무소 정천`;
 }
 
 export async function generateStaticParams() {
@@ -54,7 +54,7 @@ export async function generateMetadata({
 
   if (!caseStudy) {
     return {
-      title: "수행사례를 찾을 수 없습니다 | 법률사무소 정천",
+      title: "수행 사례를 찾을 수 없습니다 | 법률사무소 정천",
       alternates: {
         canonical: buildCaseStudyUrl(slug),
       },

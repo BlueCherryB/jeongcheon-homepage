@@ -101,7 +101,7 @@ async function isUniqueCaseSlug(
     },
   )
 
-  return duplicateId ? '이미 사용 중인 수행사례 주소입니다.' : true
+  return duplicateId ? '이미 사용 중인 수행 사례 주소입니다.' : true
 }
 
 function validateUniqueCaseSlug(value: unknown, context: unknown): Promise<true | string> {
@@ -154,7 +154,7 @@ function validateSortOrder(value: unknown, context: unknown): Promise<true | str
 
 export const caseStudy = defineType({
   name: 'caseStudy',
-  title: '수행사례',
+  title: '수행 사례',
   type: 'document',
   __experimental_formPreviewTitle: false,
   initialValue: async (_params, context) => ({
@@ -175,7 +175,7 @@ export const caseStudy = defineType({
       title: '제목',
       type: 'string',
       group: 'basic',
-      description: '수행사례 목록과 상세 페이지에 표시되는 제목입니다.',
+      description: '수행 사례 목록과 상세 페이지에 표시되는 제목입니다.',
       validation: (Rule) => Rule.max(120).error('제목은 120자 이내로 입력해주세요.'),
     }),
     defineField({
@@ -271,7 +271,7 @@ export const caseStudy = defineType({
       title: '대표 이미지',
       type: 'object',
       group: 'basic',
-      description: '홈페이지, 수행사례 목록, 상세 페이지에 사용할 수 있는 이미지입니다.',
+      description: '홈페이지, 수행 사례 목록, 상세 페이지에 사용할 수 있는 이미지입니다.',
       fields: [
         defineField({
           name: 'image',

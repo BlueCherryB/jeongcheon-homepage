@@ -31,7 +31,7 @@ export function CasesSection({ caseStudies }: CasesSectionProps) {
           </div>
 
           <h2 className="font-chosun mx-auto mt-9 max-w-4xl text-[28px] font-normal leading-[1.45] tracking-[-0.02em] text-[#111B36] sm:text-[34px] lg:text-[38px]">
-            <span className="block sm:inline">정천의 수행사례를</span>
+            <span className="block sm:inline">정천의 수행 사례를</span>
             <span aria-hidden="true" className="hidden sm:inline">
               {" "}
             </span>

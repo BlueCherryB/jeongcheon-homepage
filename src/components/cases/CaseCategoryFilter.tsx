@@ -11,7 +11,7 @@ export function CaseCategoryFilter({
   activeCategory,
 }: CaseCategoryFilterProps) {
   return (
-    <nav aria-label="수행사례 카테고리">
+    <nav aria-label="수행 사례 카테고리">
       <ul className="flex flex-wrap gap-3">
         {caseCategoryFilters.map((filter) => {
           const isActive = filter.value === activeCategory;

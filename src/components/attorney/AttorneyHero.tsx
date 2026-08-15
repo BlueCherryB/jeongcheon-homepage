@@ -69,7 +69,7 @@ export function AttorneyHero({ attorney }: AttorneyHeroProps) {
                 variant="secondary"
                 className="h-[52px] min-w-40 justify-center border-[#C8A96A] px-7"
               >
-                수행사례 보기
+                수행 사례 보기
               </Button>
             </div>
           </div>
