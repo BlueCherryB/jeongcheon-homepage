@@ -147,6 +147,23 @@ function ArticleBlock({block}: {block: CaseStudyPortableTextBlock}) {
   return <p>{content}</p>;
 }
 
+function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
+  const listItem = getBlockString(block, "listItem");
+  const content = renderBlockText(block);
+
+  if (listItem === "bullet" || listItem === "number") {
+    const ListTag = listItem === "number" ? "ol" : "ul";
+
+    return (
+      <ListTag className="ml-5 list-outside space-y-2.5 pl-1 marker:text-[#C8A96A]">
+        <li>{content}</li>
+      </ListTag>
+    );
+  }
+
+  return <p>{content}</p>;
+}
+
 export function portableTextToPlainText(value: CaseStudyPortableText): string {
   return getRenderableBlocks(value)
     .map((block) =>
@@ -198,7 +215,7 @@ export function PortableTextContent({
   return (
     <div className="space-y-4">
       {blocks.map((block) => (
-        <p key={block._key}>{renderBlockText(block)}</p>
+        <ParagraphBlock key={block._key} block={block} />
       ))}
     </div>
   );
