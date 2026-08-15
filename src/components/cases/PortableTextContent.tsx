@@ -128,9 +128,13 @@ function ArticleBlock({block}: {block: CaseStudyPortableTextBlock}) {
 
   if (listItem === "bullet" || listItem === "number") {
     const ListTag = listItem === "number" ? "ol" : "ul";
+    const listClassName =
+      listItem === "number"
+        ? "ml-5 list-outside list-decimal space-y-2.5 pl-1 marker:text-[#C8A96A]"
+        : "ml-5 list-outside list-disc space-y-2.5 pl-1 marker:text-[#C8A96A]";
 
     return (
-      <ListTag className="ml-5 list-outside space-y-2.5 pl-1 marker:text-[#C8A96A]">
+      <ListTag className={listClassName}>
         <li>{content}</li>
       </ListTag>
     );
@@ -153,9 +157,13 @@ function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
 
   if (listItem === "bullet" || listItem === "number") {
     const ListTag = listItem === "number" ? "ol" : "ul";
+    const listClassName =
+      listItem === "number"
+        ? "ml-5 list-outside list-decimal space-y-2.5 pl-1 marker:text-[#C8A96A]"
+        : "ml-5 list-outside list-disc space-y-2.5 pl-1 marker:text-[#C8A96A]";
 
     return (
-      <ListTag className="ml-5 list-outside space-y-2.5 pl-1 marker:text-[#C8A96A]">
+      <ListTag className={listClassName}>
         <li>{content}</li>
       </ListTag>
     );

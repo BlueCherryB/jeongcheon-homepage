@@ -273,7 +273,7 @@ export function mapSanityCaseStudyDetail(
     ...mapSanityCaseStudyListItem(caseStudy),
     overview: mapPortableTextBlocks(caseStudy.overview),
     issues: mapPortableTextBlocks(caseStudy.legalIssues),
-    response: [],
+    response: mapPortableTextBlocks(caseStudy.response),
     outcome: mapPortableTextBlocks(caseStudy.outcome),
     keywords: mapKeywords(caseStudy.tags),
     relatedPracticeIds: [],

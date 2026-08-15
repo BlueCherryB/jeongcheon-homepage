@@ -113,6 +113,7 @@ export const legalArticle = defineType({
   groups: [
     {name: 'basic', title: '기본 정보', default: true},
     {name: 'content', title: '본문'},
+    {name: 'processing', title: '원문 관리'},
     {name: 'source', title: '출처'},
     {name: 'seo', title: 'SEO'},
   ],
@@ -171,6 +172,15 @@ export const legalArticle = defineType({
       type: 'contentImage',
       group: 'basic',
       description: '선택 입력입니다. 이미지 없이도 법률 정보를 게시할 수 있습니다.',
+    }),
+    defineField({
+      name: 'rawSource',
+      title: '원문 내용',
+      type: 'text',
+      rows: 18,
+      group: 'processing',
+      description:
+        '한글 문서 등에서 복사한 원문을 그대로 붙여 넣습니다. 원문 자동 정리 기능은 이 내용을 바탕으로 본문을 채우며, 원문은 다시 정리할 수 있도록 보존됩니다.',
     }),
     defineField({
       name: 'body',

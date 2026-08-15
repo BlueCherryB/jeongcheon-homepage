@@ -72,6 +72,7 @@ export const publishedCaseStudyBySlugQuery = `*[
   },
   overview,
   legalIssues,
+  response,
   outcome,
   publishedAt,
   featured,
