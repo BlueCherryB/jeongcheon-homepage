@@ -45,7 +45,7 @@ function createEmptySections(): ParsedSections {
 function normalizeLine(line: string): string {
   return line
     .replace(/\u00a0/g, ' ')
-    .replace(/^\s*(?:#{1,6}|[\d]+[.)])\s*/, '')
+    .replace(/^\s*(?:#{1,6}|[\d]+[.)]|[○●◦•▪◆◇oO]\s+)\s*/, '')
     .replace(/[：:]+\s*$/, '')
     .replace(/\s+/g, ' ')
     .trim()
@@ -186,6 +186,14 @@ function getParsedResult(lines: string[]): NormalizedCaseStudyContent['result'] 
 function inferCaseStudyTitle(lines: string[]): {title?: string; contentLines: string[]} {
   const firstHeadingIndex = lines.findIndex((line) => Boolean(getSectionFromHeading(line)))
   const preface = (firstHeadingIndex === -1 ? [] : lines.slice(0, firstHeadingIndex)).filter(Boolean)
+  const bracketedTitle = preface.find((line) => /^\[[^\]]+\]$/.test(line))
+
+  if (bracketedTitle) {
+    return {
+      title: bracketedTitle.slice(1, -1).trim(),
+      contentLines: lines.slice(firstHeadingIndex),
+    }
+  }
 
   if (preface.length !== 1 || preface[0].length > 120) {
     return {contentLines: lines}
