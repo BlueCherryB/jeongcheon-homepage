@@ -1,7 +1,14 @@
 import {useCallback} from 'react'
 import {Box, Button, Card, Flex, Heading, Stack, Text} from '@sanity/ui'
 import {useToast} from '@sanity/ui/toast'
-import type {LegalContentDocumentType, LegalContentExport, NormalizedLegalContent} from '../lib/legalContent/types'
+import type {
+  CaseStudySection,
+  LegalContentDocumentType,
+  LegalContentExport,
+  NormalizedCaseStudyContent,
+  NormalizedLegalContent,
+  PortableTextBlock,
+} from '../lib/legalContent/types'
 import {
   formatHomepageContent,
   formatLawTalkContent,
@@ -57,6 +64,55 @@ function ExportPreview({label, value}: {label: string; value: LegalContentExport
   )
 }
 
+function getBlockText(block: PortableTextBlock): string {
+  return block.children.map((child) => child.text).join('').trim()
+}
+
+const caseStudyFieldLabels: Record<CaseStudySection, string> = {
+  overview: '사건의 개요',
+  issues: '주요 쟁점',
+  response: '변호인의 대응·조력',
+  outcome: '사건의 결과',
+}
+
+function CaseStudySectionPreview({content}: {content: NormalizedCaseStudyContent}) {
+  return (
+    <Stack space={2}>
+      {(Object.keys(caseStudyFieldLabels) as CaseStudySection[]).map((section) => {
+        const blocks = content.sections[section]
+
+        if (blocks.length === 0) {
+          return null
+        }
+
+        return (
+          <Card border key={section} padding={3} radius={2} tone="transparent">
+            <Stack space={2}>
+              <Text size={1} weight="semibold">
+                {caseStudyFieldLabels[section]}
+              </Text>
+              <Text size={1} style={{whiteSpace: 'pre-wrap'}}>
+                {blocks.map(getBlockText).filter(Boolean).join('\n')}
+              </Text>
+            </Stack>
+          </Card>
+        )
+      })}
+      {(content.result.result || content.result.resultDetail) && (
+        <Card border padding={3} radius={2} tone="transparent">
+          <Stack space={2}>
+            <Text size={1} weight="semibold">
+              결과 배지
+            </Text>
+            {content.result.result && <Text size={1}>사건 결과: {content.result.result}</Text>}
+            {content.result.resultDetail && <Text size={1}>세부 결과: {content.result.resultDetail}</Text>}
+          </Stack>
+        </Card>
+      )}
+    </Stack>
+  )
+}
+
 function ContentPreview({content, fallbackTitle}: Pick<LegalContentProcessorDialogProps, 'content' | 'fallbackTitle'>) {
   const homepageContent = formatHomepageContent(content, fallbackTitle)
 
@@ -69,9 +125,13 @@ function ContentPreview({content, fallbackTitle}: Pick<LegalContentProcessorDial
         <Text size={1} muted>
           제목: {homepageContent.title || '기존 제목을 유지합니다.'}
         </Text>
-        <Text size={1} style={{whiteSpace: 'pre-wrap'}}>
-          {homepageContent.body || '원문에서 적용할 본문을 찾지 못했습니다.'}
-        </Text>
+        {content.documentType === 'caseStudy' ? (
+          <CaseStudySectionPreview content={content} />
+        ) : (
+          <Text size={1} style={{whiteSpace: 'pre-wrap'}}>
+            {homepageContent.body || '원문에서 적용할 본문을 찾지 못했습니다.'}
+          </Text>
+        )}
       </Stack>
     </Card>
   )

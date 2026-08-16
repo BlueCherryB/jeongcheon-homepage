@@ -38,6 +38,8 @@ function getPatchValues(
     ...(content.sections.issues.length > 0 ? {legalIssues: content.sections.issues} : {}),
     ...(content.sections.response.length > 0 ? {response: content.sections.response} : {}),
     ...(content.sections.outcome.length > 0 ? {outcome: content.sections.outcome} : {}),
+    ...(content.result.result ? {result: content.result.result} : {}),
+    ...(content.result.resultDetail ? {resultDetail: content.result.resultDetail} : {}),
   }
 }
 

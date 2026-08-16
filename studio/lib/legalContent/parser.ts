@@ -12,8 +12,25 @@ type ParsedSections = Record<CaseStudySection, string[]>
 const sectionMatchers: Array<[CaseStudySection, RegExp]> = [
   ['overview', /^(사건의?\s*개요|사안의?\s*개요|사건\s*개요)$/],
   ['issues', /^(주요\s*쟁점|법적\s*쟁점|쟁점)$/],
-  ['response', /^(변호인(?:의)?\s*(?:대응|조력)|변호사(?:의)?\s*(?:대응|조력)|대응\s*\/\s*조력)$/],
+  [
+    'response',
+    /^(변호인(?:의)?\s*(?:대응|조력|대응\s*및\s*조력)|변호사(?:의)?\s*(?:대응|조력|대응\s*및\s*조력)|대응(?:\s*내용|\s*\/\s*조력)?)$/,
+  ],
   ['outcome', /^(사건의?\s*(?:결과|결론)|처리\s*결과|결과|결론)$/],
+]
+
+const resultTaxonomies: Array<[string, RegExp]> = [
+  ['무혐의', /(?:무혐의|혐의\s*없음|불송치)/],
+  ['무죄', /무죄/],
+  ['승소', /(?:전부|일부)?\s*승소/],
+  ['조정성립', /조정\s*성립/],
+  ['화해권고', /화해\s*권고/],
+  ['인용', /(?:전부|일부)?\s*인용|청구\s*인용/],
+  ['기각', /(?:전부|일부)?\s*기각|청구\s*기각/],
+  ['감경', /감경/],
+  ['불기소', /불기소/],
+  ['집행유예', /집행\s*유예/],
+  ['기소의견', /기소\s*의견/],
 ]
 
 function createEmptySections(): ParsedSections {
@@ -143,6 +160,29 @@ function toPortableTextBlocks(lines: string[], keyPrefix: string): PortableTextB
   return blocks
 }
 
+function getParsedResult(lines: string[]): NormalizedCaseStudyContent['result'] {
+  const explicitResult = lines.find((line) => /^결과\s*[:：]\s*\S+/.test(line))
+  const explicitDetail = lines.find((line) => /^(?:세부\s*결과|결과\s*상세)\s*[:：]\s*\S+/.test(line))
+  const candidate = normalizeLine(explicitResult ?? lines.find(Boolean) ?? '')
+    .replace(/^결과\s*[:：]\s*/, '')
+    .trim()
+  const detail = normalizeLine(explicitDetail ?? '')
+    .replace(/^(?:세부\s*결과|결과\s*상세)\s*[:：]\s*/, '')
+    .trim()
+  const matchedResults = resultTaxonomies.filter(([, matcher]) => matcher.test(candidate))
+
+  if (candidate.length > 60 || matchedResults.length !== 1) {
+    return detail ? {resultDetail: detail} : {}
+  }
+
+  const result = matchedResults[0][0]
+
+  return {
+    result,
+    resultDetail: detail || (candidate === result ? undefined : candidate),
+  }
+}
+
 function inferCaseStudyTitle(lines: string[]): {title?: string; contentLines: string[]} {
   const firstHeadingIndex = lines.findIndex((line) => Boolean(getSectionFromHeading(line)))
   const preface = (firstHeadingIndex === -1 ? [] : lines.slice(0, firstHeadingIndex)).filter(Boolean)
@@ -186,6 +226,7 @@ export function normalizeCaseStudySource(rawSource: string): NormalizedCaseStudy
       response: toPortableTextBlocks(sections.response, 'processor-response'),
       outcome: toPortableTextBlocks(sections.outcome, 'processor-outcome'),
     },
+    result: getParsedResult(sections.outcome),
   }
 }
 

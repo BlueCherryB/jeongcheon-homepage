@@ -17,10 +17,16 @@ export type PortableTextBlock = {
 
 export type CaseStudySection = 'overview' | 'issues' | 'response' | 'outcome'
 
+export type ParsedCaseStudyResult = {
+  result?: string
+  resultDetail?: string
+}
+
 export type NormalizedCaseStudyContent = {
   documentType: 'caseStudy'
   title?: string
   sections: Record<CaseStudySection, PortableTextBlock[]>
+  result: ParsedCaseStudyResult
 }
 
 export type NormalizedLegalArticleContent = {
