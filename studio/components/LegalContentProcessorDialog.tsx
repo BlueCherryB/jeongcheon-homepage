@@ -1,6 +1,6 @@
 import {useCallback} from 'react'
-import {useToast} from 'sanity'
 import {Box, Button, Card, Flex, Heading, Stack, Text} from '@sanity/ui'
+import {useToast} from '@sanity/ui/toast'
 import type {LegalContentDocumentType, LegalContentExport, NormalizedLegalContent} from '../lib/legalContent/types'
 import {
   formatHomepageContent,

@@ -1,6 +1,7 @@
 import {useCallback, useMemo, useState} from 'react'
-import {useDocumentOperation, useToast} from 'sanity'
+import {useDocumentOperation} from 'sanity'
 import type {DocumentActionComponent} from 'sanity'
+import {useToast} from '@sanity/ui/toast'
 import {LegalContentProcessorDialog} from './LegalContentProcessorDialog'
 import {normalizeLegalContent} from '../lib/legalContent/parser'
 import type {LegalContentDocumentType, NormalizedLegalContent} from '../lib/legalContent/types'
