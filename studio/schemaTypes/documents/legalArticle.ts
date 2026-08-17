@@ -160,13 +160,6 @@ export const legalArticle = defineType({
       validation: (Rule) => Rule.max(220),
     }),
     defineField({
-      name: 'publishedAt',
-      title: '게시일',
-      type: 'datetime',
-      group: 'basic',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'coverImage',
       title: '표지 이미지',
       type: 'contentImage',
@@ -221,24 +214,16 @@ export const legalArticle = defineType({
     select: {
       title: 'title',
       category: 'category',
-      publishedAt: 'publishedAt',
       media: 'coverImage.image',
     },
-    prepare({title, category, publishedAt, media}) {
+    prepare({title, category, media}) {
       const categoryTitle = category ? legalArticleCategoryTitles[category] ?? '분야 미정' : '분야 미정'
 
       return {
         title: title ?? '제목 없음',
-        subtitle: [categoryTitle, publishedAt?.slice(0, 10)].filter(Boolean).join(' · '),
+        subtitle: categoryTitle,
         media,
       }
     },
   },
-  orderings: [
-    {
-      name: 'publishedAtDesc',
-      title: '게시일 최신순',
-      by: [{field: 'publishedAt', direction: 'desc'}],
-    },
-  ],
 })

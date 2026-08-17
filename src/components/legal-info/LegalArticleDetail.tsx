@@ -20,12 +20,8 @@ export function LegalArticleDetail({article}: LegalArticleDetailProps) {
       <Container className="py-16 sm:py-20 lg:py-24">
         <article className="mx-auto max-w-4xl">
           <header className="border-b border-[#E8E2D7] pb-10 sm:pb-12">
-            <div className="flex items-center gap-3 text-sm font-semibold text-[#9F7F37]">
+            <div className="text-sm font-semibold text-[#9F7F37]">
               <span>{article.categoryLabel}</span>
-              <span aria-hidden="true" className="h-px w-7 bg-[#C8A96A]" />
-              <time dateTime={article.publishedAt} className="text-[#111B36]/55">
-                {article.displayDate}
-              </time>
             </div>
             <h1 className="font-chosun mt-5 text-3xl font-normal leading-[1.4] sm:text-4xl lg:text-[44px]">
               {article.title}

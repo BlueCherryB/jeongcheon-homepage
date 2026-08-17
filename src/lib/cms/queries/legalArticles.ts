@@ -5,7 +5,6 @@ const legalArticleListProjection = `{
   category,
   excerpt,
   body,
-  publishedAt,
   coverImage {
     image {
       asset,
@@ -17,7 +16,7 @@ const legalArticleListProjection = `{
   }
 }`;
 
-const legalArticleOrdering = "order(publishedAt desc, _createdAt desc)";
+const legalArticleOrdering = "order(_createdAt desc)";
 
 export const publishedLegalArticlesQuery = `*[
   _type == "legalArticle" &&
@@ -33,7 +32,6 @@ export const publishedLegalArticleBySlugQuery = `*[
   "slug": slug.current,
   category,
   excerpt,
-  publishedAt,
   coverImage {
     image {
       asset,

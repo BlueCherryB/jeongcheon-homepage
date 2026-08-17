@@ -39,12 +39,8 @@ export function LegalArticleList({articles}: LegalArticleListProps) {
                 .join(" ")}
             >
               <div className="min-w-0">
-                <div className="flex items-center gap-3 text-sm font-semibold text-[#9F7F37]">
+                <div className="flex items-center text-sm font-semibold text-[#9F7F37]">
                   <span>{article.categoryLabel}</span>
-                  <span aria-hidden="true" className="h-px w-7 bg-[#C8A96A]" />
-                  <time dateTime={article.publishedAt} className="text-[#111B36]/55">
-                    {article.displayDate}
-                  </time>
                 </div>
                 <h2 className="mt-4 text-2xl font-semibold leading-snug text-[#111B36] transition-colors group-hover:text-[#9F7F37] sm:text-[28px]">
                   {article.title}
