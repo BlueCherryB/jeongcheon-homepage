@@ -50,6 +50,7 @@ export const LegalContentProcessorAction: DocumentActionComponent = (props) => {
   const document = (props.draft ?? props.published) as ContentDocument | null
   const rawSource = getStringValue(document, 'rawSource')
   const currentTitle = getStringValue(document, 'title')
+  const category = getStringValue(document, 'category')
   const documentType = props.type as LegalContentDocumentType
   const content = useMemo(
     () => normalizeLegalContent(documentType, rawSource),
@@ -66,7 +67,10 @@ export const LegalContentProcessorAction: DocumentActionComponent = (props) => {
 
     patch.execute([{set: values}])
     setDialogOpen(false)
-    toast.push({status: 'success', title: '정리한 내용을 문서에 적용했습니다. 게시 전 다시 확인해 주세요.'})
+    toast.push({
+      status: 'success',
+      title: '정리한 내용을 문서에 적용했습니다. 게시 전 다시 확인해 주세요.',
+    })
   }, [content, currentTitle, documentType, patch, toast])
 
   return {
@@ -85,6 +89,8 @@ export const LegalContentProcessorAction: DocumentActionComponent = (props) => {
               content={content}
               documentType={documentType}
               fallbackTitle={currentTitle}
+              category={category}
+              rawSource={rawSource}
               onApply={handleApply}
             />
           ),

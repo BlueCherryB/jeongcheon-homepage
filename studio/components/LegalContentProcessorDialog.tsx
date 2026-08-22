@@ -14,35 +14,50 @@ import {
   formatLawTalkContent,
   formatNaverBlogContent,
 } from '../lib/legalContent/formatters'
+import {formatNaverAiExpansionPrompt} from '../lib/legalContent/naverAiPrompt'
 
 type LegalContentProcessorDialogProps = {
   content: NormalizedLegalContent
   documentType: LegalContentDocumentType
   fallbackTitle: string
+  category: string
+  rawSource: string
   onApply: () => void
 }
 
 type CopyButtonProps = {
   label: string
   value: string
+  successMessage?: string
 }
 
-function CopyButton({label, value}: CopyButtonProps) {
+function CopyButton({label, value, successMessage}: CopyButtonProps) {
   const toast = useToast()
 
   const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(value)
-      toast.push({status: 'success', title: `${label}을(를) 복사했습니다.`})
+      toast.push({status: 'success', title: successMessage ?? `${label}을(를) 복사했습니다.`})
     } catch {
-      toast.push({status: 'error', title: '복사하지 못했습니다. 텍스트를 직접 선택해 복사해 주세요.'})
+      toast.push({
+        status: 'error',
+        title: '복사하지 못했습니다. 텍스트를 직접 선택해 복사해 주세요.',
+      })
     }
-  }, [label, toast, value])
+  }, [label, successMessage, toast, value])
 
   return <Button fontSize={1} mode="ghost" onClick={handleCopy} text={label} />
 }
 
-function ExportPreview({label, value}: {label: string; value: LegalContentExport}) {
+function ExportPreview({
+  label,
+  value,
+  aiPrompt,
+}: {
+  label: string
+  value: LegalContentExport
+  aiPrompt?: string
+}) {
   return (
     <Card border padding={3} radius={2}>
       <Stack space={3}>
@@ -54,6 +69,13 @@ function ExportPreview({label, value}: {label: string; value: LegalContentExport
             <CopyButton label="제목" value={value.title} />
             <CopyButton label="본문" value={value.body} />
             <CopyButton label="전체 내용" value={value.full} />
+            {aiPrompt ? (
+              <CopyButton
+                label="AI 확장용 프롬프트 복사"
+                successMessage="AI 확장용 프롬프트를 복사했습니다. ChatGPT에 붙여 넣어 사용하세요."
+                value={aiPrompt}
+              />
+            ) : null}
           </Flex>
         </Flex>
         <Text size={1} style={{whiteSpace: 'pre-wrap'}}>
@@ -65,7 +87,10 @@ function ExportPreview({label, value}: {label: string; value: LegalContentExport
 }
 
 function getBlockText(block: PortableTextBlock): string {
-  return block.children.map((child) => child.text).join('').trim()
+  return block.children
+    .map((child) => child.text)
+    .join('')
+    .trim()
 }
 
 const caseStudyFieldLabels: Record<CaseStudySection, string> = {
@@ -105,7 +130,9 @@ function CaseStudySectionPreview({content}: {content: NormalizedCaseStudyContent
               결과 배지
             </Text>
             {content.result.result && <Text size={1}>사건 결과: {content.result.result}</Text>}
-            {content.result.resultDetail && <Text size={1}>세부 결과: {content.result.resultDetail}</Text>}
+            {content.result.resultDetail && (
+              <Text size={1}>세부 결과: {content.result.resultDetail}</Text>
+            )}
           </Stack>
         </Card>
       )}
@@ -113,7 +140,10 @@ function CaseStudySectionPreview({content}: {content: NormalizedCaseStudyContent
   )
 }
 
-function ContentPreview({content, fallbackTitle}: Pick<LegalContentProcessorDialogProps, 'content' | 'fallbackTitle'>) {
+function ContentPreview({
+  content,
+  fallbackTitle,
+}: Pick<LegalContentProcessorDialogProps, 'content' | 'fallbackTitle'>) {
   const homepageContent = formatHomepageContent(content, fallbackTitle)
 
   return (
@@ -141,11 +171,19 @@ export function LegalContentProcessorDialog({
   content,
   documentType,
   fallbackTitle,
+  category,
+  rawSource,
   onApply,
 }: LegalContentProcessorDialogProps) {
   const homepageContent = formatHomepageContent(content, fallbackTitle)
   const naverContent = formatNaverBlogContent(content, fallbackTitle)
   const lawTalkContent = formatLawTalkContent(content, fallbackTitle)
+  const naverAiPrompt = formatNaverAiExpansionPrompt({
+    content,
+    fallbackTitle,
+    category,
+    rawSource,
+  })
   const documentLabel = documentType === 'caseStudy' ? '수행 사례' : '법률 정보'
 
   return (
@@ -166,7 +204,7 @@ export function LegalContentProcessorDialog({
             플랫폼별 복사본
           </Text>
           <ExportPreview label="홈페이지 / Sanity" value={homepageContent} />
-          <ExportPreview label="네이버 블로그" value={naverContent} />
+          <ExportPreview label="네이버 블로그" value={naverContent} aiPrompt={naverAiPrompt} />
           <ExportPreview label="로톡" value={lawTalkContent} />
         </Stack>
 
