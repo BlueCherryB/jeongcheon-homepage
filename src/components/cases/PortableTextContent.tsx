@@ -152,6 +152,7 @@ function ArticleBlock({block}: {block: CaseStudyPortableTextBlock}) {
 }
 
 function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
+  const style = getBlockString(block, "style");
   const listItem = getBlockString(block, "listItem");
   const content = renderBlockText(block);
 
@@ -167,6 +168,14 @@ function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
         <li>{content}</li>
       </ListTag>
     );
+  }
+
+  if (style === "h2") {
+    return <h2 className="pt-5 text-2xl font-semibold leading-snug text-[#111B36]">{content}</h2>;
+  }
+
+  if (style === "h3") {
+    return <h3 className="pt-3 text-lg font-semibold leading-snug text-[#111B36]">{content}</h3>;
   }
 
   return <p>{content}</p>;
