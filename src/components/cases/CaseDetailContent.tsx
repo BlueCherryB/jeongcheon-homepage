@@ -26,7 +26,10 @@ export function CaseDetailContent({
         </CaseDetailSection>
 
         <CaseDetailSection icon="search" title="주요 쟁점">
-          <PortableTextContent value={caseStudy.issues} variant="list" />
+          <PortableTextContent
+            value={caseStudy.issues}
+            variant={caseStudy.legalIssuesUseBullets ? "list" : "paragraphs"}
+          />
         </CaseDetailSection>
 
         {caseStudy.response.length > 0 ? (

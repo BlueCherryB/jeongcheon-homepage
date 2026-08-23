@@ -331,6 +331,15 @@ export const caseStudy = defineType({
       group: 'content',
     }),
     defineField({
+      name: 'legalIssuesUseBullets',
+      title: '주요 쟁점 불릿 표시',
+      type: 'boolean',
+      group: 'content',
+      initialValue: false,
+      description:
+        '켜면 주요 쟁점의 모든 단락을 불릿 목록으로 표시합니다. 끄면 작성한 Portable Text 서식을 그대로 표시합니다.',
+    }),
+    defineField({
       name: 'response',
       title: '변호인의 대응·조력',
       type: 'blockContent',
