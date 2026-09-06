@@ -248,9 +248,6 @@ export function buildLegalArticleStructuredData({
         "@id": `${url}#article`,
         headline: article.title,
         description,
-        datePublished: isValidDate(article.publishedAt)
-          ? article.publishedAt
-          : undefined,
         articleSection: article.categoryLabel,
         keywords: article.seo.keywords.length > 0 ? article.seo.keywords : undefined,
         articleBody: articleBody || undefined,

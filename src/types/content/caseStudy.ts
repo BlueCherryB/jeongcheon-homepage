@@ -72,6 +72,7 @@ export type CaseStudyListItem = {
 export type CaseStudyDetail = CaseStudyListItem & {
   overview: CaseStudyPortableText;
   issues: CaseStudyPortableText;
+  legalIssuesUseBullets: boolean;
   response: CaseStudyPortableText;
   outcome: CaseStudyPortableText;
   keywords: string[];

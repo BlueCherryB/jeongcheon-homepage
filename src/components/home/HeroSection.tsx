@@ -10,8 +10,22 @@ export function HeroSection() {
 
   return (
     <Section bordered={false} spacing="hero">
-      <div className="grid items-center gap-0 sm:gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
-        <div className="max-w-2xl text-left sm:text-left">
+      <div className="relative isolate grid items-center gap-0 overflow-hidden sm:gap-12 sm:overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 -right-6 w-[48%] sm:hidden"
+        >
+          <Image
+            src={hero.image.src}
+            alt=""
+            fill
+            sizes="48vw"
+            className="object-cover object-[58%_center] opacity-[0.16] saturate-50"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/15" />
+        </div>
+
+        <div className="relative z-10 max-w-2xl text-left sm:text-left">
           <div className="flex w-full flex-col items-start sm:inline-flex sm:w-auto sm:items-start">
             <p className="text-xl font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
               {hero.eyebrow}
@@ -42,7 +56,7 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div className="relative hidden min-h-[360px] overflow-hidden bg-zinc-100 sm:block sm:min-h-[480px] lg:min-h-[560px]">
+        <div className="relative z-10 hidden min-h-[360px] overflow-hidden bg-zinc-100 sm:block sm:min-h-[480px] lg:min-h-[560px]">
           <Image
             src={hero.image.src}
             alt={hero.image.alt}

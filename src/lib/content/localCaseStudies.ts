@@ -112,6 +112,7 @@ export function mapLocalCaseStudy(
     featured: caseStudy.featured === true,
     overview: mapPortableText(`${slug}-overview`, caseStudy.overview),
     issues: mapPortableText(`${slug}-issues`, caseStudy.issues),
+    legalIssuesUseBullets: false,
     response: mapPortableText(`${slug}-response`, caseStudy.strategy),
     outcome: mapPortableText(`${slug}-outcome`, caseStudy.outcome),
     keywords: mapStringArray(caseStudy.keywords),

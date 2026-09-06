@@ -166,6 +166,7 @@ export const caseStudy = defineType({
   groups: [
     {name: 'basic', title: '기본 정보', default: true},
     {name: 'content', title: '본문'},
+    {name: 'processing', title: '원문 관리'},
     {name: 'settings', title: '게시 설정'},
     {name: 'seo', title: 'SEO'},
   ],
@@ -309,6 +310,15 @@ export const caseStudy = defineType({
       },
     }),
     defineField({
+      name: 'rawSource',
+      title: '원문 내용',
+      type: 'text',
+      rows: 18,
+      group: 'processing',
+      description:
+        '한글 문서 등에서 복사한 원문을 그대로 붙여 넣습니다. 원문 자동 정리 기능은 이 내용을 바탕으로 편집 필드를 채우며, 원문은 다시 정리할 수 있도록 보존됩니다.',
+    }),
+    defineField({
       name: 'overview',
       title: '사건 개요',
       type: 'blockContent',
@@ -317,6 +327,21 @@ export const caseStudy = defineType({
     defineField({
       name: 'legalIssues',
       title: '주요 법적 쟁점',
+      type: 'blockContent',
+      group: 'content',
+    }),
+    defineField({
+      name: 'legalIssuesUseBullets',
+      title: '주요 쟁점 불릿 표시',
+      type: 'boolean',
+      group: 'content',
+      initialValue: false,
+      description:
+        '켜면 주요 쟁점의 모든 단락을 불릿 목록으로 표시합니다. 끄면 작성한 Portable Text 서식을 그대로 표시합니다.',
+    }),
+    defineField({
+      name: 'response',
+      title: '변호인의 대응·조력',
       type: 'blockContent',
       group: 'content',
     }),

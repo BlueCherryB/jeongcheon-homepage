@@ -3,6 +3,7 @@ import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
+import {LegalContentProcessorAction} from './components/LegalContentProcessorAction'
 import './styles/studio.css'
 
 const studioTextOverrides = defineLocaleResourceBundle({
@@ -28,5 +29,12 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+  },
+
+  document: {
+    actions: (previousActions, context) =>
+      context.schemaType === 'caseStudy' || context.schemaType === 'legalArticle'
+        ? [...previousActions, LegalContentProcessorAction]
+        : previousActions,
   },
 })

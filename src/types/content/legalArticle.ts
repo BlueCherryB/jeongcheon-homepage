@@ -21,8 +21,6 @@ export type LegalArticleListItem = {
   category: LegalArticleCategory;
   categoryLabel: string;
   excerpt: string;
-  publishedAt: string;
-  displayDate: string;
   coverImage?: CaseStudyImage;
 };
 
