@@ -27,7 +27,7 @@ export function HeroSection() {
 
         <div className="relative z-10 max-w-2xl text-left sm:text-left">
           <div className="flex w-full flex-col items-start sm:inline-flex sm:w-auto sm:items-start">
-            <p className="text-[15px] font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
+            <p className="text-[13px] font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
               {hero.eyebrow}
             </p>
             <span
