@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { AttorneyIntroductionSection } from "@/components/attorney/AttorneyIntroductionSection";
 import { CaseStudyCard } from "@/components/home/CaseStudyCard";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -206,6 +207,8 @@ export function AttorneySections({
           </div>
         </Container>
       </section>
+
+      <AttorneyIntroductionSection introduction={attorney.introduction} />
 
       {representativeCases.length > 0 ? (
         <section className="bg-[#FAF8F4]">
