@@ -20,7 +20,7 @@ export function HeroSection() {
             alt=""
             fill
             sizes="48vw"
-            className="object-cover object-[58%_center] opacity-70 saturate-75"
+            className="object-cover object-[58%_center] opacity-100 saturate-75"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-white/10" />
         </div>
