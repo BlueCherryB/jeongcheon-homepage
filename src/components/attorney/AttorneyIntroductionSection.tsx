@@ -24,7 +24,7 @@ export function AttorneyIntroductionSection({
             </h2>
           </header>
 
-          <div className="mt-10 space-y-6 break-keep text-[16px] leading-8 text-[#111B36]/78 sm:mt-12 sm:text-[17px] sm:leading-9">
+          <div className="mt-10 space-y-6 break-keep text-justify text-[16px] leading-8 text-[#111B36]/78 sm:mt-12 sm:text-[17px] sm:leading-9">
             {introduction.openingParagraphs.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
@@ -37,7 +37,7 @@ export function AttorneyIntroductionSection({
                 <h3 className="font-chosun mt-5 break-keep text-[25px] font-normal leading-[1.45] tracking-[-0.02em] text-[#111B36] sm:text-[30px]">
                   {section.title}
                 </h3>
-                <div className="mt-6 space-y-6 break-keep text-[16px] leading-8 text-[#111B36]/78 sm:text-[17px] sm:leading-9">
+                <div className="mt-6 space-y-6 break-keep text-justify text-[16px] leading-8 text-[#111B36]/78 sm:text-[17px] sm:leading-9">
                   {section.paragraphs.map((paragraph) => (
                     <p key={paragraph}>{paragraph}</p>
                   ))}
