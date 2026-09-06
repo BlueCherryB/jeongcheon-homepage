@@ -20,9 +20,9 @@ export function HeroSection() {
             alt=""
             fill
             sizes="48vw"
-            className="object-cover object-[58%_center] opacity-[0.16] saturate-50"
+            className="object-cover object-[58%_center] opacity-70 saturate-75"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/15" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-white/10" />
         </div>
 
         <div className="relative z-10 max-w-2xl text-left sm:text-left">
@@ -39,7 +39,7 @@ export function HeroSection() {
             level={1}
             title={hero.title}
             description={hero.description}
-            titleClassName="font-chosun mt-6 max-w-2xl whitespace-pre-line text-[34px] font-normal leading-[1.35] tracking-[-0.02em] text-[#0F172A] sm:mt-7 sm:text-[52px] sm:leading-[1.4]"
+            titleClassName="font-chosun mt-6 max-w-2xl whitespace-pre-line text-[32px] font-normal leading-[1.35] tracking-[-0.02em] text-[#0F172A] sm:mt-7 sm:text-[52px] sm:leading-[1.4]"
             descriptionClassName="mx-auto mt-5 max-w-md whitespace-pre-line text-base leading-[1.7] text-zinc-600 sm:mx-0"
           />
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
