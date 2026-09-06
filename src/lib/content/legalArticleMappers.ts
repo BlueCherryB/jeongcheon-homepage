@@ -194,18 +194,12 @@ function mapSeo(seo: SanitySeoFields | undefined): CaseStudySeo {
   };
 }
 
-function formatDisplayDate(value: string): string {
-  return value.slice(0, 10).replaceAll("-", ".");
-}
-
 export function mapSanityLegalArticleListItem(
   article: SanityLegalArticleListItem,
 ): LegalArticleListItem {
   if (!isLegalArticleCategory(article.category)) {
     throw new LegalArticleMappingError("Legal article category is invalid.");
   }
-
-  const publishedAt = requireTrimmedString("publishedAt", article.publishedAt);
 
   return {
     id: requireTrimmedString("_id", article._id),
@@ -214,8 +208,6 @@ export function mapSanityLegalArticleListItem(
     category: article.category,
     categoryLabel: legalArticleCategoryLabels[article.category],
     excerpt: deriveExcerpt(article),
-    publishedAt,
-    displayDate: formatDisplayDate(publishedAt),
     coverImage: mapCoverImage(article.coverImage),
   };
 }

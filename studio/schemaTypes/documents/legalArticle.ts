@@ -113,6 +113,7 @@ export const legalArticle = defineType({
   groups: [
     {name: 'basic', title: '기본 정보', default: true},
     {name: 'content', title: '본문'},
+    {name: 'processing', title: '원문 관리'},
     {name: 'source', title: '출처'},
     {name: 'seo', title: 'SEO'},
   ],
@@ -159,18 +160,20 @@ export const legalArticle = defineType({
       validation: (Rule) => Rule.max(220),
     }),
     defineField({
-      name: 'publishedAt',
-      title: '게시일',
-      type: 'datetime',
-      group: 'basic',
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: 'coverImage',
       title: '표지 이미지',
       type: 'contentImage',
       group: 'basic',
       description: '선택 입력입니다. 이미지 없이도 법률 정보를 게시할 수 있습니다.',
+    }),
+    defineField({
+      name: 'rawSource',
+      title: '원문 내용',
+      type: 'text',
+      rows: 18,
+      group: 'processing',
+      description:
+        '한글 문서 등에서 복사한 원문을 그대로 붙여 넣습니다. 원문 자동 정리 기능은 이 내용을 바탕으로 본문을 채우며, 원문은 다시 정리할 수 있도록 보존됩니다.',
     }),
     defineField({
       name: 'body',
@@ -211,24 +214,16 @@ export const legalArticle = defineType({
     select: {
       title: 'title',
       category: 'category',
-      publishedAt: 'publishedAt',
       media: 'coverImage.image',
     },
-    prepare({title, category, publishedAt, media}) {
+    prepare({title, category, media}) {
       const categoryTitle = category ? legalArticleCategoryTitles[category] ?? '분야 미정' : '분야 미정'
 
       return {
         title: title ?? '제목 없음',
-        subtitle: [categoryTitle, publishedAt?.slice(0, 10)].filter(Boolean).join(' · '),
+        subtitle: categoryTitle,
         media,
       }
     },
   },
-  orderings: [
-    {
-      name: 'publishedAtDesc',
-      title: '게시일 최신순',
-      by: [{field: 'publishedAt', direction: 'desc'}],
-    },
-  ],
 })

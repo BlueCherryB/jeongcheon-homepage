@@ -18,7 +18,6 @@ export type SanityLegalArticleListItem = {
   category?: SanityLegalArticleCategory;
   excerpt?: string;
   body?: SanityPortableTextBlock[];
-  publishedAt?: string;
   coverImage?: SanityContentImage;
 };
 

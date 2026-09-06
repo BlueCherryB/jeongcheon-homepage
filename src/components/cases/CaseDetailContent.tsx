@@ -26,10 +26,17 @@ export function CaseDetailContent({
         </CaseDetailSection>
 
         <CaseDetailSection icon="search" title="주요 쟁점">
-          <PortableTextContent value={caseStudy.issues} variant="list" />
+          <PortableTextContent
+            value={caseStudy.issues}
+            variant={caseStudy.legalIssuesUseBullets ? "list" : "paragraphs"}
+          />
         </CaseDetailSection>
 
-        {/* "정천의 대응" is intentionally hidden for now and may be restored later. */}
+        {caseStudy.response.length > 0 ? (
+          <CaseDetailSection icon="document" title="변호인의 대응·조력">
+            <PortableTextContent value={caseStudy.response} />
+          </CaseDetailSection>
+        ) : null}
 
         <CaseDetailSection icon="result" title="사건의 결과">
           <PortableTextContent value={caseStudy.outcome} />

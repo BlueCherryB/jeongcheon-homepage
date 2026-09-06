@@ -65,7 +65,6 @@ export async function generateMetadata({params}: LegalArticlePageProps): Promise
       description,
       url: buildLegalArticlePath(article.slug),
       type: "article",
-      publishedTime: article.publishedAt,
       section: article.categoryLabel,
       tags: article.seo.keywords,
       images: imageUrl ? [{url: imageUrl, alt: article.coverImage?.alt}] : undefined,
