@@ -11,20 +11,6 @@ export function HeroSection() {
   return (
     <Section bordered={false} spacing="hero">
       <div className="relative isolate grid items-center gap-0 overflow-hidden sm:gap-12 sm:overflow-visible lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 -right-6 w-[48%] sm:hidden"
-        >
-          <Image
-            src={hero.image.src}
-            alt=""
-            fill
-            sizes="48vw"
-            className="object-cover object-[58%_center] opacity-100 saturate-75"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-white via-white/60 to-white/10" />
-        </div>
-
         <div className="relative z-10 max-w-2xl text-left sm:text-left">
           <div className="flex w-full flex-col items-start sm:inline-flex sm:w-auto sm:items-start">
             <p className="text-[17px] font-semibold tracking-wide text-[#C8980A] sm:text-[20px] lg:text-[25px]">
