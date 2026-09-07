@@ -3,6 +3,7 @@ import Image from "next/image";
 import { homepageContent } from "@/data/homepage";
 
 const mobileOfficeBanner = {
+  imageSrc: "/hero-law-office-mobile.webp",
   heightClassName: "h-[180px]",
   imageClassName: "scale-[1.32] object-[center_45%]",
 };
@@ -15,7 +16,7 @@ export function MobileOfficeBanner() {
       className={`relative overflow-hidden sm:hidden ${mobileOfficeBanner.heightClassName}`}
     >
       <Image
-        src={image.src}
+        src={mobileOfficeBanner.imageSrc}
         alt={image.alt}
         fill
         priority
