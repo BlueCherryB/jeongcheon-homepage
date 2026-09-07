@@ -5,7 +5,7 @@ import { homepageContent } from "@/data/homepage";
 const mobileOfficeBanner = {
   imageSrc: "/hero-law-office-mobile.webp",
   heightClassName: "h-[180px]",
-  imageClassName: "scale-[1.32] object-[center_45%]",
+  imageClassName: "scale-[1.5] object-[center_45%]",
 };
 
 export function MobileOfficeBanner() {
