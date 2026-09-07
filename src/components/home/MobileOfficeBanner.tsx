@@ -4,7 +4,7 @@ import { homepageContent } from "@/data/homepage";
 
 const mobileOfficeBanner = {
   heightClassName: "h-[180px]",
-  objectPositionClassName: "object-[center_45%]",
+  imageClassName: "scale-[1.32] object-[center_45%]",
 };
 
 export function MobileOfficeBanner() {
@@ -19,8 +19,8 @@ export function MobileOfficeBanner() {
         alt={image.alt}
         fill
         priority
-        sizes="100vw"
-        className={`object-cover ${mobileOfficeBanner.objectPositionClassName}`}
+        sizes="(max-width: 639px) 100vw, 1px"
+        className={`object-cover ${mobileOfficeBanner.imageClassName}`}
       />
     </div>
   );
