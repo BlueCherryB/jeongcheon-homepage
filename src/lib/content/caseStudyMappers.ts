@@ -156,36 +156,6 @@ function mapPortableTextBlocks(
   }));
 }
 
-function portableTextToPlainText(blocks: SanityPortableTextBlock[] | undefined): string | undefined {
-  if (!Array.isArray(blocks)) {
-    return undefined;
-  }
-
-  const plainText = blocks
-    .map((block) => {
-      if (!Array.isArray(block.children)) {
-        return "";
-      }
-
-      return block.children
-        .map((child) => {
-          if (!child || typeof child !== "object" || !("text" in child)) {
-            return "";
-          }
-
-          const text = child.text;
-
-          return typeof text === "string" ? text : "";
-        })
-        .join("");
-    })
-    .join(" ")
-    .replace(/\s+/g, " ")
-    .trim();
-
-  return plainText || undefined;
-}
-
 function truncateSummary(summary: string): string {
   if (summary.length <= summaryMaxLength) {
     return summary;
@@ -195,10 +165,7 @@ function truncateSummary(summary: string): string {
 }
 
 function deriveSummary(caseStudy: SanityCaseStudyListItem): string {
-  const summary =
-    portableTextToPlainText(caseStudy.overview) ??
-    portableTextToPlainText(caseStudy.outcome) ??
-    optionalTrimmedString(caseStudy.summary);
+  const summary = optionalTrimmedString(caseStudy.summary);
 
   if (!summary) {
     throw new CaseStudyMappingError("Case Study summary could not be derived.");

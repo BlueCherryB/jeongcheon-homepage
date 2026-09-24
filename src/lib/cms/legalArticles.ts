@@ -1,3 +1,6 @@
+import {unstable_cache} from "next/cache";
+
+import {cmsCacheTags} from "@/lib/cms/cacheTags";
 import {publishedSanityClient} from "@/lib/cms/client";
 import {
   publishedLegalArticleBySlugQuery,
@@ -20,29 +23,43 @@ function assertValidLegalArticleSlug(slug: string): void {
   }
 }
 
-export async function getPublishedLegalArticles(): Promise<SanityLegalArticleListItem[]> {
+const fetchPublishedLegalArticles = unstable_cache(async (): Promise<SanityLegalArticleListItem[]> => {
   const result = await publishedSanityClient.fetch<SanityLegalArticleListItem[]>(
     publishedLegalArticlesQuery,
   );
 
   return Array.isArray(result) ? result : [];
+}, ["published-legal-articles"], {revalidate: 300, tags: [cmsCacheTags.legalArticles]});
+
+export async function getPublishedLegalArticles(): Promise<SanityLegalArticleListItem[]> {
+  return fetchPublishedLegalArticles();
 }
 
-export async function getPublishedLegalArticleBySlug(
+const fetchPublishedLegalArticleBySlug = unstable_cache(async (
   slug: string,
-): Promise<SanityLegalArticleDetail | null> {
+): Promise<SanityLegalArticleDetail | null> => {
   assertValidLegalArticleSlug(slug);
 
   return publishedSanityClient.fetch<SanityLegalArticleDetail | null>(
     publishedLegalArticleBySlugQuery,
     {slug},
   );
+}, ["published-legal-article-by-slug"], {revalidate: 300, tags: [cmsCacheTags.legalArticles]});
+
+export async function getPublishedLegalArticleBySlug(
+  slug: string,
+): Promise<SanityLegalArticleDetail | null> {
+  return fetchPublishedLegalArticleBySlug(slug);
 }
 
-export async function getPublishedLegalArticleSlugs(): Promise<SanityLegalArticleSlug[]> {
+const fetchPublishedLegalArticleSlugs = unstable_cache(async (): Promise<SanityLegalArticleSlug[]> => {
   const result = await publishedSanityClient.fetch<SanityLegalArticleSlug[]>(
     publishedLegalArticleSlugsQuery,
   );
 
   return Array.isArray(result) ? result : [];
+}, ["published-legal-article-slugs"], {revalidate: 300, tags: [cmsCacheTags.legalArticles]});
+
+export async function getPublishedLegalArticleSlugs(): Promise<SanityLegalArticleSlug[]> {
+  return fetchPublishedLegalArticleSlugs();
 }

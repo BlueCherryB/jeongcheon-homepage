@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import {
   LegalArticleMappingError,
   mapNullableSanityLegalArticleDetail,
@@ -13,7 +15,7 @@ async function getCmsLegalArticleApi() {
   return import("@/lib/cms/legalArticles");
 }
 
-export async function getLegalArticles(): Promise<LegalArticleListItem[]> {
+export const getLegalArticles = cache(async (): Promise<LegalArticleListItem[]> => {
   try {
     const {getPublishedLegalArticles} = await getCmsLegalArticleApi();
 
@@ -25,9 +27,9 @@ export async function getLegalArticles(): Promise<LegalArticleListItem[]> {
 
     return [];
   }
-}
+});
 
-export async function getLegalArticleBySlug(slug: string): Promise<LegalArticleDetail | null> {
+export const getLegalArticleBySlug = cache(async (slug: string): Promise<LegalArticleDetail | null> => {
   try {
     const {getPublishedLegalArticleBySlug} = await getCmsLegalArticleApi();
 
@@ -37,9 +39,9 @@ export async function getLegalArticleBySlug(slug: string): Promise<LegalArticleD
   } catch {
     return null;
   }
-}
+});
 
-export async function getLegalArticleSlugs(): Promise<string[]> {
+export const getLegalArticleSlugs = cache(async (): Promise<string[]> => {
   try {
     const {getPublishedLegalArticleSlugs} = await getCmsLegalArticleApi();
 
@@ -51,4 +53,4 @@ export async function getLegalArticleSlugs(): Promise<string[]> {
 
     return [];
   }
-}
+});

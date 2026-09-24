@@ -1,7 +1,9 @@
 import { timingSafeEqual } from "node:crypto";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
+
+import { cmsCacheTags } from "@/lib/cms/cacheTags";
 
 export const runtime = "nodejs";
 
@@ -17,6 +19,11 @@ const documentPaths = {
     detailPrefix: "/legal-info/",
     additionalPaths: [],
   },
+} as const;
+
+const documentCacheTags = {
+  caseStudy: cmsCacheTags.caseStudies,
+  legalArticle: cmsCacheTags.legalArticles,
 } as const;
 
 type SupportedDocumentType = keyof typeof documentPaths;
@@ -202,6 +209,8 @@ export async function POST(request: Request): Promise<NextResponse> {
   for (const path of revalidatedPaths) {
     revalidatePath(path);
   }
+
+  revalidateTag(documentCacheTags[documentType], { expire: 0 });
 
   return jsonResponse({
     ok: true,
