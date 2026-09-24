@@ -210,7 +210,7 @@ export async function POST(request: Request): Promise<NextResponse> {
     revalidatePath(path);
   }
 
-  revalidateTag(documentCacheTags[documentType], { expire: 0 });
+  revalidateTag(documentCacheTags[documentType], "max");
 
   return jsonResponse({
     ok: true,
