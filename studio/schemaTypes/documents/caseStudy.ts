@@ -310,6 +310,16 @@ export const caseStudy = defineType({
       },
     }),
     defineField({
+      name: 'searchKeywords',
+      title: '검색 키워드',
+      type: 'array',
+      group: 'basic',
+      description: '웹사이트 검색 발견성을 높일 보조 키워드를 입력합니다. 예: 사기, 투자사기, 보이스피싱',
+      of: [defineArrayMember({type: 'string', validation: (Rule) => Rule.max(30)})],
+      options: {layout: 'tags'},
+      validation: (Rule) => Rule.max(10),
+    }),
+    defineField({
       name: 'rawSource',
       title: '원문 내용',
       type: 'text',

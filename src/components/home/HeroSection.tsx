@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { Button } from "@/components/ui/Button";
+import { SearchForm } from "@/components/search/SearchForm";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { homepageContent } from "@/data/homepage";
@@ -28,18 +28,7 @@ export function HeroSection() {
             titleClassName="font-chosun mt-6 max-w-2xl whitespace-pre-line text-[32px] font-normal leading-[1.35] tracking-[-0.02em] text-[#0F172A] sm:mt-7 sm:text-[52px] sm:leading-[1.4]"
             descriptionClassName="mx-auto mt-5 max-w-md whitespace-pre-line text-base leading-[1.7] text-zinc-600 sm:mx-0"
           />
-          <div className="mt-8 flex flex-col gap-4 sm:flex-row">
-            <Button href={hero.primaryCta.href} className="h-12 px-6 text-[18px] sm:h-14 sm:px-7 sm:text-[17px]">
-              {hero.primaryCta.label}
-            </Button>
-            <Button
-              href={hero.secondaryCta.href}
-              variant="secondary"
-              className="h-12 px-6 text-[18px] sm:h-14 sm:px-7 sm:text-[17px]"
-            >
-              {hero.secondaryCta.label}
-            </Button>
-          </div>
+          <SearchForm variant="hero" />
         </div>
 
         <div className="relative z-10 hidden min-h-[360px] overflow-hidden bg-zinc-100 sm:block sm:min-h-[480px] lg:min-h-[560px]">
