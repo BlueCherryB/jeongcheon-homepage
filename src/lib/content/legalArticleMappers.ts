@@ -49,38 +49,6 @@ function optionalTrimmedString(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
 }
 
-function getFirstPortableTextParagraph(
-  blocks: SanityPortableTextBlock[] | undefined,
-): string | undefined {
-  if (!Array.isArray(blocks)) {
-    return undefined;
-  }
-
-  for (const block of blocks) {
-    if (!block || block._type !== "block" || !Array.isArray(block.children)) {
-      continue;
-    }
-
-    const text = block.children
-      .map((child) => {
-        if (!child || typeof child !== "object" || !("text" in child)) {
-          return "";
-        }
-
-        return typeof child.text === "string" ? child.text : "";
-      })
-      .join("")
-      .replace(/\s+/g, " ")
-      .trim();
-
-    if (text) {
-      return text;
-    }
-  }
-
-  return undefined;
-}
-
 function truncateGeneratedExcerpt(value: string): string {
   if (value.length <= generatedExcerptMaxLength) {
     return value;
@@ -99,7 +67,7 @@ function truncateGeneratedExcerpt(value: string): string {
 function deriveExcerpt(article: SanityLegalArticleListItem): string {
   const excerpt =
     optionalTrimmedString(article.excerpt) ??
-    getFirstPortableTextParagraph(article.body);
+    optionalTrimmedString(article.generatedExcerpt);
 
   if (!excerpt) {
     throw new LegalArticleMappingError(

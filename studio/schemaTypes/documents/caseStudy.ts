@@ -207,6 +207,17 @@ export const caseStudy = defineType({
       },
     }),
     defineField({
+      name: 'caseType',
+      title: '사건 유형',
+      type: 'reference',
+      group: 'basic',
+      description: '기존 유형을 선택하거나 새 유형을 만들어 재사용합니다.',
+      to: [{type: 'caseType'}],
+      options: {
+        sort: [{field: 'title', direction: 'asc'}],
+      },
+    }),
+    defineField({
       name: 'result',
       title: '사건 결과',
       type: 'string',
@@ -310,6 +321,16 @@ export const caseStudy = defineType({
       },
     }),
     defineField({
+      name: 'searchKeywords',
+      title: '검색 키워드',
+      type: 'array',
+      group: 'basic',
+      description: '웹사이트 검색 발견성을 높일 보조 키워드를 입력합니다. 예: 사기, 투자사기, 보이스피싱',
+      of: [defineArrayMember({type: 'string', validation: (Rule) => Rule.max(30)})],
+      options: {layout: 'tags'},
+      validation: (Rule) => Rule.max(10),
+    }),
+    defineField({
       name: 'rawSource',
       title: '원문 내용',
       type: 'text',
@@ -391,15 +412,15 @@ export const caseStudy = defineType({
     select: {
       title: 'title',
       category: 'category',
+      caseType: 'caseType.title',
       result: 'result',
-      publishedAt: 'publishedAt',
       featured: 'featured',
       sortOrder: 'sortOrder',
       media: 'mainImage.image',
     },
-    prepare({title, category, result, publishedAt, featured, sortOrder, media}) {
+    prepare({title, category, caseType, result, featured, sortOrder, media}) {
       const categoryTitle = category ? caseCategoryTitles[category] || '분야 미지정' : '분야 미지정'
-      const subtitleItems = [categoryTitle, result, publishedAt?.slice(0, 10)].filter(Boolean)
+      const subtitleItems = [categoryTitle, caseType, result].filter(Boolean)
       const previewTitle =
         featured && typeof sortOrder === 'number'
           ? `[대표 ${sortOrder}] ${title || '제목 없음'}`

@@ -4,7 +4,7 @@ const legalArticleListProjection = `{
   "slug": slug.current,
   category,
   excerpt,
-  body,
+  "generatedExcerpt": pt::text(body[0...1]),
   coverImage {
     image {
       asset,
@@ -32,6 +32,7 @@ export const publishedLegalArticleBySlugQuery = `*[
   "slug": slug.current,
   category,
   excerpt,
+  "generatedExcerpt": pt::text(body[0...1]),
   coverImage {
     image {
       asset,

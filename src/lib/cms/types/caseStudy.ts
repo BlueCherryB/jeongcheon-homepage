@@ -57,8 +57,6 @@ export type SanityCaseStudyListItem = {
   category?: SanityCaseCategory;
   result?: string;
   resultDetail?: string;
-  overview?: SanityPortableTextBlock[];
-  outcome?: SanityPortableTextBlock[];
   summary?: string;
   publishedAt?: string;
   featured?: boolean;
@@ -67,10 +65,12 @@ export type SanityCaseStudyListItem = {
 };
 
 export type SanityCaseStudyDetail = SanityCaseStudyListItem & {
+  overview?: SanityPortableTextBlock[];
   tags?: string[];
   legalIssues?: SanityPortableTextBlock[];
   legalIssuesUseBullets?: boolean;
   response?: SanityPortableTextBlock[];
+  outcome?: SanityPortableTextBlock[];
   seo?: SanitySeoFields;
 };
 

@@ -17,11 +17,12 @@ export type SanityLegalArticleListItem = {
   slug?: string;
   category?: SanityLegalArticleCategory;
   excerpt?: string;
-  body?: SanityPortableTextBlock[];
+  generatedExcerpt?: string;
   coverImage?: SanityContentImage;
 };
 
 export type SanityLegalArticleDetail = SanityLegalArticleListItem & {
+  body?: SanityPortableTextBlock[];
   source?: SanityLegalArticleSource;
   seo?: SanitySeoFields;
 };

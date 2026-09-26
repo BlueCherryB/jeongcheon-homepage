@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import {
   CaseStudyMappingError,
   mapNullableSanityCaseStudyDetail,
@@ -23,7 +25,7 @@ function uniqueSlugs(slugs: string[]): string[] {
   return Array.from(new Set(slugs));
 }
 
-export async function getCaseStudies(): Promise<CaseStudyListItem[]> {
+export const getCaseStudies = cache(async (): Promise<CaseStudyListItem[]> => {
   try {
     const { getPublishedCaseStudies } = await getCmsCaseStudyApi();
     const caseStudies = mapSanityCaseStudyListItems(
@@ -38,9 +40,9 @@ export async function getCaseStudies(): Promise<CaseStudyListItem[]> {
 
     return getLocalCaseStudies();
   }
-}
+});
 
-export async function getFeaturedCaseStudies(): Promise<CaseStudyListItem[]> {
+export const getFeaturedCaseStudies = cache(async (): Promise<CaseStudyListItem[]> => {
   try {
     const { getFeaturedCaseStudies: getFeaturedSanityCaseStudies } =
       await getCmsCaseStudyApi();
@@ -56,11 +58,11 @@ export async function getFeaturedCaseStudies(): Promise<CaseStudyListItem[]> {
 
     return getLocalFeaturedCaseStudies();
   }
-}
+});
 
-export async function getCaseStudyBySlug(
+export const getCaseStudyBySlug = cache(async (
   slug: string,
-): Promise<CaseStudyDetail | null> {
+): Promise<CaseStudyDetail | null> => {
   try {
     const { getPublishedCaseStudyBySlug } = await getCmsCaseStudyApi();
     const caseStudy = mapNullableSanityCaseStudyDetail(
@@ -75,9 +77,9 @@ export async function getCaseStudyBySlug(
 
     return getLocalCaseStudyBySlug(slug);
   }
-}
+});
 
-export async function getCaseStudySlugs(): Promise<string[]> {
+export const getCaseStudySlugs = cache(async (): Promise<string[]> => {
   const localSlugs = getLocalCaseStudySlugs();
 
   try {
@@ -94,4 +96,4 @@ export async function getCaseStudySlugs(): Promise<string[]> {
 
     return localSlugs;
   }
-}
+});

@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 
 const legalArticleCategoryTitles: Record<string, string> = {
   criminal: '형사',
@@ -158,6 +158,16 @@ export const legalArticle = defineType({
       group: 'basic',
       description: '선택 입력입니다. 비워 두면 본문 첫 내용을 목록과 기본 SEO 설명으로 사용합니다.',
       validation: (Rule) => Rule.max(220),
+    }),
+    defineField({
+      name: 'searchKeywords',
+      title: '검색 키워드',
+      type: 'array',
+      group: 'basic',
+      description: '웹사이트 검색 발견성을 높일 보조 키워드를 입력합니다. 예: 사기, 사기죄, 편취',
+      of: [defineArrayMember({type: 'string', validation: (Rule) => Rule.max(30)})],
+      options: {layout: 'tags'},
+      validation: (Rule) => Rule.max(10),
     }),
     defineField({
       name: 'coverImage',

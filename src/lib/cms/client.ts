@@ -10,6 +10,6 @@ export const publishedSanityClient = createClient({
   projectId: sanityProjectId,
   dataset: sanityDataset,
   apiVersion: sanityApiVersion,
-  useCdn: false,
+  useCdn: true,
   perspective: "published",
 });

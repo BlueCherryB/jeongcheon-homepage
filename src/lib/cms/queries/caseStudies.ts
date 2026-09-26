@@ -6,9 +6,7 @@ const caseStudyListProjection = `{
   category,
   result,
   resultDetail,
-  summary,
-  overview,
-  outcome,
+  "summary": coalesce(summary, pt::text(overview[0...1]), pt::text(outcome[0...1])),
   publishedAt,
   featured,
   sortOrder,
@@ -59,7 +57,7 @@ export const publishedCaseStudyBySlugQuery = `*[
   result,
   resultDetail,
   tags,
-  summary,
+  "summary": coalesce(summary, pt::text(overview[0...1]), pt::text(outcome[0...1])),
   mainImage {
     displayMode,
     image {

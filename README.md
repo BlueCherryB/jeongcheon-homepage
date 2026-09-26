@@ -64,6 +64,18 @@ Local Workers runtime preview:
 npm run cf:preview
 ```
 
+Cloudflare branch Preview deployment:
+
+```bash
+npm run cf:cloudflare-preview
+```
+
+This creates or updates a branch-specific Cloudflare Preview URL. Cloudflare
+requires a `CLOUDFLARE_API_TOKEN` locally, or a configured deployment token in
+Workers Builds. Set the Sanity public configuration values in the Worker's
+Previews Base settings before the first deployment. Preview settings are
+isolated from production and do not inherit production secrets automatically.
+
 Future deployment command:
 
 ```bash
