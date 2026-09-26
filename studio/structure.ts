@@ -16,6 +16,16 @@ export const structure: StructureResolver = (S) =>
             .params({type: 'caseStudy'})
             .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
         ),
+      S.documentTypeListItem('caseType')
+        .id('caseTypes')
+        .title('사건 유형 관리')
+        .child(
+          S.documentTypeList('caseType')
+            .id('caseTypesList')
+            .title('사건 유형 관리')
+            .defaultOrdering([{field: 'title', direction: 'asc'}])
+            .initialValueTemplates([S.initialValueTemplateItem('caseType')]),
+        ),
       S.listItem()
         .id('featuredCaseStudies')
         .title('메인 대표 사례')

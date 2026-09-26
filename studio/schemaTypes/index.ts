@@ -1,7 +1,8 @@
 import {caseStudy} from './documents/caseStudy'
+import {caseType} from './documents/caseType'
 import {legalArticle} from './documents/legalArticle'
 import {blockContent} from './objects/blockContent'
 import {contentImage} from './objects/contentImage'
 import {seoFields} from './objects/seoFields'
 
-export const schemaTypes = [blockContent, seoFields, contentImage, caseStudy, legalArticle]
+export const schemaTypes = [blockContent, seoFields, contentImage, caseType, caseStudy, legalArticle]
