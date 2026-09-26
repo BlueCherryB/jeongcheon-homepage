@@ -64,7 +64,7 @@ export function SearchForm({
         aria-label="검색"
         className={[
           "shrink-0 bg-[#0F172A] px-5 font-semibold text-white transition-colors hover:bg-[#17213A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0F172A]",
-          isHero ? "min-w-16 sm:min-w-20" : "min-w-16",
+          isHero ? "min-w-20 sm:w-28" : "min-w-16",
         ].join(" ")}
       >
         검색

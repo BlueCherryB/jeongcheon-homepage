@@ -31,22 +31,25 @@ export function HeroSection() {
             />
           </div>
 
-          <div className="relative z-10 order-3 hidden min-h-[360px] overflow-hidden bg-zinc-100 sm:block sm:min-h-[480px] lg:order-2 lg:min-h-[560px]">
-            <Image
-              src={hero.image.src}
-              alt={hero.image.alt}
-              fill
-              priority
-              sizes="(min-width: 1024px) 54vw, 100vw"
-              className="object-cover object-[center_45%]"
-            />
+          <div className="relative z-10 order-3 hidden min-h-[360px] overflow-hidden bg-zinc-100 sm:block sm:min-h-[480px] lg:order-2 lg:h-[500px] lg:min-h-0">
+            {/* Preserve the original desktop image crop, then clip its vertical edges. */}
+            <div className="absolute inset-0 lg:inset-x-0 lg:-top-[30px] lg:bottom-auto lg:h-[560px]">
+              <Image
+                src={hero.image.src}
+                alt={hero.image.alt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 54vw, 100vw"
+                className="object-cover object-[center_45%]"
+              />
+            </div>
             <div
               aria-hidden="true"
               className="absolute inset-y-0 left-0 hidden w-24 bg-gradient-to-r from-white to-transparent lg:block"
             />
           </div>
 
-          <div className="order-2 mt-8 max-w-3xl sm:mt-9 lg:order-3 lg:col-span-2 lg:mx-auto lg:mt-12 lg:max-w-[1040px]">
+          <div className="order-2 mt-8 max-w-3xl sm:mt-9 lg:order-3 lg:col-span-2 lg:mx-auto lg:mt-12 lg:w-[85%] lg:max-w-6xl">
             <SearchForm variant="hero" />
           </div>
         </div>
