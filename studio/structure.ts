@@ -9,12 +9,79 @@ export const structure: StructureResolver = (S) =>
         .id('caseStudies')
         .title('수행사례')
         .child(
-          S.documentTypeList('caseStudy')
-            .id('publishedCaseStudies')
+          S.list()
+            .id('caseStudyCategories')
             .title('수행사례')
-            .filter('_type == $type && !(_id in path("drafts.**"))')
-            .params({type: 'caseStudy'})
-            .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
+            .items([
+              S.listItem()
+                .id('allCaseStudies')
+                .title('전체')
+                .schemaType('caseStudy')
+                .child(
+                  S.documentList()
+                    .id('allCaseStudiesList')
+                    .title('전체')
+                    .schemaType('caseStudy')
+                    .filter('_type == $type && !(_id in path("drafts.**"))')
+                    .params({type: 'caseStudy'})
+                    .defaultOrdering([
+                      {field: 'caseType.title', direction: 'asc'},
+                      {field: 'title', direction: 'asc'},
+                    ])
+                    .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
+                ),
+              S.listItem()
+                .id('criminalCaseStudies')
+                .title('형사')
+                .schemaType('caseStudy')
+                .child(
+                  S.documentList()
+                    .id('criminalCaseStudiesList')
+                    .title('형사')
+                    .schemaType('caseStudy')
+                    .filter('_type == $type && !(_id in path("drafts.**")) && category == $category')
+                    .params({type: 'caseStudy', category: 'criminal'})
+                    .defaultOrdering([
+                      {field: 'caseType.title', direction: 'asc'},
+                      {field: 'title', direction: 'asc'},
+                    ])
+                    .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
+                ),
+              S.listItem()
+                .id('civilCaseStudies')
+                .title('민사')
+                .schemaType('caseStudy')
+                .child(
+                  S.documentList()
+                    .id('civilCaseStudiesList')
+                    .title('민사')
+                    .schemaType('caseStudy')
+                    .filter('_type == $type && !(_id in path("drafts.**")) && category == $category')
+                    .params({type: 'caseStudy', category: 'civil'})
+                    .defaultOrdering([
+                      {field: 'caseType.title', direction: 'asc'},
+                      {field: 'title', direction: 'asc'},
+                    ])
+                    .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
+                ),
+              S.listItem()
+                .id('familyCaseStudies')
+                .title('가사')
+                .schemaType('caseStudy')
+                .child(
+                  S.documentList()
+                    .id('familyCaseStudiesList')
+                    .title('가사')
+                    .schemaType('caseStudy')
+                    .filter('_type == $type && !(_id in path("drafts.**")) && category == $category')
+                    .params({type: 'caseStudy', category: 'family'})
+                    .defaultOrdering([
+                      {field: 'caseType.title', direction: 'asc'},
+                      {field: 'title', direction: 'asc'},
+                    ])
+                    .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
+                ),
+            ]),
         ),
       S.documentTypeListItem('caseType')
         .id('caseTypes')
