@@ -4,15 +4,12 @@ import { ConsultationSection } from "@/components/home/ConsultationSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { MobileOfficeBanner } from "@/components/home/MobileOfficeBanner";
 import { PracticeSection } from "@/components/home/PracticeSection";
-import { getFeaturedCaseStudies } from "@/lib/content/caseStudies";
+import { getDailyFeaturedCaseStudies } from "@/lib/content/featuredCaseStudies";
 
-const homepageCaseStudyLimit = 5;
+export const revalidate = 3600;
 
 export default async function Home() {
-  const caseStudies = (await getFeaturedCaseStudies()).slice(
-    0,
-    homepageCaseStudyLimit,
-  );
+  const caseStudies = await getDailyFeaturedCaseStudies();
 
   return (
     <main className="flex flex-1 flex-col bg-white text-zinc-950">
