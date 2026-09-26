@@ -8,6 +8,7 @@ export const navigationItems: NavigationItem[] = [
   { label: "업무 분야", href: "/practice" },
   { label: "수행사례", href: "/cases" },
   { label: "법률 정보", href: "/legal-info" },
+  { label: "면책공고", href: "/disclaimer" },
   // Temporarily hidden until the FAQ section is restored.
   // { label: "자주 묻는 질문", href: "/#faq" },
 ];
