@@ -213,6 +213,9 @@ export const caseStudy = defineType({
       group: 'basic',
       description: '기존 유형을 선택하거나 새 유형을 만들어 재사용합니다.',
       to: [{type: 'caseType'}],
+      options: {
+        sort: [{field: 'title', direction: 'asc'}],
+      },
     }),
     defineField({
       name: 'result',

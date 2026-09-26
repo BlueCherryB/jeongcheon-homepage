@@ -19,6 +19,7 @@ export const caseType = defineType({
     prepare({title}) {
       return {
         title: title ?? '제목 없음',
+        media: false,
       }
     },
   },
