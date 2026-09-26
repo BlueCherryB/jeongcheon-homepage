@@ -40,7 +40,7 @@ export function SearchForm({
       className={[
         "flex w-full items-stretch border border-[#D8D1C5] bg-white focus-within:border-[#0F172A] focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[#C8A96A]",
         isHero
-          ? "mt-8 max-w-3xl sm:mt-9 lg:relative lg:z-20 lg:w-[calc(195%+2rem)] lg:max-w-[1040px]"
+          ? "mt-8 max-w-3xl sm:mt-9 lg:relative lg:z-20 lg:mt-16 lg:ml-[8%] lg:w-[calc(195%+2rem)] lg:max-w-[1040px]"
           : "max-w-3xl",
       ].join(" ")}
     >
