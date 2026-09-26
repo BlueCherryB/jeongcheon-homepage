@@ -12,6 +12,42 @@ const caseCategoryOptions = [
   {title: caseCategoryTitles.family, value: 'family'},
 ]
 
+export const caseTypeTitles: Record<string, string> = {
+  fraud: '사기',
+  embezzlement: '횡령',
+  occupationalBreachOfTrust: '업무상배임',
+  intimidation: '협박',
+  assault: '상해',
+  drugs: '마약',
+  drunkDriving: '음주운전',
+  sexualCrime: '성범죄',
+  damages: '손해배상',
+  loan: '대여금',
+  divorce: '이혼',
+  renunciationOfInheritance: '상속포기',
+}
+
+export const caseTypeOptions = [
+  {title: caseTypeTitles.fraud, value: 'fraud'},
+  {title: caseTypeTitles.embezzlement, value: 'embezzlement'},
+  {
+    title: caseTypeTitles.occupationalBreachOfTrust,
+    value: 'occupationalBreachOfTrust',
+  },
+  {title: caseTypeTitles.intimidation, value: 'intimidation'},
+  {title: caseTypeTitles.assault, value: 'assault'},
+  {title: caseTypeTitles.drugs, value: 'drugs'},
+  {title: caseTypeTitles.drunkDriving, value: 'drunkDriving'},
+  {title: caseTypeTitles.sexualCrime, value: 'sexualCrime'},
+  {title: caseTypeTitles.damages, value: 'damages'},
+  {title: caseTypeTitles.loan, value: 'loan'},
+  {title: caseTypeTitles.divorce, value: 'divorce'},
+  {
+    title: caseTypeTitles.renunciationOfInheritance,
+    value: 'renunciationOfInheritance',
+  },
+]
+
 const sanityApiVersion = '2025-02-19'
 const slugPattern = /^[a-z0-9]+(?:[-_][a-z0-9]+)*$/
 const sequentialSlugPattern = /^case_(\d+)$/
@@ -204,6 +240,17 @@ export const caseStudy = defineType({
       options: {
         list: caseCategoryOptions,
         layout: 'radio',
+      },
+    }),
+    defineField({
+      name: 'caseType',
+      title: '사건 유형',
+      type: 'string',
+      group: 'basic',
+      description: '사건 분야 안에서 세부 유형을 선택합니다.',
+      options: {
+        list: caseTypeOptions,
+        layout: 'dropdown',
       },
     }),
     defineField({
@@ -401,15 +448,16 @@ export const caseStudy = defineType({
     select: {
       title: 'title',
       category: 'category',
+      caseType: 'caseType',
       result: 'result',
-      publishedAt: 'publishedAt',
       featured: 'featured',
       sortOrder: 'sortOrder',
       media: 'mainImage.image',
     },
-    prepare({title, category, result, publishedAt, featured, sortOrder, media}) {
+    prepare({title, category, caseType, result, featured, sortOrder, media}) {
       const categoryTitle = category ? caseCategoryTitles[category] || '분야 미지정' : '분야 미지정'
-      const subtitleItems = [categoryTitle, result, publishedAt?.slice(0, 10)].filter(Boolean)
+      const caseTypeTitle = caseType ? caseTypeTitles[caseType] || caseType : undefined
+      const subtitleItems = [categoryTitle, caseTypeTitle, result].filter(Boolean)
       const previewTitle =
         featured && typeof sortOrder === 'number'
           ? `[대표 ${sortOrder}] ${title || '제목 없음'}`
