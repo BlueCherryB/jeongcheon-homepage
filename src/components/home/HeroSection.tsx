@@ -31,14 +31,14 @@ export function HeroSection() {
           <SearchForm variant="hero" />
         </div>
 
-        <div className="relative z-10 hidden min-h-[360px] overflow-hidden bg-zinc-100 sm:block sm:min-h-[480px] lg:min-h-[560px]">
+        <div className="relative z-10 hidden min-h-[360px] overflow-hidden bg-zinc-100 sm:block sm:min-h-[480px] lg:h-[340px] lg:min-h-0">
           <Image
             src={hero.image.src}
             alt={hero.image.alt}
             fill
             priority
             sizes="(min-width: 1024px) 54vw, 100vw"
-            className="object-cover object-[center_45%]"
+            className="object-cover object-center"
           />
           <div
             aria-hidden="true"
