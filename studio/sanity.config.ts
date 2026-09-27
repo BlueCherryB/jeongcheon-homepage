@@ -14,6 +14,27 @@ const studioTextOverrides = defineLocaleResourceBundle({
   },
 })
 
+const caseStudyCategoryTemplates = [
+  {
+    id: 'caseStudy-criminal',
+    title: '형사 수행사례',
+    schemaType: 'caseStudy',
+    value: {category: 'criminal'},
+  },
+  {
+    id: 'caseStudy-civil',
+    title: '민사 수행사례',
+    schemaType: 'caseStudy',
+    value: {category: 'civil'},
+  },
+  {
+    id: 'caseStudy-family',
+    title: '가사 수행사례',
+    schemaType: 'caseStudy',
+    value: {category: 'family'},
+  },
+]
+
 export default defineConfig({
   name: 'default',
   title: 'Jeongcheon Law Office',
@@ -29,6 +50,10 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
+    templates: (previousTemplates) => [
+      ...previousTemplates,
+      ...caseStudyCategoryTemplates,
+    ],
   },
 
   document: {

@@ -1,11 +1,32 @@
 import type {StructureResolver} from 'sanity/structure'
 
+const caseStudyTemplateIds = {
+  all: 'caseStudy',
+  criminal: 'caseStudy-criminal',
+  civil: 'caseStudy-civil',
+  family: 'caseStudy-family',
+} as const
+
+function canHandleCaseStudyIntent(templateId: string) {
+  return (intentName: string, params: Record<string, string | undefined>) =>
+    params.type === 'caseStudy' &&
+    (intentName === 'edit' ||
+      (intentName === 'create' && params.template === templateId))
+}
+
+function canHandleCaseStudyEdit(
+  intentName: string,
+  params: Record<string, string | undefined>,
+) {
+  return intentName === 'edit' && params.type === 'caseStudy'
+}
+
 export const structure: StructureResolver = (S) =>
   S.list()
     .id('content')
     .title('콘텐츠')
     .items([
-      S.documentTypeListItem('caseStudy')
+      S.listItem()
         .id('caseStudies')
         .title('수행 사례')
         .child(
@@ -28,7 +49,12 @@ export const structure: StructureResolver = (S) =>
                       {field: 'caseType.title', direction: 'asc'},
                       {field: 'title', direction: 'asc'},
                     ])
-                    .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem(caseStudyTemplateIds.all),
+                    ])
+                    .canHandleIntent(
+                      canHandleCaseStudyIntent(caseStudyTemplateIds.all),
+                    ),
                 ),
               S.listItem()
                 .id('criminalCaseStudies')
@@ -45,7 +71,12 @@ export const structure: StructureResolver = (S) =>
                       {field: 'caseType.title', direction: 'asc'},
                       {field: 'title', direction: 'asc'},
                     ])
-                    .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem(caseStudyTemplateIds.criminal),
+                    ])
+                    .canHandleIntent(
+                      canHandleCaseStudyIntent(caseStudyTemplateIds.criminal),
+                    ),
                 ),
               S.listItem()
                 .id('civilCaseStudies')
@@ -62,7 +93,12 @@ export const structure: StructureResolver = (S) =>
                       {field: 'caseType.title', direction: 'asc'},
                       {field: 'title', direction: 'asc'},
                     ])
-                    .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem(caseStudyTemplateIds.civil),
+                    ])
+                    .canHandleIntent(
+                      canHandleCaseStudyIntent(caseStudyTemplateIds.civil),
+                    ),
                 ),
               S.listItem()
                 .id('familyCaseStudies')
@@ -79,7 +115,12 @@ export const structure: StructureResolver = (S) =>
                       {field: 'caseType.title', direction: 'asc'},
                       {field: 'title', direction: 'asc'},
                     ])
-                    .initialValueTemplates([S.initialValueTemplateItem('caseStudy')]),
+                    .initialValueTemplates([
+                      S.initialValueTemplateItem(caseStudyTemplateIds.family),
+                    ])
+                    .canHandleIntent(
+                      canHandleCaseStudyIntent(caseStudyTemplateIds.family),
+                    ),
                 ),
             ]),
         ),
@@ -96,7 +137,6 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .id('featuredCaseStudies')
         .title('메인 대표 사례')
-        .schemaType('caseStudy')
         .child(
           S.documentList()
             .id('featuredCaseStudiesList')
@@ -107,7 +147,9 @@ export const structure: StructureResolver = (S) =>
             .defaultOrdering([
               {field: 'sortOrder', direction: 'asc'},
               {field: 'publishedAt', direction: 'desc'},
-            ]),
+            ])
+            .initialValueTemplates([])
+            .canHandleIntent(canHandleCaseStudyEdit),
         ),
       S.documentTypeListItem('legalArticle')
         .id('legalArticles')
