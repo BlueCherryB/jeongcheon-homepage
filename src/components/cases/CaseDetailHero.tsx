@@ -24,10 +24,11 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
     ignoreCrop: isDocumentImage,
   });
   const imageObjectPosition = getSanityImageObjectPosition(caseStudy.image);
+  const hasImage = Boolean(imageSrc && imageAsset);
 
   return (
     <section className="overflow-hidden border-b border-[#E8E2D7] bg-[#FAF8F4]">
-      <Container className="py-12 lg:py-20">
+      <Container className={hasImage ? "py-12 lg:py-20" : "py-10 lg:py-14"}>
         <nav aria-label="Breadcrumb" className="text-sm text-[#111B36]/70">
           <ol className="flex flex-wrap items-center gap-3">
             <li>
@@ -61,13 +62,20 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
           </ol>
         </nav>
 
-        <div className="mt-9 grid gap-10 lg:grid-cols-[minmax(0,680px)_340px] lg:items-center lg:justify-between lg:gap-14">
+        <div
+          className={[
+            "mt-9",
+            hasImage
+              ? "grid gap-10 lg:grid-cols-[minmax(0,680px)_340px] lg:items-center lg:justify-between lg:gap-14"
+              : "max-w-4xl",
+          ].join(" ")}
+        >
           <div className="min-w-0">
             <p className="font-semibold text-[#C8A96A]">
               {caseStudy.categoryLabel}
             </p>
 
-            <div className="mt-4 max-w-[680px]">
+            <div className={hasImage ? "mt-4 max-w-[680px]" : "mt-4 max-w-4xl"}>
               <h1 className="font-chosun text-[32px] font-normal leading-[1.5] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
                 {caseStudy.title}
               </h1>
@@ -103,7 +111,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
             </div>
           </div>
 
-          {imageSrc && imageAsset ? (
+          {hasImage && imageSrc && imageAsset ? (
             <div
               className={[
                 "hidden overflow-hidden rounded-[22px] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:flex lg:w-[340px] lg:items-center lg:justify-center",
@@ -130,12 +138,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
                 }
               />
             </div>
-          ) : (
-            <div
-              aria-hidden="true"
-              className="hidden aspect-[3/4] rounded-[22px] bg-[#D8D4CC] shadow-[0_24px_70px_rgba(17,27,54,0.08)] lg:block"
-            />
-          )}
+          ) : null}
         </div>
       </Container>
     </section>
