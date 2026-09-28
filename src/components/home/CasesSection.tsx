@@ -14,7 +14,13 @@ type CasesSectionProps = {
 
 export function CasesSection({ caseStudies }: CasesSectionProps) {
   const { cases } = homepageContent;
-  const filterHrefs: CaseFilterValue[] = ["all", "criminal", "civil", "family"];
+  const filterHrefs: CaseFilterValue[] = [
+    "all",
+    "criminal",
+    "civil",
+    "family",
+    "advisory",
+  ];
 
   return (
     <section id={cases.id} className="bg-[#FAF8F4]">
