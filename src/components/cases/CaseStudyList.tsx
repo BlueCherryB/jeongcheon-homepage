@@ -5,18 +5,27 @@ import {
 
 type CaseStudyListProps = {
   caseStudies: CaseStudyCardItem[];
+  showResultColumn?: boolean;
 };
 
-export function CaseStudyList({ caseStudies }: CaseStudyListProps) {
+export function CaseStudyList({
+  caseStudies,
+  showResultColumn = true,
+}: CaseStudyListProps) {
   return (
     <div>
       <div
         aria-hidden="true"
-        className="mb-1 hidden grid-cols-[120px_minmax(0,1fr)_150px_168px] rounded-md border border-[#E8E2D7] bg-white/45 px-10 py-3 text-sm font-semibold text-[#111B36] lg:grid lg:gap-8"
+        className={[
+          "mb-1 hidden rounded-md border border-[#E8E2D7] bg-white/45 px-10 py-3 text-sm font-semibold text-[#111B36] lg:grid lg:gap-8",
+          showResultColumn
+            ? "lg:grid-cols-[120px_minmax(0,1fr)_150px_168px]"
+            : "lg:grid-cols-[120px_minmax(0,1fr)_168px]",
+        ].join(" ")}
       >
         <div>분야</div>
         <div>사건명</div>
-        <div className="text-center">결과</div>
+        {showResultColumn ? <div className="text-center">결과</div> : null}
         <div />
       </div>
 

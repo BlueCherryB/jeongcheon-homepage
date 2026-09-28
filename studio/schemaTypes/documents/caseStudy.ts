@@ -27,6 +27,7 @@ type InitialValueContext = {
 type ValidationContext = InitialValueContext & {
   document?: {
     _id?: string
+    category?: string
     featured?: boolean
     sortOrder?: number
   }
@@ -225,7 +226,16 @@ export const caseStudy = defineType({
       type: 'string',
       group: 'basic',
       description: '목록과 상세 화면에서 강조할 사건 결과입니다. 예: 무혐의, 승소, 조정 성립',
-      validation: (Rule) => Rule.max(120).error('사건 결과는 120자 이내로 입력해주세요.'),
+      hidden: ({document}) => document?.category === 'advisory',
+      validation: (Rule) =>
+        Rule.max(120)
+          .custom((value, context) =>
+            context.document?.category === 'advisory' ||
+            (typeof value === 'string' && value.trim())
+              ? true
+              : '자문 이외의 수행 사례에는 사건 결과를 입력해주세요.',
+          )
+          .error('사건 결과를 확인해주세요.'),
     }),
     defineField({
       name: 'resultDetail',
@@ -233,6 +243,7 @@ export const caseStudy = defineType({
       type: 'string',
       group: 'basic',
       description: '결과 배지 아래에 작게 표시할 추가 결과를 입력합니다. 예: 위자료 3천만원, 집행유예, 벌금 감경',
+      hidden: ({document}) => document?.category === 'advisory',
       validation: (Rule) => Rule.max(120).error('세부 결과는 120자 이내로 입력해주세요.'),
     }),
     defineField({

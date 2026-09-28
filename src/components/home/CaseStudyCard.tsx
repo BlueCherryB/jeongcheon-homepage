@@ -1,13 +1,17 @@
 import Link from "next/link";
 
-import type { CaseStudyImage } from "@/types/content/caseStudy";
+import type {
+  CaseStudyCategory,
+  CaseStudyImage,
+} from "@/types/content/caseStudy";
 
 export type CaseStudyCardItem = {
   slug: string;
+  category: CaseStudyCategory;
   categoryLabel: string;
   title: string;
   summary: string;
-  result: string;
+  result?: string;
   resultDetail?: string;
   publishedAt?: string;
   displayDate?: string;
@@ -24,6 +28,8 @@ export function CaseStudyCard({
   variant = "preview",
 }: CaseStudyCardProps) {
   const isBoard = variant === "board";
+  const showResult =
+    caseStudy.category !== "advisory" && Boolean(caseStudy.result);
 
   return (
     <Link
@@ -37,9 +43,13 @@ export function CaseStudyCard({
       <article
         className={[
           "grid gap-6 lg:items-center lg:gap-8",
-          isBoard
-            ? "lg:grid-cols-[120px_minmax(0,1fr)_150px_168px]"
-            : "lg:grid-cols-[120px_minmax(0,1fr)_150px_174px]",
+          showResult
+            ? isBoard
+              ? "lg:grid-cols-[120px_minmax(0,1fr)_150px_168px]"
+              : "lg:grid-cols-[120px_minmax(0,1fr)_150px_174px]"
+            : isBoard
+              ? "lg:grid-cols-[120px_minmax(0,1fr)_168px]"
+              : "lg:grid-cols-[120px_minmax(0,1fr)_174px]",
         ].join(" ")}
       >
         <div className="flex items-center lg:min-h-20 lg:border-r lg:border-[#E8E2D7]">
@@ -63,18 +73,20 @@ export function CaseStudyCard({
           </p>
         </div>
 
-        <div className="flex justify-start lg:justify-center lg:border-l lg:border-[#E8E2D7] lg:pl-8">
-          <div className="flex h-28 w-28 shrink-0 flex-col items-center justify-center rounded-full border border-[#C8A96A] text-center text-[#111B36]">
-            <p className="max-w-[88px] break-keep text-balance text-xl font-bold leading-snug text-[#C8A96A]">
-              {caseStudy.result}
-            </p>
-            {caseStudy.resultDetail ? (
-              <p className="mt-1 max-w-[88px] break-keep text-balance text-xs font-semibold leading-5 text-[#111B36]">
-                {caseStudy.resultDetail}
+        {showResult ? (
+          <div className="flex justify-start lg:justify-center lg:border-l lg:border-[#E8E2D7] lg:pl-8">
+            <div className="flex h-28 w-28 shrink-0 flex-col items-center justify-center rounded-full border border-[#C8A96A] text-center text-[#111B36]">
+              <p className="max-w-[88px] break-keep text-balance text-xl font-bold leading-snug text-[#C8A96A]">
+                {caseStudy.result}
               </p>
-            ) : null}
+              {caseStudy.resultDetail ? (
+                <p className="mt-1 max-w-[88px] break-keep text-balance text-xs font-semibold leading-5 text-[#111B36]">
+                  {caseStudy.resultDetail}
+                </p>
+              ) : null}
+            </div>
           </div>
-        </div>
+        ) : null}
 
         <div className="flex items-center justify-between gap-4 border-t border-[#E8E2D7] pt-5 text-sm font-medium text-[#111B36] lg:border-l lg:border-t-0 lg:py-4 lg:pl-8">
           <time dateTime={caseStudy.publishedAt}>

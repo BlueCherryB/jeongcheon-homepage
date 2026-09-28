@@ -25,6 +25,8 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
   });
   const imageObjectPosition = getSanityImageObjectPosition(caseStudy.image);
   const hasImage = Boolean(imageSrc && imageAsset);
+  const showResult =
+    caseStudy.category !== "advisory" && Boolean(caseStudy.result);
 
   return (
     <section className="overflow-hidden border-b border-[#E8E2D7] bg-[#FAF8F4]">
@@ -79,25 +81,27 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
               <h1 className="font-chosun text-[32px] font-normal leading-[1.5] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
                 {caseStudy.title}
               </h1>
-              <div className="mt-5 flex justify-end pr-3 sm:justify-start sm:pr-0">
-                <div className="inline-flex max-w-full items-center rounded-full border border-[#D9C89E] bg-white px-5 py-2.5 text-base font-bold text-[#111B36] shadow-[0_14px_34px_rgba(17,27,54,0.07)] sm:px-6 sm:py-3 sm:text-[17px]">
-                  <span className="shrink-0 text-sm text-[#C8A96A] sm:text-base">
-                    결과
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="mx-3 h-4 w-px bg-[#D9C89E]"
-                  />
-                  <span className="min-w-0">
-                    <span className="block truncate">{caseStudy.result}</span>
-                    {caseStudy.resultDetail ? (
-                      <span className="mt-0.5 block truncate text-xs font-semibold text-[#111B36]/72 sm:text-sm">
-                        {caseStudy.resultDetail}
-                      </span>
-                    ) : null}
-                  </span>
+              {showResult ? (
+                <div className="mt-5 flex justify-end pr-3 sm:justify-start sm:pr-0">
+                  <div className="inline-flex max-w-full items-center rounded-full border border-[#D9C89E] bg-white px-5 py-2.5 text-base font-bold text-[#111B36] shadow-[0_14px_34px_rgba(17,27,54,0.07)] sm:px-6 sm:py-3 sm:text-[17px]">
+                    <span className="shrink-0 text-sm text-[#C8A96A] sm:text-base">
+                      결과
+                    </span>
+                    <span
+                      aria-hidden="true"
+                      className="mx-3 h-4 w-px bg-[#D9C89E]"
+                    />
+                    <span className="min-w-0">
+                      <span className="block truncate">{caseStudy.result}</span>
+                      {caseStudy.resultDetail ? (
+                        <span className="mt-0.5 block truncate text-xs font-semibold text-[#111B36]/72 sm:text-sm">
+                          {caseStudy.resultDetail}
+                        </span>
+                      ) : null}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
 
             <div className="mt-6 hidden flex-wrap items-center gap-4 text-sm font-medium text-[#111B36]/70 sm:flex">

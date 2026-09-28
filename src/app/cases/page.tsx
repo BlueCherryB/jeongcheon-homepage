@@ -79,7 +79,10 @@ export default async function CasesPage({ searchParams }: CasesPageProps) {
           </div>
 
           <div className="mt-5">
-            <CaseStudyList caseStudies={currentCases} />
+            <CaseStudyList
+              caseStudies={currentCases}
+              showResultColumn={activeCategory !== "advisory"}
+            />
           </div>
 
           <CasePagination

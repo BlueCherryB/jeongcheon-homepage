@@ -202,6 +202,11 @@ export function mapSanityCaseStudyListItem(
   caseStudy: SanityCaseStudyListItem,
 ): CaseStudyListItem {
   const category = mapCategory(caseStudy.category);
+  const result = optionalTrimmedString(caseStudy.result);
+
+  if (category !== "advisory" && !result) {
+    throw new CaseStudyMappingError("Case Study result is required.");
+  }
 
   return {
     id: requireTrimmedString("_id", caseStudy._id),
@@ -211,7 +216,7 @@ export function mapSanityCaseStudyListItem(
     category,
     categoryId: category,
     categoryLabel: caseStudyCategoryLabels[category],
-    result: requireTrimmedString("result", caseStudy.result),
+    result,
     resultDetail: optionalTrimmedString(caseStudy.resultDetail),
     summary: deriveSummary(caseStudy),
     publishedAt: optionalTrimmedString(caseStudy.publishedAt),
