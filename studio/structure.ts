@@ -5,7 +5,6 @@ const caseStudyTemplateIds = {
   criminal: 'caseStudy-criminal',
   civil: 'caseStudy-civil',
   family: 'caseStudy-family',
-  application: 'caseStudy-application',
   advisory: 'caseStudy-advisory',
 } as const
 
@@ -122,28 +121,6 @@ export const structure: StructureResolver = (S) =>
                     ])
                     .canHandleIntent(
                       canHandleCaseStudyIntent(caseStudyTemplateIds.family),
-                    ),
-                ),
-              S.listItem()
-                .id('applicationCaseStudies')
-                .title('신청')
-                .schemaType('caseStudy')
-                .child(
-                  S.documentList()
-                    .id('applicationCaseStudiesList')
-                    .title('신청')
-                    .schemaType('caseStudy')
-                    .filter('_type == $type && !(_id in path("drafts.**")) && category == $category')
-                    .params({type: 'caseStudy', category: 'application'})
-                    .defaultOrdering([
-                      {field: 'caseType.title', direction: 'asc'},
-                      {field: 'title', direction: 'asc'},
-                    ])
-                    .initialValueTemplates([
-                      S.initialValueTemplateItem(caseStudyTemplateIds.application),
-                    ])
-                    .canHandleIntent(
-                      canHandleCaseStudyIntent(caseStudyTemplateIds.application),
                     ),
                 ),
               S.listItem()

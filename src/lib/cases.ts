@@ -33,7 +33,6 @@ const caseCategoryValues: CaseStudyCategory[] = [
   "criminal",
   "civil",
   "family",
-  "application",
   "advisory",
 ];
 
@@ -42,7 +41,6 @@ export const caseCategoryFilters: CaseCategoryFilter[] = [
   { label: caseStudyCategoryLabels.criminal, value: "criminal" },
   { label: caseStudyCategoryLabels.civil, value: "civil" },
   { label: "가사", value: "family" },
-  { label: caseStudyCategoryLabels.application, value: "application" },
   { label: caseStudyCategoryLabels.advisory, value: "advisory" },
 ];
 

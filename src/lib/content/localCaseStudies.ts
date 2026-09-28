@@ -14,7 +14,6 @@ const caseStudyCategories = [
   "criminal",
   "civil",
   "family",
-  "application",
   "advisory",
 ] as const;
 const localFeaturedFallbackLimit = 5;

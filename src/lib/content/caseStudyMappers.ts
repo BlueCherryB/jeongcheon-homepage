@@ -26,7 +26,6 @@ const caseStudyCategories = [
   "criminal",
   "civil",
   "family",
-  "application",
   "advisory",
 ] as const;
 const defaultCaseStudyImageAlt = "판결문 이미지";

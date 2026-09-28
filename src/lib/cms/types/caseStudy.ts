@@ -2,7 +2,6 @@ export type SanityCaseCategory =
   | "criminal"
   | "civil"
   | "family"
-  | "application"
   | "advisory";
 
 export type SanityImageAssetReference = {
