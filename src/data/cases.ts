@@ -1,9 +1,14 @@
-export type CaseCategoryId = "criminal" | "civil" | "family";
+export type CaseCategoryId =
+  | "criminal"
+  | "civil"
+  | "family"
+  | "application"
+  | "advisory";
 
 export type CaseStudy = {
   slug: string;
   categoryId: CaseCategoryId;
-  categoryLabel: "형사" | "민사" | "이혼·가사";
+  categoryLabel: "형사" | "민사" | "이혼·가사" | "신청" | "자문";
   title: string;
   summary: string;
   publishedAt: string;
@@ -30,6 +35,8 @@ export const caseCategoryFilters: CaseCategoryFilter[] = [
   { label: "형사", value: "criminal" },
   { label: "민사", value: "civil" },
   { label: "이혼·가사", value: "family" },
+  { label: "신청", value: "application" },
+  { label: "자문", value: "advisory" },
 ];
 
 export const caseStudies: CaseStudy[] = [

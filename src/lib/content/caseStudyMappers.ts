@@ -22,7 +22,13 @@ import {
   type CaseStudySeo,
 } from "@/types/content/caseStudy";
 
-const caseStudyCategories = ["criminal", "civil", "family"] as const;
+const caseStudyCategories = [
+  "criminal",
+  "civil",
+  "family",
+  "application",
+  "advisory",
+] as const;
 const defaultCaseStudyImageAlt = "판결문 이미지";
 const summaryMaxLength = 220;
 

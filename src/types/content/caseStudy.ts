@@ -1,11 +1,23 @@
-export type CaseStudyCategory = "criminal" | "civil" | "family";
+export type CaseStudyCategory =
+  | "criminal"
+  | "civil"
+  | "family"
+  | "application"
+  | "advisory";
 
-export type CaseStudyCategoryLabel = "형사" | "민사" | "이혼·가사";
+export type CaseStudyCategoryLabel =
+  | "형사"
+  | "민사"
+  | "이혼·가사"
+  | "신청"
+  | "자문";
 
 export const caseStudyCategoryLabels = {
   criminal: "형사",
   civil: "민사",
   family: "이혼·가사",
+  application: "신청",
+  advisory: "자문",
 } as const satisfies Record<CaseStudyCategory, CaseStudyCategoryLabel>;
 
 export type CaseStudyImageAssetReference = {

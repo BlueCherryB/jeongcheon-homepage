@@ -29,14 +29,21 @@ type PaginationInput = {
   page: number;
 };
 
-const caseCategoryValues: CaseStudyCategory[] = ["criminal", "civil", "family"];
+const caseCategoryValues: CaseStudyCategory[] = [
+  "criminal",
+  "civil",
+  "family",
+  "application",
+  "advisory",
+];
 
 export const caseCategoryFilters: CaseCategoryFilter[] = [
   { label: "전체", value: "all" },
-  ...caseCategoryValues.map((category) => ({
-    label: caseStudyCategoryLabels[category],
-    value: category,
-  })),
+  { label: caseStudyCategoryLabels.criminal, value: "criminal" },
+  { label: caseStudyCategoryLabels.civil, value: "civil" },
+  { label: "가사", value: "family" },
+  { label: caseStudyCategoryLabels.application, value: "application" },
+  { label: caseStudyCategoryLabels.advisory, value: "advisory" },
 ];
 
 export function parseCaseCategory(value: unknown): CaseFilterValue {

@@ -4,12 +4,16 @@ const caseCategoryTitles: Record<string, string> = {
   criminal: '형사',
   civil: '민사',
   family: '이혼·가사',
+  application: '신청',
+  advisory: '자문',
 }
 
 const caseCategoryOptions = [
   {title: caseCategoryTitles.criminal, value: 'criminal'},
   {title: caseCategoryTitles.civil, value: 'civil'},
   {title: caseCategoryTitles.family, value: 'family'},
+  {title: caseCategoryTitles.application, value: 'application'},
+  {title: caseCategoryTitles.advisory, value: 'advisory'},
 ]
 
 const sanityApiVersion = '2025-02-19'

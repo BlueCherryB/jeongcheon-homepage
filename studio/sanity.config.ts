@@ -33,6 +33,18 @@ const caseStudyCategoryTemplates = [
     schemaType: 'caseStudy',
     value: {category: 'family'},
   },
+  {
+    id: 'caseStudy-application',
+    title: '신청 수행사례',
+    schemaType: 'caseStudy',
+    value: {category: 'application'},
+  },
+  {
+    id: 'caseStudy-advisory',
+    title: '자문 수행사례',
+    schemaType: 'caseStudy',
+    value: {category: 'advisory'},
+  },
 ]
 
 export default defineConfig({

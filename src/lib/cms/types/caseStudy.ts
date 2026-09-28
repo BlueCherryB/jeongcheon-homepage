@@ -1,4 +1,9 @@
-export type SanityCaseCategory = "criminal" | "civil" | "family";
+export type SanityCaseCategory =
+  | "criminal"
+  | "civil"
+  | "family"
+  | "application"
+  | "advisory";
 
 export type SanityImageAssetReference = {
   _ref: string;

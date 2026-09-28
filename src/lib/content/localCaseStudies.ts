@@ -10,7 +10,13 @@ import {
   type CaseStudyPortableTextBlock,
 } from "@/types/content/caseStudy";
 
-const caseStudyCategories = ["criminal", "civil", "family"] as const;
+const caseStudyCategories = [
+  "criminal",
+  "civil",
+  "family",
+  "application",
+  "advisory",
+] as const;
 const localFeaturedFallbackLimit = 5;
 
 function isCaseStudyCategory(value: unknown): value is CaseStudyCategory {

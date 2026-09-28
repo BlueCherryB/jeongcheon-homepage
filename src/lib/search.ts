@@ -6,6 +6,8 @@ const categorySearchValues = {
   민사: "civil",
   가사: "family",
   이혼: "family",
+  신청: "application",
+  자문: "advisory",
   기타: "general",
   일반: "general",
 } as const;
