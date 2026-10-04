@@ -1,7 +1,12 @@
 import { unstable_cache } from "next/cache";
 
 import { cmsCacheTags } from "@/lib/cms/cacheTags";
-import { getCaseStudies } from "@/lib/content/caseStudies";
+import { getHomepageCaseStudies } from "@/lib/cms/caseStudies";
+import {
+  CaseStudyMappingError,
+  mapSanityCaseStudyListItems,
+} from "@/lib/content/caseStudyMappers";
+import { getLocalCaseStudies } from "@/lib/content/localCaseStudies";
 import type {
   CaseStudyCategory,
   CaseStudyListItem,
@@ -135,7 +140,24 @@ export function selectDailyFeaturedCaseStudies(
 
 function getCachedDailyFeaturedCaseStudies(rotationDateKey: string) {
   return unstable_cache(
-    async () => selectFeaturedCaseStudies(await getCaseStudies(), rotationDateKey),
+    async () => {
+      let caseStudies: CaseStudyListItem[];
+
+      try {
+        caseStudies = mapSanityCaseStudyListItems(await getHomepageCaseStudies());
+      } catch (error) {
+        if (error instanceof CaseStudyMappingError) {
+          throw error;
+        }
+
+        caseStudies = [];
+      }
+
+      return selectFeaturedCaseStudies(
+        caseStudies.length > 0 ? caseStudies : getLocalCaseStudies(),
+        rotationDateKey,
+      );
+    },
     ["daily-featured-case-studies", rotationDateKey],
     {
       revalidate: 86400,

@@ -4,6 +4,7 @@ import { cmsCacheTags } from "@/lib/cms/cacheTags";
 import { publishedSanityClient } from "@/lib/cms/client";
 import {
   featuredCaseStudiesQuery,
+  homepageCaseStudiesQuery,
   publishedCaseStudiesQuery,
   publishedCaseStudyBySlugQuery,
   publishedCaseStudySlugsQuery,
@@ -36,6 +37,14 @@ const fetchPublishedCaseStudies = unstable_cache(async (): Promise<
 
 export async function getPublishedCaseStudies(): Promise<SanityCaseStudyListItem[]> {
   return fetchPublishedCaseStudies();
+}
+
+export async function getHomepageCaseStudies(): Promise<SanityCaseStudyListItem[]> {
+  const result = await publishedSanityClient.fetch<SanityCaseStudyListItem[]>(
+    homepageCaseStudiesQuery,
+  );
+
+  return Array.isArray(result) ? result : [];
 }
 
 const fetchFeaturedCaseStudies = unstable_cache(async (): Promise<

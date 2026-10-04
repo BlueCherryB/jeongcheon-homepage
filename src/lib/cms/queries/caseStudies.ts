@@ -37,6 +37,21 @@ export const publishedCaseStudiesQuery = `*[
   defined(slug.current)
 ] | ${caseStudyOrdering} ${caseStudyListProjection}`;
 
+export const homepageCaseStudiesQuery = `*[
+  _type == "caseStudy" &&
+  defined(slug.current)
+] | order(slug.current asc) {
+  _id,
+  _createdAt,
+  title,
+  "slug": slug.current,
+  category,
+  result,
+  resultDetail,
+  "summary": coalesce(summary, pt::text(overview[0...1]), pt::text(outcome[0...1])),
+  publishedAt
+}`;
+
 export const featuredCaseStudiesQuery = `*[
   _type == "caseStudy" &&
   defined(slug.current) &&
