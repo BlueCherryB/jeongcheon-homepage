@@ -18,8 +18,8 @@ npx wrangler d1 create jeongcheon-homepage-tags
 ```
 
 If a named resource already exists, reuse it instead of recreating it. Put the
-actual D1 `database_id` from the command output into `wrangler.jsonc`, replacing
-`REPLACE_WITH_JEONGCHEON_TAG_CACHE_DATABASE_ID`. Do not deploy that placeholder.
+actual D1 `database_id` from the command output into `wrangler.jsonc`. The current
+configuration contains the existing production database ID; reuse that resource.
 The Durable Object namespace is created by the checked-in SQLite migration on
 deployment; no separate queue resource or manually invented namespace ID is used.
 Keep the migration after the first deployment.
@@ -81,8 +81,31 @@ warning concerns image optimization and is outside this cache change.
 - Next production build/type checking and OpenNext build passed (62 pages).
 - Local preview populated 310 R2 entries and initialized the D1 table.
 - `/cases/case_021` returned 200 repeatedly with `x-opennext-cache: HIT`.
-- `/` returned 500 with a Windows OpenNext `ChunkLoadError` for the server
-  case-study mapper chunk, also observed before this infrastructure change.
-- Cold-render/revalidation completion and production CPU limits remain
-  unverified. No remote resources were created and no remote deployment was
-  attempted with the D1 placeholder.
+- The initial Turbopack build returned 500 for `/` with a server mapper
+  `ChunkLoadError`. This also occurred in production; it was not merely a local
+  Windows preview limitation.
+
+## Emergency recovery, 2026-10-05
+
+Production version `784157ff-802c-4c0c-9f2e-eb53f75352e9` logged that same
+Turbopack `ChunkLoadError` for `/`. The generated Worker already exported
+`DOQueueHandler`; the CLI warning occurs while `getPlatformProxy` loads
+environment bindings before cache population and does not establish that the
+deployment bundle lacks the class.
+
+The production build now explicitly uses `next build --webpack`. Keep this until
+a separately tested OpenNext/Turbopack build passes uncached page rendering.
+Local OpenNext requests for `/` and `/cases/case_021` both returned 200 repeatedly
+after rebuilding; the latter also returned `x-opennext-cache: HIT`.
+
+Keep `v1-opennext-cache-queue`, its binding and exported class intact. An older
+version predating the applied DO lifecycle migration cannot be used as a simple
+rollback target. Recover with a new compatible deployment, never a deletion
+migration. R2 and D1 resources remain in place. Error 1102 and stale-revalidation
+CPU behavior require separate validation after service recovery.
+
+Recovery deployment: `npx opennextjs-cloudflare deploy` published version
+`ff21c74c-2864-477c-92d6-60cdd3bfe258`. Both production URLs returned HTML with
+HTTP 200 twice; their new-version tail events had no exceptions or binding
+errors. Homepage CPU samples were 168/165 ms and detail samples 14/16 ms;
+these samples establish recovery, not resolution of intermittent Error 1102.

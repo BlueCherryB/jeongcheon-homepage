@@ -4,7 +4,9 @@
   "main": ".open-next/worker.js",
   "keep_vars": true,
   "compatibility_date": "2026-07-19",
-  "compatibility_flags": ["nodejs_compat"],
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
   "preview_urls": true,
   "services": [
     {
@@ -29,15 +31,16 @@
   "migrations": [
     {
       "tag": "v1-opennext-cache-queue",
-      "new_sqlite_classes": ["DOQueueHandler"]
+      "new_sqlite_classes": [
+        "DOQueueHandler"
+      ]
     }
   ],
   "d1_databases": [
     {
       "binding": "NEXT_TAG_CACHE_D1",
       "database_name": "jeongcheon-homepage-tags",
-      // Replace with the ID returned by wrangler d1 create before remote deployment.
-      "database_id": "REPLACE_WITH_JEONGCHEON_TAG_CACHE_DATABASE_ID"
+      "database_id": "f90e0b53-cc92-4c17-979c-6c0e5b58d465"
     }
   ],
   "assets": {
