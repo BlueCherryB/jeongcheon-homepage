@@ -6,6 +6,40 @@
   "compatibility_date": "2026-07-19",
   "compatibility_flags": ["nodejs_compat"],
   "preview_urls": true,
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "jeongcheon-homepage"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "NEXT_INC_CACHE_R2_BUCKET",
+      "bucket_name": "jeongcheon-homepage-cache"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "NEXT_CACHE_DO_QUEUE",
+        "class_name": "DOQueueHandler"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1-opennext-cache-queue",
+      "new_sqlite_classes": ["DOQueueHandler"]
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "NEXT_TAG_CACHE_D1",
+      "database_name": "jeongcheon-homepage-tags",
+      // Replace with the ID returned by wrangler d1 create before remote deployment.
+      "database_id": "REPLACE_WITH_JEONGCHEON_TAG_CACHE_DATABASE_ID"
+    }
+  ],
   "assets": {
     "binding": "ASSETS",
     "directory": ".open-next/assets"
