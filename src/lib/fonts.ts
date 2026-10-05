@@ -9,9 +9,14 @@ export const chosunNm = localFont({
 });
 
 export const eulyoo1945 = localFont({
-  src: "../fonts/Eulyoo1945-Regular.ttf",
+  // This face is only used for the two-character "정천" wordmark.
+  // Keeping a glyph subset here lets the root-layout preload finish before the header paints.
+  src: "../fonts/Eulyoo1945-Logo.ttf",
   variable: "--font-eulyoo1945",
   display: "swap",
+  preload: true,
+  fallback: ["Times New Roman", "serif"],
+  adjustFontFallback: "Times New Roman",
   weight: "400",
   style: "normal",
 });
