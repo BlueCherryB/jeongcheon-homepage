@@ -4,7 +4,7 @@ const caseCategoryTitles: Record<string, string> = {
   criminal: '형사',
   civil: '민사',
   family: '이혼·가사',
-  advisory: '자문',
+  advisory: '기타',
 }
 
 const caseCategoryOptions = [
@@ -234,7 +234,7 @@ export const caseStudy = defineType({
             context.document?.category === 'advisory' ||
             (typeof value === 'string' && value.trim())
               ? true
-              : '자문 이외의 수행 사례에는 사건 결과를 입력해주세요.',
+              : '기타 이외의 수행 사례에는 사건 결과를 입력해주세요.',
           )
           .error('사건 결과를 확인해주세요.'),
     }),

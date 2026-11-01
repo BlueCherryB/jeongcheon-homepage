@@ -35,7 +35,7 @@ const caseStudyCategoryTemplates = [
   },
   {
     id: 'caseStudy-advisory',
-    title: '자문 수행사례',
+    title: '기타 수행사례',
     schemaType: 'caseStudy',
     value: {category: 'advisory'},
   },

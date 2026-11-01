@@ -7,7 +7,7 @@ export type CaseCategoryId =
 export type CaseStudy = {
   slug: string;
   categoryId: CaseCategoryId;
-  categoryLabel: "형사" | "민사" | "이혼·가사" | "자문";
+  categoryLabel: "형사" | "민사" | "이혼·가사" | "기타";
   title: string;
   summary: string;
   publishedAt: string;
@@ -34,7 +34,7 @@ export const caseCategoryFilters: CaseCategoryFilter[] = [
   { label: "형사", value: "criminal" },
   { label: "민사", value: "civil" },
   { label: "이혼·가사", value: "family" },
-  { label: "자문", value: "advisory" },
+  { label: "기타", value: "advisory" },
 ];
 
 export const caseStudies: CaseStudy[] = [

@@ -44,9 +44,11 @@ export function buildSearchPattern(query: string): string {
 }
 
 export function getSearchCategoryValues(query: string): string[] {
-  return Object.entries(categorySearchValues)
+  const values = Object.entries(categorySearchValues)
     .filter(([label]) => query.includes(label))
     .map(([, value]) => value);
+
+  return query.includes("기타") ? [...values, "advisory"] : values;
 }
 
 export function getSearchPaginationPages(

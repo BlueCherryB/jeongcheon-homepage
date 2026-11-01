@@ -128,7 +128,7 @@ export const homepageContent = {
     id: "cases",
     eyebrow: "수행 사례",
     heading: "정천의 수행 사례를\n소개합니다.",
-    filters: ["전체", "형사", "민사", "이혼·가사", "자문"],
+    filters: ["전체", "형사", "민사", "이혼·가사", "기타"],
     viewAllLabel: "전체 사례 보기",
     viewAllHref: "/cases",
   },
