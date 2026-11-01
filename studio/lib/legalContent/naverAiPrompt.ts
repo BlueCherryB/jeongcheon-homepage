@@ -23,7 +23,7 @@ const categoryLabels: Record<string, string> = {
   criminal: '형사',
   civil: '민사',
   family: '가사',
-  advisory: '자문',
+  advisory: '기타',
   general: '기타',
 }
 

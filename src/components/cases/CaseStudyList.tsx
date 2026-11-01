@@ -12,22 +12,27 @@ export function CaseStudyList({
   caseStudies,
   showResultColumn = true,
 }: CaseStudyListProps) {
+  const hasMixedResultColumns =
+    showResultColumn && caseStudies.some((caseStudy) => caseStudy.category === "advisory");
+
   return (
     <div>
-      <div
-        aria-hidden="true"
-        className={[
-          "mb-1 hidden rounded-md border border-[#E8E2D7] bg-white/45 px-10 py-3 text-sm font-semibold text-[#111B36] lg:grid lg:gap-8",
-          showResultColumn
-            ? "lg:grid-cols-[120px_minmax(0,1fr)_150px_168px]"
-            : "lg:grid-cols-[120px_minmax(0,1fr)_168px]",
-        ].join(" ")}
-      >
-        <div>분야</div>
-        <div>사건명</div>
-        {showResultColumn ? <div className="text-center">결과</div> : null}
-        <div />
-      </div>
+      {!hasMixedResultColumns ? (
+        <div
+          aria-hidden="true"
+          className={[
+            "mb-1 hidden rounded-md border border-[#E8E2D7] bg-white/45 px-10 py-3 text-sm font-semibold text-[#111B36] lg:grid lg:gap-8",
+            showResultColumn
+              ? "lg:grid-cols-[120px_minmax(0,1fr)_150px_168px]"
+              : "lg:grid-cols-[120px_minmax(0,1fr)_168px]",
+          ].join(" ")}
+        >
+          <div>분야</div>
+          <div>사건명</div>
+          {showResultColumn ? <div className="text-center">결과</div> : null}
+          <div />
+        </div>
+      ) : null}
 
       {caseStudies.length > 0 ? (
         <div className="flex flex-col gap-1.5">

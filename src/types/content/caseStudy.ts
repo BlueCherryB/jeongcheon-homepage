@@ -8,13 +8,13 @@ export type CaseStudyCategoryLabel =
   | "형사"
   | "민사"
   | "이혼·가사"
-  | "자문";
+  | "기타";
 
 export const caseStudyCategoryLabels = {
   criminal: "형사",
   civil: "민사",
   family: "이혼·가사",
-  advisory: "자문",
+  advisory: "기타",
 } as const satisfies Record<CaseStudyCategory, CaseStudyCategoryLabel>;
 
 export type CaseStudyImageAssetReference = {

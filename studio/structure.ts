@@ -125,12 +125,12 @@ export const structure: StructureResolver = (S) =>
                 ),
               S.listItem()
                 .id('advisoryCaseStudies')
-                .title('자문')
+                .title('기타 수행사례')
                 .schemaType('caseStudy')
                 .child(
                   S.documentList()
                     .id('advisoryCaseStudiesList')
-                    .title('자문')
+                    .title('기타 수행사례')
                     .schemaType('caseStudy')
                     .filter('_type == $type && !(_id in path("drafts.**")) && category == $category')
                     .params({type: 'caseStudy', category: 'advisory'})
