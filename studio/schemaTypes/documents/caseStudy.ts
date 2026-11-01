@@ -168,6 +168,7 @@ export const caseStudy = defineType({
   }),
   groups: [
     {name: 'basic', title: '기본 정보', default: true},
+    {name: 'simpleWriting', title: '간편 작성'},
     {name: 'content', title: '본문'},
     {name: 'processing', title: '원문 관리'},
     {name: 'settings', title: '게시 설정'},
@@ -342,6 +343,14 @@ export const caseStudy = defineType({
       of: [defineArrayMember({type: 'string', validation: (Rule) => Rule.max(30)})],
       options: {layout: 'tags'},
       validation: (Rule) => Rule.max(10),
+    }),
+    defineField({
+      name: 'articleBody',
+      title: '간편 작성 본문',
+      type: 'blockContent',
+      group: 'simpleWriting',
+      description:
+        'ChatGPT 등에서 작성한 완성된 글을 그대로 붙여넣을 수 있습니다. 이 필드가 입력된 경우 공개 상세 페이지에서는 기존 분할 본문보다 우선 사용합니다.',
     }),
     defineField({
       name: 'rawSource',

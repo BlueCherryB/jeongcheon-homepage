@@ -6,7 +6,7 @@ const caseStudyListProjection = `{
   category,
   result,
   resultDetail,
-  "summary": coalesce(summary, pt::text(overview[0...1]), pt::text(outcome[0...1])),
+  "summary": coalesce(summary, pt::text(articleBody[0...1]), pt::text(overview[0...1]), pt::text(outcome[0...1])),
   publishedAt,
   featured,
   sortOrder,
@@ -48,7 +48,7 @@ export const homepageCaseStudiesQuery = `*[
   category,
   result,
   resultDetail,
-  "summary": coalesce(summary, pt::text(overview[0...1]), pt::text(outcome[0...1])),
+  "summary": coalesce(summary, pt::text(articleBody[0...1]), pt::text(overview[0...1]), pt::text(outcome[0...1])),
   publishedAt
 }`;
 
@@ -83,6 +83,7 @@ export const publishedCaseStudyBySlugQuery = `*[
     alt,
     caption
   },
+  articleBody,
   overview,
   legalIssues,
   legalIssuesUseBullets,

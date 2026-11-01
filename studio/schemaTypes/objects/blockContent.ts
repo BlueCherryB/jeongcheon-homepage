@@ -61,7 +61,10 @@ export const blockContent = defineType({
         {title: 'Number', value: 'number'},
       ],
       marks: {
-        decorators: [{title: 'Bold', value: 'strong'}],
+        decorators: [
+          {title: 'Bold', value: 'strong'},
+          {title: 'Italic', value: 'em'},
+        ],
         annotations: [
           defineArrayMember({
             name: 'link',

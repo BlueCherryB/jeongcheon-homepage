@@ -2,7 +2,10 @@ import Link from "next/link";
 
 import { CaseConsultationCta } from "@/components/cases/CaseConsultationCta";
 import { CaseDetailSection } from "@/components/cases/CaseDetailSection";
-import { PortableTextContent } from "@/components/cases/PortableTextContent";
+import {
+  PortableTextContent,
+  portableTextToPlainText,
+} from "@/components/cases/PortableTextContent";
 import { Container } from "@/components/ui/Container";
 import type {
   CaseStudyDetail,
@@ -18,29 +21,39 @@ export function CaseDetailContent({
   caseStudy,
   relatedCases,
 }: CaseDetailContentProps) {
+  const hasArticleBody = portableTextToPlainText(caseStudy.articleBody).length > 0;
+
   return (
     <Container className="py-16 lg:py-20">
       <div className="rounded-[22px] border border-[#E8E2D7] bg-white px-7 shadow-[0_18px_54px_rgba(17,27,54,0.05)] sm:px-10 lg:px-12">
-        <CaseDetailSection icon="document" title="사건의 개요">
-          <PortableTextContent value={caseStudy.overview} />
-        </CaseDetailSection>
+        {hasArticleBody ? (
+          <div className="py-10 lg:py-12">
+            <PortableTextContent value={caseStudy.articleBody} variant="article" />
+          </div>
+        ) : (
+          <>
+            <CaseDetailSection icon="document" title="사건의 개요">
+              <PortableTextContent value={caseStudy.overview} />
+            </CaseDetailSection>
 
-        <CaseDetailSection icon="search" title="주요 쟁점">
-          <PortableTextContent
-            value={caseStudy.issues}
-            variant={caseStudy.legalIssuesUseBullets ? "list" : "paragraphs"}
-          />
-        </CaseDetailSection>
+            <CaseDetailSection icon="search" title="주요 쟁점">
+              <PortableTextContent
+                value={caseStudy.issues}
+                variant={caseStudy.legalIssuesUseBullets ? "list" : "paragraphs"}
+              />
+            </CaseDetailSection>
 
-        {caseStudy.response.length > 0 ? (
-          <CaseDetailSection icon="document" title="변호인의 대응·조력">
-            <PortableTextContent value={caseStudy.response} />
-          </CaseDetailSection>
-        ) : null}
+            {caseStudy.response.length > 0 ? (
+              <CaseDetailSection icon="document" title="변호인의 대응·조력">
+                <PortableTextContent value={caseStudy.response} />
+              </CaseDetailSection>
+            ) : null}
 
-        <CaseDetailSection icon="result" title="사건의 결과">
-          <PortableTextContent value={caseStudy.outcome} />
-        </CaseDetailSection>
+            <CaseDetailSection icon="result" title="사건의 결과">
+              <PortableTextContent value={caseStudy.outcome} />
+            </CaseDetailSection>
+          </>
+        )}
       </div>
 
       {caseStudy.keywords.length > 0 ? (

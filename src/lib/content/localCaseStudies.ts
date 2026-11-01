@@ -115,6 +115,7 @@ export function mapLocalCaseStudy(
     publishedAt: requireTrimmedString("publishedAt", caseStudy.publishedAt),
     displayDate: requireTrimmedString("displayDate", caseStudy.displayDate),
     featured: caseStudy.featured === true,
+    articleBody: [],
     overview: mapPortableText(`${slug}-overview`, caseStudy.overview),
     issues: mapPortableText(`${slug}-issues`, caseStudy.issues),
     legalIssuesUseBullets: false,
