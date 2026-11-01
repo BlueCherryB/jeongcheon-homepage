@@ -1,3 +1,5 @@
+const caseStudySummaryProjection = `coalesce(summary, pt::text(articleBody[0...1]), pt::text(overview[0...1]), pt::text(outcome[0...1]))`;
+
 const caseStudyListProjection = `{
   _id,
   _createdAt,
@@ -6,7 +8,7 @@ const caseStudyListProjection = `{
   category,
   result,
   resultDetail,
-  "summary": coalesce(summary, pt::text(articleBody[0...1]), pt::text(overview[0...1]), pt::text(outcome[0...1])),
+  "summary": ${caseStudySummaryProjection},
   publishedAt,
   featured,
   sortOrder,
@@ -48,7 +50,7 @@ export const homepageCaseStudiesQuery = `*[
   category,
   result,
   resultDetail,
-  "summary": coalesce(summary, pt::text(articleBody[0...1]), pt::text(overview[0...1]), pt::text(outcome[0...1])),
+  "summary": ${caseStudySummaryProjection},
   publishedAt
 }`;
 
@@ -72,7 +74,7 @@ export const publishedCaseStudyBySlugQuery = `*[
   result,
   resultDetail,
   tags,
-  "summary": coalesce(summary, pt::text(overview[0...1]), pt::text(outcome[0...1])),
+  "summary": ${caseStudySummaryProjection},
   mainImage {
     displayMode,
     image {
