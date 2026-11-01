@@ -121,7 +121,7 @@ function getBlockString(block: CaseStudyPortableTextBlock, property: string): st
   return typeof value === "string" ? value : undefined;
 }
 
-function ArticleBlock({block}: {block: CaseStudyPortableTextBlock}) {
+function ArticleBlock({block, className}: {block: CaseStudyPortableTextBlock; className: string}) {
   const style = getBlockString(block, "style");
   const listItem = getBlockString(block, "listItem");
   const content = renderBlockText(block);
@@ -134,21 +134,58 @@ function ArticleBlock({block}: {block: CaseStudyPortableTextBlock}) {
         : "ml-5 list-outside list-disc space-y-2.5 pl-1 marker:text-[#C8A96A]";
 
     return (
-      <ListTag className={listClassName}>
+      <ListTag className={`${className} ${listClassName}`}>
         <li>{content}</li>
       </ListTag>
     );
   }
 
   if (style === "h2") {
-    return <h2 className="pt-5 text-2xl font-semibold leading-snug text-[#111B36]">{content}</h2>;
+    return <h2 className={`${className} text-2xl font-semibold leading-snug text-[#111B36]`}>{content}</h2>;
   }
 
   if (style === "h3") {
-    return <h3 className="pt-3 text-lg font-semibold leading-snug text-[#111B36]">{content}</h3>;
+    return <h3 className={`${className} text-lg font-semibold leading-snug text-[#111B36]`}>{content}</h3>;
   }
 
-  return <p>{content}</p>;
+  return <p className={className}>{content}</p>;
+}
+
+function getArticleBlocks(value: CaseStudyPortableText) {
+  const articleBlocks: {block: CaseStudyPortableTextBlock; className: string}[] = [];
+  let hasBlankBefore = false;
+  let previousWasHeading = false;
+
+  for (const block of value) {
+    if (block._type !== "block") {
+      continue;
+    }
+
+    if (!getSpanChildren(block).some((span) => span.text?.trim())) {
+      hasBlankBefore = articleBlocks.length > 0;
+      continue;
+    }
+
+    const style = getBlockString(block, "style");
+    const isHeading = style === "h2" || style === "h3";
+    const className = articleBlocks.length === 0
+      ? ""
+      : hasBlankBefore
+        ? "mt-10"
+        : style === "h2"
+          ? "mt-9"
+          : style === "h3"
+            ? "mt-7"
+            : previousWasHeading
+              ? "mt-4"
+              : "mt-5";
+
+    articleBlocks.push({block, className});
+    hasBlankBefore = false;
+    previousWasHeading = isHeading;
+  }
+
+  return articleBlocks;
 }
 
 function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
@@ -221,9 +258,9 @@ export function PortableTextContent({
 
   if (variant === "article") {
     return (
-      <div className="space-y-5 text-[17px] leading-8 text-zinc-700 sm:text-lg sm:leading-9">
-        {blocks.map((block) => (
-          <ArticleBlock key={block._key} block={block} />
+      <div className="text-[17px] leading-8 text-zinc-700 sm:text-lg sm:leading-9">
+        {getArticleBlocks(value).map(({block, className}) => (
+          <ArticleBlock key={block._key} block={block} className={className} />
         ))}
       </div>
     );
