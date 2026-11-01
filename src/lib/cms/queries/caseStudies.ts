@@ -1,4 +1,4 @@
-const caseStudySummaryProjection = `coalesce(summary, pt::text(articleBody[0...1]), pt::text(overview[0...1]), pt::text(outcome[0...1]))`;
+const caseStudySummaryProjection = `coalesce(summary, pt::text(articleBody[_type == "block" && length(pt::text([@])) > 0][0...1]), pt::text(overview[0...1]), pt::text(outcome[0...1]))`;
 
 const caseStudyListProjection = `{
   _id,

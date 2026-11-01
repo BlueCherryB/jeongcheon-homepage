@@ -1,4 +1,5 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
+import {portableTextBlock} from '../objects/blockContent'
 
 const caseCategoryTitles: Record<string, string> = {
   criminal: '형사',
@@ -347,8 +348,39 @@ export const caseStudy = defineType({
     defineField({
       name: 'articleBody',
       title: '간편 작성 본문',
-      type: 'blockContent',
+      type: 'array',
       group: 'simpleWriting',
+      of: [
+        portableTextBlock,
+        defineArrayMember({
+          name: 'articleSpacer',
+          title: '여백 삽입',
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'size',
+              title: '여백 크기',
+              type: 'string',
+              options: {
+                list: [
+                  {title: 'Small (16px)', value: 'small'},
+                  {title: 'Medium (32px)', value: 'medium'},
+                  {title: 'Large (48px)', value: 'large'},
+                ],
+              },
+              initialValue: 'medium',
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {size: 'size'},
+            prepare: ({size}) => ({
+              title: '여백 삽입',
+              subtitle: `${size === 'small' ? 16 : size === 'large' ? 48 : 32}px 공간`,
+            }),
+          },
+        }),
+      ],
       description:
         'ChatGPT 등에서 작성한 완성된 글을 그대로 붙여넣을 수 있습니다. 이 필드가 입력된 경우 공개 상세 페이지에서는 기존 분할 본문보다 우선 사용합니다.',
     }),

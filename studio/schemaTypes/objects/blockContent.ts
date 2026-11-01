@@ -44,56 +44,56 @@ export function isAllowedLinkHref(value: unknown): boolean {
 const linkValidationMessage =
   'https://, http://, mailto:, 또는 /로 시작하는 내부 경로만 입력해주세요.'
 
+export const portableTextBlock = defineArrayMember({
+  type: 'block',
+  styles: [
+    {title: 'Normal', value: 'normal'},
+    {title: 'Heading 2', value: 'h2'},
+    {title: 'Heading 3', value: 'h3'},
+  ],
+  lists: [
+    {title: 'Bullet', value: 'bullet'},
+    {title: 'Number', value: 'number'},
+  ],
+  marks: {
+    decorators: [
+      {title: 'Bold', value: 'strong'},
+      {title: 'Italic', value: 'em'},
+    ],
+    annotations: [
+      defineArrayMember({
+        name: 'link',
+        title: '링크',
+        type: 'object',
+        fields: [
+          defineField({
+            name: 'href',
+            title: '링크 주소',
+            type: 'string',
+            description:
+              'https://, http://, mailto:, 또는 /로 시작하는 내부 경로를 입력해주세요.',
+            validation: (Rule) =>
+              Rule.required()
+                .custom((value) => isAllowedLinkHref(value) || linkValidationMessage)
+                .error(linkValidationMessage),
+          }),
+          defineField({
+            name: 'openInNewTab',
+            title: '새 창에서 열기',
+            type: 'boolean',
+            description:
+              '활성화하면 웹사이트 렌더러에서 target="_blank"와 rel="noopener noreferrer"를 적용해야 합니다.',
+            initialValue: false,
+          }),
+        ],
+      }),
+    ],
+  },
+})
+
 export const blockContent = defineType({
   name: 'blockContent',
   title: '본문',
   type: 'array',
-  of: [
-    defineArrayMember({
-      type: 'block',
-      styles: [
-        {title: 'Normal', value: 'normal'},
-        {title: 'Heading 2', value: 'h2'},
-        {title: 'Heading 3', value: 'h3'},
-      ],
-      lists: [
-        {title: 'Bullet', value: 'bullet'},
-        {title: 'Number', value: 'number'},
-      ],
-      marks: {
-        decorators: [
-          {title: 'Bold', value: 'strong'},
-          {title: 'Italic', value: 'em'},
-        ],
-        annotations: [
-          defineArrayMember({
-            name: 'link',
-            title: '링크',
-            type: 'object',
-            fields: [
-              defineField({
-                name: 'href',
-                title: '링크 주소',
-                type: 'string',
-                description:
-                  'https://, http://, mailto:, 또는 /로 시작하는 내부 경로를 입력해주세요.',
-                validation: (Rule) =>
-                  Rule.required()
-                    .custom((value) => isAllowedLinkHref(value) || linkValidationMessage)
-                    .error(linkValidationMessage),
-              }),
-              defineField({
-                name: 'openInNewTab',
-                title: '새 창에서 열기',
-                type: 'boolean',
-                description:
-                  '활성화하면 웹사이트 렌더러에서 target="_blank"와 rel="noopener noreferrer"를 적용해야 합니다.',
-                initialValue: false,
-              }),
-            ],
-          }),
-        ],
-      },
-    }),
-  ],
+  of: [portableTextBlock],
 })

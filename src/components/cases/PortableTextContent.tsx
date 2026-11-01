@@ -1,5 +1,14 @@
 import type { ReactNode } from "react";
 
+import {
+  getArticleBlocks,
+  getRenderableBlocks,
+  getSpacerHeightClassName,
+  getSpanChildren,
+  isArticleSpacer,
+} from "@/lib/content/caseStudyArticle";
+export { portableTextToPlainText } from "@/lib/content/caseStudyArticle";
+
 import type {
   CaseStudyPortableText,
   CaseStudyPortableTextBlock,
@@ -10,13 +19,6 @@ type PortableTextContentProps = {
   variant?: "paragraphs" | "list" | "article";
 };
 
-type PortableTextSpan = {
-  _key?: string;
-  _type?: string;
-  text?: string;
-  marks?: string[];
-};
-
 type PortableTextMarkDef = {
   _key?: string;
   _type?: string;
@@ -25,20 +27,6 @@ type PortableTextMarkDef = {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === "object";
-}
-
-function getSpanChildren(block: CaseStudyPortableTextBlock): PortableTextSpan[] {
-  if (!Array.isArray(block.children)) {
-    return [];
-  }
-
-  return block.children.filter((child): child is PortableTextSpan => {
-    if (!isRecord(child)) {
-      return false;
-    }
-
-    return child._type === "span" && typeof child.text === "string";
-  });
 }
 
 function getMarkDefs(block: CaseStudyPortableTextBlock): PortableTextMarkDef[] {
@@ -105,23 +93,13 @@ function renderBlockText(block: CaseStudyPortableTextBlock): ReactNode[] {
   ));
 }
 
-function getRenderableBlocks(value: CaseStudyPortableText) {
-  return value.filter((block) => {
-    if (block._type !== "block") {
-      return false;
-    }
-
-    return getSpanChildren(block).some((span) => span.text?.trim());
-  });
-}
-
 function getBlockString(block: CaseStudyPortableTextBlock, property: string): string | undefined {
   const value = block[property];
 
   return typeof value === "string" ? value : undefined;
 }
 
-function ArticleBlock({block}: {block: CaseStudyPortableTextBlock}) {
+function ArticleBlock({block, className}: {block: CaseStudyPortableTextBlock; className: string}) {
   const style = getBlockString(block, "style");
   const listItem = getBlockString(block, "listItem");
   const content = renderBlockText(block);
@@ -134,21 +112,26 @@ function ArticleBlock({block}: {block: CaseStudyPortableTextBlock}) {
         : "ml-5 list-outside list-disc space-y-2.5 pl-1 marker:text-[#C8A96A]";
 
     return (
-      <ListTag className={listClassName}>
+      <ListTag className={`${className} ${listClassName}`}>
         <li>{content}</li>
       </ListTag>
     );
   }
 
   if (style === "h2") {
-    return <h2 className="pt-5 text-2xl font-semibold leading-snug text-[#111B36]">{content}</h2>;
+    return <h2 className={`${className} pt-5 text-2xl font-semibold leading-snug text-[#111B36]`}>{content}</h2>;
   }
 
   if (style === "h3") {
-    return <h3 className="pt-3 text-lg font-semibold leading-snug text-[#111B36]">{content}</h3>;
+    return <h3 className={`${className} pt-3 text-lg font-semibold leading-snug text-[#111B36]`}>{content}</h3>;
   }
 
-  return <p>{content}</p>;
+  return <p className={className}>{content}</p>;
+}
+
+function ArticleSpacer({block}: {block: CaseStudyPortableTextBlock}) {
+  const size = getBlockString(block, "size");
+  return <div aria-hidden="true" className={getSpacerHeightClassName(size)} />;
 }
 
 function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
@@ -181,18 +164,6 @@ function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
   return <p>{content}</p>;
 }
 
-export function portableTextToPlainText(value: CaseStudyPortableText): string {
-  return getRenderableBlocks(value)
-    .map((block) =>
-      getSpanChildren(block)
-        .map((span) => span.text ?? "")
-        .join(""),
-    )
-    .filter(Boolean)
-    .join(" ")
-    .trim();
-}
-
 export function PortableTextContent({
   value,
   variant = "paragraphs",
@@ -220,11 +191,21 @@ export function PortableTextContent({
   }
 
   if (variant === "article") {
+    const articleBlocks = getArticleBlocks(value);
+
     return (
-      <div className="space-y-5 text-[17px] leading-8 text-zinc-700 sm:text-lg sm:leading-9">
-        {blocks.map((block) => (
-          <ArticleBlock key={block._key} block={block} />
-        ))}
+      <div className="text-[17px] leading-8 text-zinc-700 sm:text-lg sm:leading-9">
+        {articleBlocks.map((block, index) =>
+          isArticleSpacer(block) ? (
+            <ArticleSpacer key={block._key} block={block} />
+          ) : (
+            <ArticleBlock
+              key={block._key}
+              block={block}
+              className={index > 0 && !isArticleSpacer(articleBlocks[index - 1]) ? "mt-5" : ""}
+            />
+          ),
+        )}
       </div>
     );
   }
