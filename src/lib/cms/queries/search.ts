@@ -12,6 +12,7 @@ const searchableContentFilter = `
         tags[] match $searchPattern ||
         result match $searchPattern ||
         resultDetail match $searchPattern ||
+        pt::text(articleBody) match $searchPattern ||
         pt::text(overview) match $searchPattern ||
         pt::text(legalIssues) match $searchPattern ||
         pt::text(response) match $searchPattern ||
@@ -35,6 +36,7 @@ const searchableContentScore = `
   boost(tags[] match $searchPattern, 7),
   boost(result match $searchPattern, 5),
   boost(resultDetail match $searchPattern, 4),
+  boost(pt::text(articleBody) match $searchPattern, 3),
   boost(excerpt match $searchPattern, 4),
   boost(pt::text(overview) match $searchPattern, 3),
   boost(pt::text(legalIssues) match $searchPattern, 3),
@@ -57,6 +59,7 @@ export const publishedContentSearchQuery = `{
       "excerpt": select(
         _type == "caseStudy" => coalesce(
           summary,
+          pt::text(articleBody[0...1]),
           pt::text(overview[0...1]),
           pt::text(outcome[0...1])
         ),

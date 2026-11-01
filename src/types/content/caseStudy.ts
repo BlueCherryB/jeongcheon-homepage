@@ -79,6 +79,7 @@ export type CaseStudyListItem = {
 };
 
 export type CaseStudyDetail = CaseStudyListItem & {
+  articleBody: CaseStudyPortableText;
   overview: CaseStudyPortableText;
   issues: CaseStudyPortableText;
   legalIssuesUseBullets: boolean;

@@ -112,7 +112,8 @@ export default async function CaseDetailPage({ params }: CaseDetailPageProps) {
   const relatedCases = getRelatedCaseStudyListItems(caseStudy, allCaseStudies);
   const url = buildCaseStudyUrl(caseStudy.slug);
   const keywords = getCaseStudyKeywords(caseStudy);
-  const articleBody = [
+  const simpleArticleBody = portableTextToPlainText(caseStudy.articleBody);
+  const articleBody = simpleArticleBody || [
     portableTextToPlainText(caseStudy.overview),
     portableTextToPlainText(caseStudy.issues),
     portableTextToPlainText(caseStudy.response),
