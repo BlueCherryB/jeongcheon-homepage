@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 
+import { MobileCaseSectionNumber } from "@/components/cases/MobileCaseSectionNumber";
+
 type CaseDetailSectionProps = {
   number: number;
   icon: "document" | "search" | "shield" | "result";
@@ -72,10 +74,7 @@ export function CaseDetailSection({
   return (
     <section className="grid gap-4 border-b border-[#E8E2D7] py-8 last:border-b-0 lg:grid-cols-[150px_minmax(0,1fr)] lg:gap-10 lg:py-12">
       <div className="flex min-w-0 items-center gap-3 lg:block lg:border-r lg:border-[#E8E2D7] lg:pr-7">
-        <span aria-hidden="true" className="shrink-0 text-base font-semibold text-[#C8A96A] lg:hidden">
-          {String(number).padStart(2, "0")}
-        </span>
-        <span aria-hidden="true" className="h-5 w-px shrink-0 bg-[#D9C89E] lg:hidden" />
+        <MobileCaseSectionNumber number={number} />
         <div className="hidden h-12 w-12 items-center justify-center rounded-full border border-[#E8E2D7] bg-[#FAF8F4] text-[#C8A96A] lg:flex">
           <SectionIcon icon={icon} />
         </div>

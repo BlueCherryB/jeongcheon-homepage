@@ -34,6 +34,7 @@ export function CaseDetailContent({
               value={caseStudy.articleBody}
               variant="article"
               tone="caseStudy"
+              useNumberedSectionHeadings={caseStudy.useNumberedSectionHeadings}
             />
           </div>
         ) : (

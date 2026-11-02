@@ -86,6 +86,7 @@ export const publishedCaseStudyBySlugQuery = `*[
     caption
   },
   articleBody,
+  useNumberedSectionHeadings,
   overview,
   legalIssues,
   legalIssuesUseBullets,

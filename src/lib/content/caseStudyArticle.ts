@@ -49,6 +49,46 @@ export function getArticleBlocks(value: CaseStudyPortableText): CaseStudyPortabl
   return value.filter((block) => isArticleSpacer(block) || isMeaningfulTextBlock(block));
 }
 
+export function getArticleHeadingNumbers(value: CaseStudyPortableText): Map<string, number> {
+  const numbers = new Map<string, number>();
+
+  for (const block of getRenderableBlocks(value)) {
+    if (block.style === "h2") {
+      numbers.set(block._key, numbers.size + 1);
+    }
+  }
+
+  return numbers;
+}
+
+export function withoutLeadingSectionNumber(
+  block: CaseStudyPortableTextBlock,
+): CaseStudyPortableTextBlock {
+  if (!Array.isArray(block.children)) {
+    return block;
+  }
+
+  const text = getSpanChildren(block).map((span) => span.text ?? "").join("");
+  const prefix = /^\s*\d{1,2}[.)]?\s+(?=\S)/u.exec(text);
+
+  if (!prefix) {
+    return block;
+  }
+
+  let remaining = prefix[0].length;
+  const children = block.children.map((child) => {
+    if (!isRecord(child) || child._type !== "span" || typeof child.text !== "string") {
+      return child;
+    }
+
+    const consumed = Math.min(remaining, child.text.length);
+    remaining -= consumed;
+    return consumed > 0 ? {...child, text: child.text.slice(consumed)} : child;
+  });
+
+  return {...block, children};
+}
+
 export function getSpacerHeightClassName(size: unknown): string {
   return size === "small" ? "h-4" : size === "large" ? "h-12" : "h-8";
 }

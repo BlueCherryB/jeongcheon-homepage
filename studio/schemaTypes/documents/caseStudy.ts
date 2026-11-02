@@ -346,6 +346,15 @@ export const caseStudy = defineType({
       validation: (Rule) => Rule.max(10),
     }),
     defineField({
+      name: 'useNumberedSectionHeadings',
+      title: '섹션 제목 스타일 적용',
+      type: 'boolean',
+      group: 'simpleWriting',
+      description:
+        '활성화하면 간편 작성 본문의 H2 소제목을 모바일에서 금색 번호와 세로 구분선이 있는 섹션 제목으로 표시합니다. 번호는 자동으로 생성됩니다.',
+      initialValue: false,
+    }),
+    defineField({
       name: 'articleBody',
       title: '간편 작성 본문',
       type: 'array',

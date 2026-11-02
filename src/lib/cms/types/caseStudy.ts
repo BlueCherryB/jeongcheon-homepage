@@ -70,6 +70,7 @@ export type SanityCaseStudyListItem = {
 
 export type SanityCaseStudyDetail = SanityCaseStudyListItem & {
   articleBody?: SanityPortableTextBlock[];
+  useNumberedSectionHeadings?: boolean | null;
   overview?: SanityPortableTextBlock[];
   tags?: string[];
   legalIssues?: SanityPortableTextBlock[];

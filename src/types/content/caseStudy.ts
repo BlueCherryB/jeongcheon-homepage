@@ -80,6 +80,7 @@ export type CaseStudyListItem = {
 
 export type CaseStudyDetail = CaseStudyListItem & {
   articleBody: CaseStudyPortableText;
+  useNumberedSectionHeadings: boolean;
   overview: CaseStudyPortableText;
   issues: CaseStudyPortableText;
   legalIssuesUseBullets: boolean;

@@ -4,10 +4,12 @@ import { test } from "node:test";
 import {
   getArticleBlockSpacingClassName,
   getArticleBlocks,
+  getArticleHeadingNumbers,
   getLegacyCaseStudySections,
   getRenderableBlocks,
   getSpacerHeightClassName,
   portableTextToPlainText,
+  withoutLeadingSectionNumber,
 } from "../src/lib/content/caseStudyArticle.ts";
 
 const paragraph = (key, text) => ({
@@ -105,4 +107,73 @@ test("legacy sections are numbered in rendered order", () => {
       {number: 3, title: "사건의 결과"},
     ],
   );
+});
+
+test("mobile H2 display removes only clearly separated section numbers", () => {
+  for (const text of [
+    "2. 사건의 경위",
+    "2) 사건의 경위",
+    "2 사건의 경위",
+    "02. 사건의 경위",
+    "02) 사건의 경위",
+    "02 사건의 경위",
+    "  3. 사건의 경위",
+  ]) {
+    const block = {...paragraph("heading", text), style: "h2"};
+    assert.equal(portableTextToPlainText([withoutLeadingSectionNumber(block)]), "사건의 경위");
+    assert.equal(portableTextToPlainText([block]), text.trim());
+  }
+
+  for (const text of [
+    "사건의 경위",
+    "2026년 개정 법률의 주요 내용",
+    "3억원 손해배상청구 사례",
+    "10대 청소년 관련 사건",
+    "3D 영상분석 관련 분쟁",
+    "2.",
+    "2. ",
+  ]) {
+    const block = {...paragraph("heading", text), style: "h2"};
+    assert.equal(withoutLeadingSectionNumber(block), block);
+  }
+});
+
+test("prefix removal across spans preserves marks, links, keys, and source data", () => {
+  const block = {
+    _key: "heading",
+    _type: "block",
+    style: "h2",
+    markDefs: [{_key: "link", _type: "link", href: "/cases"}],
+    children: [
+      {_key: "prefix", _type: "span", text: " 02"},
+      {_key: "separator", _type: "span", text: ". "},
+      {_key: "bold", _type: "span", text: "대화를 녹음하는 행위", marks: ["strong"]},
+      {_key: "linked", _type: "span", text: " 관련 법률", marks: ["link"]},
+    ],
+  };
+
+  const display = withoutLeadingSectionNumber(block);
+  assert.equal(portableTextToPlainText([display]), "대화를 녹음하는 행위 관련 법률");
+  assert.deepEqual(display.children.map((span) => span._key), block.children.map((span) => span._key));
+  assert.deepEqual(display.children[2].marks, ["strong"]);
+  assert.deepEqual(display.children[3].marks, ["link"]);
+  assert.equal(display.markDefs, block.markDefs);
+  assert.equal(block.children[0].text, " 02");
+  assert.equal(block.children[1].text, ". ");
+});
+
+test("only nonempty H2 blocks advance the section number", () => {
+  const blocks = [
+    {...paragraph("first", "3. 첫 제목"), style: "h2"},
+    {...paragraph("subheading", "하위 제목"), style: "h3"},
+    paragraph("body", "본문"),
+    {_key: "space", _type: "articleSpacer", size: "large"},
+    {...paragraph("empty", " "), style: "h2"},
+    {...paragraph("second", "2) 둘째 제목"), style: "h2"},
+  ];
+
+  assert.deepEqual([...getArticleHeadingNumbers(blocks)], [["first", 1], ["second", 2]]);
+  assert.deepEqual(blocks.map((block) => block.children?.[0]?.text).filter(Boolean), [
+    "3. 첫 제목", "하위 제목", "본문", " ", "2) 둘째 제목",
+  ]);
 });

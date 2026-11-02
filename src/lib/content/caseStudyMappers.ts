@@ -249,6 +249,7 @@ export function mapSanityCaseStudyDetail(
   return {
     ...mapSanityCaseStudyListItem(caseStudy),
     articleBody: mapPortableTextBlocks(caseStudy.articleBody),
+    useNumberedSectionHeadings: caseStudy.useNumberedSectionHeadings === true,
     overview: mapPortableTextBlocks(caseStudy.overview),
     issues: mapPortableTextBlocks(caseStudy.legalIssues),
     legalIssuesUseBullets: caseStudy.legalIssuesUseBullets === true,

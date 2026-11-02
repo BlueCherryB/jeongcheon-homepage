@@ -1,12 +1,15 @@
 import type { ReactNode } from "react";
 
+import { MobileCaseSectionNumber } from "@/components/cases/MobileCaseSectionNumber";
 import {
   getArticleBlockSpacingClassName,
   getArticleBlocks,
+  getArticleHeadingNumbers,
   getRenderableBlocks,
   getSpacerHeightClassName,
   getSpanChildren,
   isArticleSpacer,
+  withoutLeadingSectionNumber,
 } from "@/lib/content/caseStudyArticle";
 export { portableTextToPlainText } from "@/lib/content/caseStudyArticle";
 
@@ -19,6 +22,7 @@ type PortableTextContentProps = {
   value: CaseStudyPortableText;
   variant?: "paragraphs" | "list" | "article";
   tone?: "default" | "caseStudy";
+  useNumberedSectionHeadings?: boolean;
 };
 
 type PortableTextMarkDef = {
@@ -109,10 +113,12 @@ function ArticleBlock({
   block,
   className,
   tone,
+  number,
 }: {
   block: CaseStudyPortableTextBlock;
   className: string;
   tone: PortableTextContentProps["tone"];
+  number?: number;
 }) {
   const style = getBlockString(block, "style");
   const listItem = getBlockString(block, "listItem");
@@ -133,6 +139,20 @@ function ArticleBlock({
   }
 
   if (style === "h2") {
+    if (number !== undefined) {
+      return (
+        <h2 className={`${className} text-2xl font-semibold leading-snug ${headingColor(tone)}`}>
+          <span className="flex min-w-0 items-center gap-3 lg:hidden">
+            <MobileCaseSectionNumber number={number} />
+            <span className="font-chosun min-w-0 break-words text-[22px] text-[#18181B]">
+              {renderBlockText(withoutLeadingSectionNumber(block))}
+            </span>
+          </span>
+          <span className="hidden lg:inline">{content}</span>
+        </h2>
+      );
+    }
+
     return <h2 className={`${className} text-2xl font-semibold leading-snug ${headingColor(tone)}`}>{content}</h2>;
   }
 
@@ -188,6 +208,7 @@ export function PortableTextContent({
   value,
   variant = "paragraphs",
   tone = "default",
+  useNumberedSectionHeadings = false,
 }: PortableTextContentProps) {
   const blocks = getRenderableBlocks(value);
 
@@ -213,6 +234,9 @@ export function PortableTextContent({
 
   if (variant === "article") {
     const articleBlocks = getArticleBlocks(value);
+    const headingNumbers = tone === "caseStudy" && useNumberedSectionHeadings
+      ? getArticleHeadingNumbers(value)
+      : null;
 
     return (
       <div
@@ -227,6 +251,7 @@ export function PortableTextContent({
               block={block}
               className={getArticleBlockSpacingClassName(block, articleBlocks[index - 1])}
               tone={tone}
+              number={headingNumbers?.get(block._key)}
             />
           ),
         )}
