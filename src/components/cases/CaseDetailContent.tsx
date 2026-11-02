@@ -42,6 +42,7 @@ export function CaseDetailContent({
               key={section.title}
               number={section.number}
               title={section.title}
+              icon={section.icon}
             >
               <PortableTextContent
                 value={section.value}

@@ -87,12 +87,12 @@ test("legacy sections are numbered in rendered order", () => {
   };
 
   assert.deepEqual(
-    getLegacyCaseStudySections(caseStudy).map(({number, title, variant}) => ({number, title, variant})),
+    getLegacyCaseStudySections(caseStudy).map(({number, title, icon, variant}) => ({number, title, icon, variant})),
     [
-      {number: 1, title: "사건의 개요", variant: "paragraphs"},
-      {number: 2, title: "주요 쟁점", variant: "list"},
-      {number: 3, title: "변호인의 대응·조력", variant: "paragraphs"},
-      {number: 4, title: "사건의 결과", variant: "paragraphs"},
+      {number: 1, title: "사건의 개요", icon: "document", variant: "paragraphs"},
+      {number: 2, title: "주요 쟁점", icon: "search", variant: "list"},
+      {number: 3, title: "변호인의 대응·조력", icon: "document", variant: "paragraphs"},
+      {number: 4, title: "사건의 결과", icon: "result", variant: "paragraphs"},
     ],
   );
 

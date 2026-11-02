@@ -7,6 +7,7 @@ import type {
 export type LegacyCaseStudySection = {
   number: number;
   title: string;
+  icon: "document" | "search" | "result";
   value: CaseStudyPortableText;
   variant: "paragraphs" | "list";
 };
@@ -91,14 +92,15 @@ export function getLegacyCaseStudySections(
   caseStudy: CaseStudyDetail,
 ): LegacyCaseStudySection[] {
   const sections = [
-    {title: "사건의 개요", value: caseStudy.overview, variant: "paragraphs" as const},
+    {title: "사건의 개요", icon: "document" as const, value: caseStudy.overview, variant: "paragraphs" as const},
     {
       title: "주요 쟁점",
+      icon: "search" as const,
       value: caseStudy.issues,
       variant: caseStudy.legalIssuesUseBullets ? ("list" as const) : ("paragraphs" as const),
     },
-    {title: "변호인의 대응·조력", value: caseStudy.response, variant: "paragraphs" as const},
-    {title: "사건의 결과", value: caseStudy.outcome, variant: "paragraphs" as const},
+    {title: "변호인의 대응·조력", icon: "document" as const, value: caseStudy.response, variant: "paragraphs" as const},
+    {title: "사건의 결과", icon: "result" as const, value: caseStudy.outcome, variant: "paragraphs" as const},
   ];
 
   return sections

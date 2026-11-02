@@ -174,11 +174,11 @@ function ParagraphBlock({
   }
 
   if (style === "h2") {
-    return <h2 className={`pt-5 ${tone === "caseStudy" ? "text-lg" : "text-2xl"} font-semibold leading-snug ${headingColor(tone)}`}>{content}</h2>;
+    return <h2 className={`pt-5 ${tone === "caseStudy" ? "text-lg lg:text-2xl" : "text-2xl"} font-semibold leading-snug ${headingColor(tone)}`}>{content}</h2>;
   }
 
   if (style === "h3") {
-    return <h3 className={`pt-3 ${tone === "caseStudy" ? "text-base" : "text-lg"} font-semibold leading-snug ${headingColor(tone)}`}>{content}</h3>;
+    return <h3 className={`pt-3 ${tone === "caseStudy" ? "text-base lg:text-lg" : "text-lg"} font-semibold leading-snug ${headingColor(tone)}`}>{content}</h3>;
   }
 
   return <p>{content}</p>;
