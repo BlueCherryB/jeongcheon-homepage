@@ -1,7 +1,15 @@
 import type {
+  CaseStudyDetail,
   CaseStudyPortableText,
   CaseStudyPortableTextBlock,
 } from "@/types/content/caseStudy";
+
+export type LegacyCaseStudySection = {
+  number: number;
+  title: string;
+  value: CaseStudyPortableText;
+  variant: "paragraphs" | "list";
+};
 
 export type PortableTextSpan = {
   _key?: string;
@@ -77,4 +85,23 @@ export function portableTextToPlainText(value: CaseStudyPortableText): string {
     .filter(Boolean)
     .join(" ")
     .trim();
+}
+
+export function getLegacyCaseStudySections(
+  caseStudy: CaseStudyDetail,
+): LegacyCaseStudySection[] {
+  const sections = [
+    {title: "사건의 개요", value: caseStudy.overview, variant: "paragraphs" as const},
+    {
+      title: "주요 쟁점",
+      value: caseStudy.issues,
+      variant: caseStudy.legalIssuesUseBullets ? ("list" as const) : ("paragraphs" as const),
+    },
+    {title: "변호인의 대응·조력", value: caseStudy.response, variant: "paragraphs" as const},
+    {title: "사건의 결과", value: caseStudy.outcome, variant: "paragraphs" as const},
+  ];
+
+  return sections
+    .filter((section) => getRenderableBlocks(section.value).length > 0)
+    .map((section, index) => ({...section, number: index + 1}));
 }

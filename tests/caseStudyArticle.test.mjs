@@ -4,6 +4,7 @@ import { test } from "node:test";
 import {
   getArticleBlockSpacingClassName,
   getArticleBlocks,
+  getLegacyCaseStudySections,
   getRenderableBlocks,
   getSpacerHeightClassName,
   portableTextToPlainText,
@@ -74,4 +75,34 @@ test("case_028-style spacer and heading sequence does not stack automatic margin
   assert.equal(getArticleBlockSpacingClassName(blocks[3], blocks[2]), "mt-5");
   assert.equal(getSpacerHeightClassName(spacer.size), "h-12");
   assert.equal(portableTextToPlainText(blocks), "사건 소개 사건의 개요 본문");
+});
+
+test("legacy sections are numbered in rendered order", () => {
+  const caseStudy = {
+    overview: [paragraph("overview", "개요")],
+    issues: [paragraph("issues", "쟁점")],
+    response: [paragraph("response", "조력")],
+    outcome: [paragraph("outcome", "결과")],
+    legalIssuesUseBullets: true,
+  };
+
+  assert.deepEqual(
+    getLegacyCaseStudySections(caseStudy).map(({number, title, variant}) => ({number, title, variant})),
+    [
+      {number: 1, title: "사건의 개요", variant: "paragraphs"},
+      {number: 2, title: "주요 쟁점", variant: "list"},
+      {number: 3, title: "변호인의 대응·조력", variant: "paragraphs"},
+      {number: 4, title: "사건의 결과", variant: "paragraphs"},
+    ],
+  );
+
+  caseStudy.response = [paragraph("empty", " ")];
+  assert.deepEqual(
+    getLegacyCaseStudySections(caseStudy).map(({number, title}) => ({number, title})),
+    [
+      {number: 1, title: "사건의 개요"},
+      {number: 2, title: "주요 쟁점"},
+      {number: 3, title: "사건의 결과"},
+    ],
+  );
 });

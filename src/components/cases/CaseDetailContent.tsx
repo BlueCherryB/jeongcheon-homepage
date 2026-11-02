@@ -7,6 +7,7 @@ import {
   portableTextToPlainText,
 } from "@/components/cases/PortableTextContent";
 import { Container } from "@/components/ui/Container";
+import { getLegacyCaseStudySections } from "@/lib/content/caseStudyArticle";
 import type {
   CaseStudyDetail,
   CaseStudyListItem,
@@ -22,6 +23,7 @@ export function CaseDetailContent({
   relatedCases,
 }: CaseDetailContentProps) {
   const hasArticleBody = portableTextToPlainText(caseStudy.articleBody).length > 0;
+  const legacySections = hasArticleBody ? [] : getLegacyCaseStudySections(caseStudy);
 
   return (
     <Container className="pt-6 pb-10 lg:py-20">
@@ -35,29 +37,19 @@ export function CaseDetailContent({
             />
           </div>
         ) : (
-          <>
-            <CaseDetailSection icon="document" title="사건의 개요">
-              <PortableTextContent value={caseStudy.overview} tone="caseStudy" />
-            </CaseDetailSection>
-
-            <CaseDetailSection icon="search" title="주요 쟁점">
+          legacySections.map((section) => (
+            <CaseDetailSection
+              key={section.title}
+              number={section.number}
+              title={section.title}
+            >
               <PortableTextContent
-                value={caseStudy.issues}
-                variant={caseStudy.legalIssuesUseBullets ? "list" : "paragraphs"}
+                value={section.value}
+                variant={section.variant}
                 tone="caseStudy"
               />
             </CaseDetailSection>
-
-            {caseStudy.response.length > 0 ? (
-              <CaseDetailSection icon="document" title="변호인의 대응·조력">
-                <PortableTextContent value={caseStudy.response} tone="caseStudy" />
-              </CaseDetailSection>
-            ) : null}
-
-            <CaseDetailSection icon="result" title="사건의 결과">
-              <PortableTextContent value={caseStudy.outcome} tone="caseStudy" />
-            </CaseDetailSection>
-          </>
+          ))
         )}
       </div>
 
