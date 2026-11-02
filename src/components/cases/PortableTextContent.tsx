@@ -141,14 +141,13 @@ function ArticleBlock({
   if (style === "h2") {
     if (number !== undefined) {
       return (
-        <h2 className={`${className} text-2xl font-semibold leading-snug ${headingColor(tone)}`}>
-          <span className="flex min-w-0 items-center gap-3 lg:hidden">
-            <MobileCaseSectionNumber number={number} />
-            <span className="font-chosun min-w-0 break-words text-[22px] text-[#18181B]">
+        <h2 className={`${className} text-[#18181B]`}>
+          <span className="flex min-w-0 items-start gap-3">
+            <MobileCaseSectionNumber number={number} showOnDesktop />
+            <span className="font-chosun min-w-0 break-words text-[26px] font-normal leading-[1.35] lg:text-[30px]">
               {renderBlockText(withoutLeadingSectionNumber(block))}
             </span>
           </span>
-          <span className="hidden lg:inline">{content}</span>
         </h2>
       );
     }
