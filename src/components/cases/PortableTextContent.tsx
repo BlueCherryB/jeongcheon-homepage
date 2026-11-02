@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import {
+  getArticleBlockSpacingClassName,
   getArticleBlocks,
   getRenderableBlocks,
   getSpacerHeightClassName,
@@ -119,11 +120,11 @@ function ArticleBlock({block, className}: {block: CaseStudyPortableTextBlock; cl
   }
 
   if (style === "h2") {
-    return <h2 className={`${className} pt-5 text-2xl font-semibold leading-snug text-[#111B36]`}>{content}</h2>;
+    return <h2 className={`${className} text-2xl font-semibold leading-snug text-[#111B36]`}>{content}</h2>;
   }
 
   if (style === "h3") {
-    return <h3 className={`${className} pt-3 text-lg font-semibold leading-snug text-[#111B36]`}>{content}</h3>;
+    return <h3 className={`${className} text-lg font-semibold leading-snug text-[#111B36]`}>{content}</h3>;
   }
 
   return <p className={className}>{content}</p>;
@@ -202,7 +203,7 @@ export function PortableTextContent({
             <ArticleBlock
               key={block._key}
               block={block}
-              className={index > 0 && !isArticleSpacer(articleBlocks[index - 1]) ? "mt-5" : ""}
+              className={getArticleBlockSpacingClassName(block, articleBlocks[index - 1])}
             />
           ),
         )}

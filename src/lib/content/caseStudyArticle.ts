@@ -44,6 +44,33 @@ export function getSpacerHeightClassName(size: unknown): string {
   return size === "small" ? "h-4" : size === "large" ? "h-12" : "h-8";
 }
 
+export function getArticleBlockSpacingClassName(
+  block: CaseStudyPortableTextBlock,
+  previousBlock: CaseStudyPortableTextBlock | undefined,
+): string {
+  if (!previousBlock || isArticleSpacer(previousBlock)) {
+    return "";
+  }
+
+  if (block.style === "h2") {
+    return "mt-12";
+  }
+
+  if (block.style === "h3") {
+    return "mt-9";
+  }
+
+  if (previousBlock.style === "h2") {
+    return "mt-5";
+  }
+
+  if (previousBlock.style === "h3") {
+    return "mt-4";
+  }
+
+  return "mt-6";
+}
+
 export function portableTextToPlainText(value: CaseStudyPortableText): string {
   return getRenderableBlocks(value)
     .map((block) => getSpanChildren(block).map((span) => span.text ?? "").join(""))
