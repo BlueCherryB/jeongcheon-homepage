@@ -212,7 +212,7 @@ export function PortableTextContent({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 lg:space-y-4">
       {blocks.map((block) => (
         <ParagraphBlock key={block._key} block={block} />
       ))}

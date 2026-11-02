@@ -24,10 +24,10 @@ export function CaseDetailContent({
   const hasArticleBody = portableTextToPlainText(caseStudy.articleBody).length > 0;
 
   return (
-    <Container className="py-16 lg:py-20">
-      <div className="rounded-[22px] border border-[#E8E2D7] bg-white px-7 shadow-[0_18px_54px_rgba(17,27,54,0.05)] sm:px-10 lg:px-12">
+    <Container className="py-10 lg:py-20">
+      <div className="lg:rounded-[22px] lg:border lg:border-[#E8E2D7] lg:bg-white lg:px-12 lg:shadow-[0_18px_54px_rgba(17,27,54,0.05)]">
         {hasArticleBody ? (
-          <div className="py-10 lg:py-12">
+          <div className="py-8 max-lg:[&_h3]:text-xl lg:py-12">
             <PortableTextContent value={caseStudy.articleBody} variant="article" />
           </div>
         ) : (
