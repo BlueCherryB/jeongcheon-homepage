@@ -12,7 +12,7 @@ export function MobileCaseSectionNumber({ number, showOnDesktop = false }: Mobil
         {String(number).padStart(2, "0")}
       </span>
       <span aria-hidden="true" className={showOnDesktop
-        ? "mt-1 h-5 w-px shrink-0 bg-[#D9C89E] lg:h-6"
+        ? "h-5 w-px shrink-0 bg-[#D9C89E] lg:h-6"
         : "h-5 w-px shrink-0 bg-[#D9C89E] lg:hidden"} />
     </>
   );
