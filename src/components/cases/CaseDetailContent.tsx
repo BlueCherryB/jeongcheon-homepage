@@ -24,33 +24,38 @@ export function CaseDetailContent({
   const hasArticleBody = portableTextToPlainText(caseStudy.articleBody).length > 0;
 
   return (
-    <Container className="py-10 lg:py-20">
+    <Container className="pt-6 pb-10 lg:py-20">
       <div className="lg:rounded-[22px] lg:border lg:border-[#E8E2D7] lg:bg-white lg:px-12 lg:shadow-[0_18px_54px_rgba(17,27,54,0.05)]">
         {hasArticleBody ? (
           <div className="py-8 max-lg:[&_h3]:text-xl lg:py-12">
-            <PortableTextContent value={caseStudy.articleBody} variant="article" />
+            <PortableTextContent
+              value={caseStudy.articleBody}
+              variant="article"
+              tone="caseStudy"
+            />
           </div>
         ) : (
           <>
             <CaseDetailSection icon="document" title="사건의 개요">
-              <PortableTextContent value={caseStudy.overview} />
+              <PortableTextContent value={caseStudy.overview} tone="caseStudy" />
             </CaseDetailSection>
 
             <CaseDetailSection icon="search" title="주요 쟁점">
               <PortableTextContent
                 value={caseStudy.issues}
                 variant={caseStudy.legalIssuesUseBullets ? "list" : "paragraphs"}
+                tone="caseStudy"
               />
             </CaseDetailSection>
 
             {caseStudy.response.length > 0 ? (
               <CaseDetailSection icon="document" title="변호인의 대응·조력">
-                <PortableTextContent value={caseStudy.response} />
+                <PortableTextContent value={caseStudy.response} tone="caseStudy" />
               </CaseDetailSection>
             ) : null}
 
             <CaseDetailSection icon="result" title="사건의 결과">
-              <PortableTextContent value={caseStudy.outcome} />
+              <PortableTextContent value={caseStudy.outcome} tone="caseStudy" />
             </CaseDetailSection>
           </>
         )}

@@ -73,12 +73,12 @@ export function CaseDetailSection({
         <div className="hidden h-12 w-12 items-center justify-center rounded-full border border-[#E8E2D7] bg-[#FAF8F4] text-[#C8A96A] lg:flex">
           <SectionIcon icon={icon} />
         </div>
-        <h2 className="font-chosun break-keep text-[22px] font-semibold tracking-[-0.02em] text-[#111B36] lg:mt-5 lg:text-xl">
+        <h2 className="font-chosun break-keep text-[22px] font-semibold tracking-[-0.02em] text-[#18181B] lg:mt-5 lg:text-xl">
           {title}
         </h2>
       </div>
 
-      <div className="min-w-0 max-w-[720px] text-base leading-[1.85] text-[#111B36]/78 sm:text-[17px] lg:leading-8">
+      <div className="min-w-0 max-w-[720px] text-base leading-[1.85] text-[#27272A] sm:text-[17px] lg:leading-8">
         {children}
       </div>
     </section>

@@ -30,7 +30,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
 
   return (
     <section className="overflow-hidden border-b border-[#E8E2D7] bg-[#FAF8F4]">
-      <Container className={hasImage ? "py-12 lg:py-20" : "py-10 lg:py-14"}>
+      <Container className={hasImage ? "pt-12 pb-9 lg:py-20" : "pt-10 pb-8 lg:py-14"}>
         <nav aria-label="Breadcrumb" className="text-sm text-[#111B36]/70">
           <ol className="flex flex-wrap items-center gap-3">
             <li>
@@ -78,7 +78,7 @@ export function CaseDetailHero({ caseStudy }: CaseDetailHeroProps) {
             </p>
 
             <div className={hasImage ? "mt-4 max-w-[680px]" : "mt-4 max-w-4xl"}>
-              <h1 className="font-chosun text-[32px] font-normal leading-[1.5] tracking-[-0.02em] text-[#111B36] sm:text-[42px]">
+              <h1 className="font-chosun text-[29px] font-normal leading-[1.5] tracking-[-0.02em] text-[#111B36] sm:text-[38px] lg:text-[42px]">
                 {caseStudy.title}
               </h1>
               {showResult ? (

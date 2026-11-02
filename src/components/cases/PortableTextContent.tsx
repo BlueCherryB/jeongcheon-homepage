@@ -18,6 +18,7 @@ import type {
 type PortableTextContentProps = {
   value: CaseStudyPortableText;
   variant?: "paragraphs" | "list" | "article";
+  tone?: "default" | "caseStudy";
 };
 
 type PortableTextMarkDef = {
@@ -100,7 +101,19 @@ function getBlockString(block: CaseStudyPortableTextBlock, property: string): st
   return typeof value === "string" ? value : undefined;
 }
 
-function ArticleBlock({block, className}: {block: CaseStudyPortableTextBlock; className: string}) {
+function headingColor(tone: PortableTextContentProps["tone"]): string {
+  return tone === "caseStudy" ? "text-[#18181B]" : "text-[#111B36]";
+}
+
+function ArticleBlock({
+  block,
+  className,
+  tone,
+}: {
+  block: CaseStudyPortableTextBlock;
+  className: string;
+  tone: PortableTextContentProps["tone"];
+}) {
   const style = getBlockString(block, "style");
   const listItem = getBlockString(block, "listItem");
   const content = renderBlockText(block);
@@ -120,11 +133,11 @@ function ArticleBlock({block, className}: {block: CaseStudyPortableTextBlock; cl
   }
 
   if (style === "h2") {
-    return <h2 className={`${className} text-2xl font-semibold leading-snug text-[#111B36]`}>{content}</h2>;
+    return <h2 className={`${className} text-2xl font-semibold leading-snug ${headingColor(tone)}`}>{content}</h2>;
   }
 
   if (style === "h3") {
-    return <h3 className={`${className} text-lg font-semibold leading-snug text-[#111B36]`}>{content}</h3>;
+    return <h3 className={`${className} text-lg font-semibold leading-snug ${headingColor(tone)}`}>{content}</h3>;
   }
 
   return <p className={className}>{content}</p>;
@@ -135,7 +148,13 @@ function ArticleSpacer({block}: {block: CaseStudyPortableTextBlock}) {
   return <div aria-hidden="true" className={getSpacerHeightClassName(size)} />;
 }
 
-function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
+function ParagraphBlock({
+  block,
+  tone,
+}: {
+  block: CaseStudyPortableTextBlock;
+  tone: PortableTextContentProps["tone"];
+}) {
   const style = getBlockString(block, "style");
   const listItem = getBlockString(block, "listItem");
   const content = renderBlockText(block);
@@ -155,11 +174,11 @@ function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
   }
 
   if (style === "h2") {
-    return <h2 className="pt-5 text-2xl font-semibold leading-snug text-[#111B36]">{content}</h2>;
+    return <h2 className={`pt-5 text-2xl font-semibold leading-snug ${headingColor(tone)}`}>{content}</h2>;
   }
 
   if (style === "h3") {
-    return <h3 className="pt-3 text-lg font-semibold leading-snug text-[#111B36]">{content}</h3>;
+    return <h3 className={`pt-3 text-lg font-semibold leading-snug ${headingColor(tone)}`}>{content}</h3>;
   }
 
   return <p>{content}</p>;
@@ -168,6 +187,7 @@ function ParagraphBlock({block}: {block: CaseStudyPortableTextBlock}) {
 export function PortableTextContent({
   value,
   variant = "paragraphs",
+  tone = "default",
 }: PortableTextContentProps) {
   const blocks = getRenderableBlocks(value);
 
@@ -177,7 +197,7 @@ export function PortableTextContent({
 
   if (variant === "list") {
     return (
-      <ul className="space-y-3.5">
+      <ul className={`space-y-3.5 ${tone === "caseStudy" ? "text-[#27272A]" : ""}`}>
         {blocks.map((block) => (
           <li key={block._key} className="flex gap-3.5">
             <span
@@ -195,7 +215,9 @@ export function PortableTextContent({
     const articleBlocks = getArticleBlocks(value);
 
     return (
-      <div className="text-[17px] leading-8 text-zinc-700 sm:text-lg sm:leading-9">
+      <div
+        className={`text-[17px] leading-8 sm:text-lg sm:leading-9 ${tone === "caseStudy" ? "text-[#27272A]" : "text-zinc-700"}`}
+      >
         {articleBlocks.map((block, index) =>
           isArticleSpacer(block) ? (
             <ArticleSpacer key={block._key} block={block} />
@@ -204,6 +226,7 @@ export function PortableTextContent({
               key={block._key}
               block={block}
               className={getArticleBlockSpacingClassName(block, articleBlocks[index - 1])}
+              tone={tone}
             />
           ),
         )}
@@ -212,9 +235,9 @@ export function PortableTextContent({
   }
 
   return (
-    <div className="space-y-6 lg:space-y-4">
+    <div className={`space-y-6 lg:space-y-4 ${tone === "caseStudy" ? "text-[#27272A]" : ""}`}>
       {blocks.map((block) => (
-        <ParagraphBlock key={block._key} block={block} />
+        <ParagraphBlock key={block._key} block={block} tone={tone} />
       ))}
     </div>
   );
