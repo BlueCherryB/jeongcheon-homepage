@@ -6,7 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { JsonLdScript } from "@/components/seo/JsonLdScript";
 import { chosunNm, eulyoo1945 } from "@/lib/fonts";
-import { getSiteUrl } from "@/lib/site";
+import { getProductionSiteUrl } from "@/lib/site";
 import { buildGlobalStructuredData } from "@/lib/structuredData";
 import "./globals.css";
 
@@ -24,7 +24,9 @@ const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
 const isProduction = process.env.NODE_ENV === "production";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getSiteUrl()),
+  // Always resolve canonical/OG URLs against the production domain, even on
+  // preview deployments, so search engines never index workers.dev hosts.
+  metadataBase: new URL(getProductionSiteUrl()),
   title: {
     default: "법률사무소 정천",
     template: "%s",
@@ -55,6 +57,9 @@ export const metadata: Metadata = {
     siteName: "법률사무소 정천",
     locale: "ko_KR",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
   },
 };
 
